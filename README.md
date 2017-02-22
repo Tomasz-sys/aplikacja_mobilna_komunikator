@@ -1,1 +1,1 @@
-# aplikacja_mobilna_komunikator
+# Projekt na zajęcia "Projekt zespołowy" - Aplikacja mobilna "Komunikator"
