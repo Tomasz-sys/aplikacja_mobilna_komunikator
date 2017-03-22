@@ -11,7 +11,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        app:srcCompat="@android:color/holo_blue_light" />
+        app:srcCompat="@android:color/holo_blue_light"
+        android:contentDescription="@string/app_icon" />
 
     <TextView
         android:id="@+id/loginQuestionTextView"
@@ -46,7 +47,7 @@
         android:layout_below="@+id/loginEditText"
         android:ems="10"
         android:hint="@string/password_text"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textColor="@android:color/holo_blue_dark"
         android:textColorLink="@android:color/darker_gray" />
 
@@ -54,6 +55,8 @@
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/passwordEditText"
+        android:layout_alignEnd="@+id/passwordEditText"
         android:layout_alignLeft="@+id/passwordEditText"
         android:layout_alignRight="@+id/passwordEditText"
         android:layout_below="@+id/passwordEditText"
@@ -78,17 +81,19 @@
             android:id="@+id/accountLackTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/lack_of_account_text"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="5dp" />
 
         <TextView
             android:id="@+id/loginLinkTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/register_text"
-            android:textColor="@android:color/holo_blue_dark" />
+            android:textColor="@android:color/holo_blue_dark"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 
 </RelativeLayout>
