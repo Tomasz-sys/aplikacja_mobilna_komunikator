@@ -70,6 +70,14 @@
         android:layout_alignRight="@+id/loginButton"
         android:layout_alignEnd="@+id/loginButton"
         android:layout_alignLeft="@+id/loginButton"
-        android:layout_alignStart="@+id/loginButton"></LinearLayout>
+        android:layout_alignStart="@+id/loginButton">
+
+        <TextView
+            android:id="@+id/accountLackTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lack_of_account_text"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
 
 </RelativeLayout>

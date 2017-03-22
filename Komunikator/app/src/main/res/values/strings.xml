@@ -4,4 +4,5 @@
     <string name="login_text">Login</string>
     <string name="password_text">Hasło</string>
     <string name="login_button_text">Zaloguj się</string>
+    <string name="lack_of_account_text">Nie masz konta?</string>
 </resources>
