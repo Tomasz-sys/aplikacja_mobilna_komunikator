@@ -38,7 +38,7 @@
         android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/retype_password"
-        android:inputType="textPersonName" />
+        android:inputType="textPassword" />
 
     <CheckBox
         android:id="@+id/signup_checkbox_rules"
