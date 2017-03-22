@@ -14,21 +14,21 @@
         app:srcCompat="@android:color/holo_blue_light" />
 
     <TextView
-        android:id="@+id/loginTextView"
+        android:id="@+id/loginQuestionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/avatarView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:gravity="center"
-        android:textColor="@android:color/holo_blue_light"
-        android:text="@string/login_text" />
+        android:text="@string/login_question_text"
+        android:textColor="@android:color/holo_blue_light" />
 
     <EditText
         android:id="@+id/loginEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginTextView"
+        android:layout_below="@+id/loginQuestionTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:ems="10"
