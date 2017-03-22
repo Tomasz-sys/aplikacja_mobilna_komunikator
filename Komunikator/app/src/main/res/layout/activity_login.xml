@@ -23,4 +23,16 @@
         android:gravity="center"
         android:textColor="@android:color/holo_blue_light"
         android:text="@string/login_text" />
+
+    <EditText
+        android:id="@+id/loginEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/login_text"
+        android:textColor="@android:color/holo_blue_dark" />
 </RelativeLayout>

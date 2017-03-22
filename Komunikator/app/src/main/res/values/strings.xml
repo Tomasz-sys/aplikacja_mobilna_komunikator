@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Komunikator</string>
-    <string name="login_text">Masz konto?\nZaloguj się:</string>
+    <string name="login_question_text">Masz konto?\nZaloguj się:</string>
+    <string name="login_text">Login</string>
 </resources>
