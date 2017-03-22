@@ -47,4 +47,16 @@
         android:inputType="textPersonName"
         android:text="@string/password_text"
         android:textColor="@android:color/holo_blue_dark" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/passwordEditText"
+        android:layout_alignRight="@+id/passwordEditText"
+        android:layout_below="@+id/passwordEditText"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/login_button_text"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

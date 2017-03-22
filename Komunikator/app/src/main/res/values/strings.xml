@@ -3,4 +3,5 @@
     <string name="login_question_text">Masz konto?\nZaloguj się:</string>
     <string name="login_text">Login</string>
     <string name="password_text">Hasło</string>
+    <string name="login_button_text">Zaloguj się</string>
 </resources>
