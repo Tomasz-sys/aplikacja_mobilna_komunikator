@@ -35,4 +35,16 @@
         android:inputType="textPersonName"
         android:text="@string/login_text"
         android:textColor="@android:color/holo_blue_dark" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/loginEditText"
+        android:layout_alignRight="@+id/loginEditText"
+        android:layout_below="@+id/loginEditText"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/password_text"
+        android:textColor="@android:color/holo_blue_dark" />
 </RelativeLayout>

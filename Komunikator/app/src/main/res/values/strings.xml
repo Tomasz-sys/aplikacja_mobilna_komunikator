@@ -2,4 +2,5 @@
     <string name="app_name">Komunikator</string>
     <string name="login_question_text">Masz konto?\nZaloguj się:</string>
     <string name="login_text">Login</string>
+    <string name="password_text">Hasło</string>
 </resources>
