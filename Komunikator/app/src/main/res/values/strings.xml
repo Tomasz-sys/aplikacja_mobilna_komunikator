@@ -18,6 +18,6 @@
     <string name="navigation_drawer_open">Rozwiń menu</string>
     <string name="navigation_drawer_close">Zamknij menu</string>
     <string name="action_settings">Ustawienia</string>
-    <string name="search_view_hint">Wyszukaj</string>
+    <string name="search_view_hint">Wyszukaj...</string>
 
 </resources>
