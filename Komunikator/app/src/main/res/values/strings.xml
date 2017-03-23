@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Komunikator</string>
+
     <string name="login_question_text">Masz konto?\nZaloguj się:</string>
     <string name="login_text">Login</string>
     <string name="password_text">Hasło</string>
@@ -7,8 +8,21 @@
     <string name="lack_of_account_text">Nie masz konta?</string>
     <string name="register_text">Zarejestruj się!</string>
     <string name="app_icon">Ikona aplikacji</string>
+
     <string name="retype_password">Powtórz hasło</string>
     <string name="email">Email</string>
     <string name="accept_rules">Akceptuję regulamin</string>
     <string name="accept_privacy_policy">Akceptuję politykę prywatności</string>
+
+    <string name="title_activity_conversations_list">Rozmowy</string>
+    <string name="navigation_drawer_open">Rozwiń menu</string>
+    <string name="navigation_drawer_close">Zamknij menu</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="search_view_hint">Wyszukaj...</string>
+
+    <string name="contact_placeholder">Kontakt</string>>
+    <string name="message_placeholder">Lorem ipsum dolor sit amet enim. Etiam ullamcorper.
+        Suspendisse a pellentesque dui, non felis.
+        Maecenas malesuada elit lectus felis, malesuada ultricies.</string>
+
 </resources>
