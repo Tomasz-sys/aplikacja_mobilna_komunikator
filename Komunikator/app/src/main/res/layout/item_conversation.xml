@@ -26,6 +26,8 @@
         android:inputType="textMultiLine"
         android:text="@string/message_placeholder" />
 
-    <View style="@style/Divider" />
+    <View
+        android:id="@+id/dividerView"
+        style="@style/Divider" />
 
 </LinearLayout>

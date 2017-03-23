@@ -9,6 +9,7 @@
     tools:showIn="@layout/app_bar_conversations_list">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/conversationsView"
         android:layout_width="368dp"
         android:layout_height="495dp"
         android:layout_marginBottom="0dp"
