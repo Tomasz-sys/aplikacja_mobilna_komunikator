@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:background="@android:color/holo_green_dark"
     android:orientation="vertical"
     android:padding="10dp">
@@ -11,8 +11,16 @@
         android:id="@+id/contactTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/contact_item_placeholder"
+        android:layout_marginBottom="2dp"
+        android:text="@string/contact_placeholder"
         android:textSize="15dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lastMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:text="@string/message_placeholder" />
 
 </LinearLayout>
