@@ -15,16 +15,18 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:text="@string/contact_placeholder"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
-    <TextView
+    <EditText
         android:id="@+id/lastMessageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:background="@null"
         android:inputType="textMultiLine"
-        android:text="@string/message_placeholder" />
+        android:text="@string/message_placeholder"
+        android:textSize="13sp" />
 
     <View
         android:id="@+id/dividerView"
