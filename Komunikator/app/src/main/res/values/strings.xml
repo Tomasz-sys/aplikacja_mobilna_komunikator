@@ -24,6 +24,7 @@
     <string name="message_placeholder">Lorem ipsum dolor sit amet enim. Etiam ullamcorper.
         Suspendisse a pellentesque dui, non felis.
         Maecenas malesuada elit lectus felis, malesuada ultricies.</string>
+    <string name="contact_email_placeholder">john.doe@example.com</string>
 
 
 </resources>
