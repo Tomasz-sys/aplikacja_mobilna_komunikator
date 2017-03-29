@@ -95,7 +95,7 @@
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2"
         android:layout_below="@+id/textView4"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="14dp"
         android:text="Nazwisko"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -107,8 +107,20 @@
         android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
         android:layout_below="@+id/textView5"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="14dp"
         android:text="Krzysztofik"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="14dp"
+        android:text="Email"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
