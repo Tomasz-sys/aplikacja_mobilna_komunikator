@@ -100,5 +100,15 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="18dp"
+        android:text="Krzysztofik"
+        android:textSize="18sp" />
 
 </RelativeLayout>
