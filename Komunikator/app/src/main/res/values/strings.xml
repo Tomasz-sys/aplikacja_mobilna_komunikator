@@ -27,5 +27,17 @@
     <string name="contact_email_placeholder">john.doe@example.com</string>
     <string name="title_activity_details">DetailsActivity</string>
 
+    <string name="details_bold_name">John Doe</string>
+    <string name="details_ignore">IGNORUJ</string>
+    <string name="details_add">DODAJ</string>
+    <string name="details_name_label">Imię</string>
+    <string name="details_surname_label">Nazwisko</string>
+    <string name="details_email_label">Email</string>
+    <string name="details_birth_label">Data urodzenia</string>
+    <string name="details_name"></string>
+    <string name="details_surname"></string>
+    <string name="details_email"></string>
+    <string name="details_birth"></string>
+
 
 </resources>
