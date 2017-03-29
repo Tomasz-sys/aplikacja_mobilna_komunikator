@@ -25,7 +25,6 @@
         Suspendisse a pellentesque dui, non felis.
         Maecenas malesuada elit lectus felis, malesuada ultricies.</string>
     <string name="contact_email_placeholder">john.doe@example.com</string>
-
     <string name="title_activity_details">DetailsActivity</string>
 
     <string name="details_bold_name">John Doe</string>
@@ -40,6 +39,7 @@
     <string name="details_email"></string>
     <string name="details_birth"></string>
 
-
+    <string name="title_action_location">Lokalizacja</string>
+    <string name="title_action_search">Wyszukiwarka</string>
 
 </resources>
