@@ -15,5 +15,18 @@
         android:contentDescription="@string/app_icon"
         app:srcCompat="@android:color/holo_blue_light" />
 
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatarView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="John Doe"
+        android:textColor="@android:color/background_dark"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 
 </RelativeLayout>
