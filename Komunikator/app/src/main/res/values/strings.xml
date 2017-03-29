@@ -25,6 +25,7 @@
         Suspendisse a pellentesque dui, non felis.
         Maecenas malesuada elit lectus felis, malesuada ultricies.</string>
     <string name="contact_email_placeholder">john.doe@example.com</string>
+    <string name="title_activity_details">DetailsActivity</string>
 
 
 </resources>
