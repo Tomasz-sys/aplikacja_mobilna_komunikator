@@ -71,6 +71,21 @@
         android:layout_marginStart="11dp"
         android:layout_marginTop="42dp"
         android:layout_weight="1"
-        android:text="Imię" />
+        android:text="Imię"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginTop="14dp"
+        android:layout_toLeftOf="@+id/avatarView"
+        android:layout_toStartOf="@+id/avatarView"
+        android:text="Krzysztof"
+        android:textSize="18sp" />
 
 </RelativeLayout>
