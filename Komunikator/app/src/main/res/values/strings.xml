@@ -39,5 +39,7 @@
     <string name="details_email"></string>
     <string name="details_birth"></string>
 
+    <string name="title_action_location">Lokalizacja</string>
+    <string name="title_action_search">Wyszukiwarka</string>
 
 </resources>
