@@ -48,9 +48,18 @@
             android:text="Ignoruj"
             android:textAlignment="center" />
 
-
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/holo_blue_light"
+            android:text="Dodaj"
+            android:textAlignment="center" />
 
     </LinearLayout>
-   
+
+    
 
 </RelativeLayout>
