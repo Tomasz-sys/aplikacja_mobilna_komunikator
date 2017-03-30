@@ -35,7 +35,6 @@ public class ChatActivity extends AppCompatActivity {
         messageET = (EditText) findViewById(R.id.messageEdit);
         sendBtn = (Button) findViewById(R.id.chatSendButton);
 
-        RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
         loadDummyHistory();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
