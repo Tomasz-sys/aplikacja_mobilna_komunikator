@@ -3,6 +3,8 @@ package pl.komunikator.komunikator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,5 +90,14 @@ public class ChatActivity extends AppCompatActivity {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.conversations_menu, menu);
+
+        setTitle(R.string.contact_placeholder);
+        return true;
     }
 }
