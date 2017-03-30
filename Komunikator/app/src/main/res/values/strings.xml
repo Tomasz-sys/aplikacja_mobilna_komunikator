@@ -42,4 +42,7 @@
     <string name="title_action_location">Lokalizacja</string>
     <string name="title_action_search">Wyszukiwarka</string>
 
+    <string name="type_message_hint">Wprowadź wiadomość...</string>
+    <string name="send_message">Wyślij</string>
+
 </resources>
