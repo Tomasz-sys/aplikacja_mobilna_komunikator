@@ -1,6 +1,5 @@
 package pl.komunikator.komunikator;
 
-import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -8,9 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,9 +16,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText messageET;
     private ListView messagesContainer;
-    private Button sendBtn;
     private ChatAdapter adapter;
-    private ArrayList<ChatMessage> chatHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +29,7 @@ public class ChatActivity extends AppCompatActivity {
     private void initControls() {
         messagesContainer = (ListView) findViewById(R.id.messagesContainer);
         messageET = (EditText) findViewById(R.id.messageEdit);
-        sendBtn = (Button) findViewById(R.id.chatSendButton);
+        Button sendBtn = (Button) findViewById(R.id.chatSendButton);
 
         loadDummyHistory();
 
@@ -70,7 +66,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void loadDummyHistory(){
 
-        chatHistory = new ArrayList<ChatMessage>();
+        ArrayList<ChatMessage> chatHistory = new ArrayList<>();
 
         ChatMessage msg = new ChatMessage();
         msg.setId(1);
@@ -88,7 +84,7 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new ChatAdapter(ChatActivity.this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
 
-        for(int i=0; i < chatHistory.size(); i++) {
+        for(int i = 0; i < chatHistory.size(); i++) {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
