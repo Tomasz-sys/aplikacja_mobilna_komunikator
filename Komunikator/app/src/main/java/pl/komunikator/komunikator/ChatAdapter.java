@@ -64,11 +64,11 @@ public class ChatAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        boolean myMsg = chatMessage.getIsme() ;//Just a dummy check
+        boolean myMsg = chatMessage.isMe ;//Just a dummy check
         //to simulate whether it me or other sender
         setAlignment(holder, myMsg);
-        holder.txtMessage.setText(chatMessage.getMessage());
-        holder.txtInfo.setText(chatMessage.getDate());
+        holder.txtMessage.setText(chatMessage.message);
+        holder.txtInfo.setText(chatMessage.dateTime);
 
         return convertView;
     }

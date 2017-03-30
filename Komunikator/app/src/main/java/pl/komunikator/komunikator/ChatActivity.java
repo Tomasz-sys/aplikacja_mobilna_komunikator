@@ -42,10 +42,10 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
                 ChatMessage chatMessage = new ChatMessage();
-                chatMessage.setId(122);//dummy
-                chatMessage.setMessage(messageText);
-                chatMessage.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-                chatMessage.setMe(true);
+                chatMessage.id = 122;//dummy
+                chatMessage.message = messageText;
+                chatMessage.dateTime = DateFormat.getDateTimeInstance().format(new Date());
+                chatMessage.isMe = true;
 
                 messageET.setText("");
 
@@ -69,16 +69,16 @@ public class ChatActivity extends AppCompatActivity {
         ArrayList<ChatMessage> chatHistory = new ArrayList<>();
 
         ChatMessage msg = new ChatMessage();
-        msg.setId(1);
-        msg.setMe(false);
-        msg.setMessage("Hi");
-        msg.setDate(DateFormat.getDateTimeInstance().format(new Date()));
+        msg.id = 1;
+        msg.isMe = false;
+        msg.message = "Hi";
+        msg.dateTime = DateFormat.getDateTimeInstance().format(new Date());
         chatHistory.add(msg);
         ChatMessage msg1 = new ChatMessage();
-        msg1.setId(2);
-        msg1.setMe(false);
-        msg1.setMessage("How r u doing???");
-        msg1.setDate(DateFormat.getDateTimeInstance().format(new Date()));
+        msg1.id = 2;
+        msg1.isMe = false;
+        msg1.message = "How r u doing???";
+        msg1.dateTime = DateFormat.getDateTimeInstance().format(new Date());
         chatHistory.add(msg1);
 
         adapter = new ChatAdapter(ChatActivity.this, new ArrayList<ChatMessage>());
