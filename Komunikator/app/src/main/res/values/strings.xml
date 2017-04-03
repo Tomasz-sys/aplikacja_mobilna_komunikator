@@ -46,7 +46,13 @@
     <string name="send_message">Wyślij</string>
 
     <string name="settings_sound">Dźwięk</string>
-    <string name="settings_location">Lokalizacja</string>
+    <string name="settings_location">Zgoda na śledzenie lokalizacji</string>
     <string name="settings_notification">Powiadomienia</string>
+    <string name="settings_invite">Zgoda na zapraszanie do znajomych</string>
+    <string name="settings_archive">Przechowywanie archiwum</string>
+    <string name="settings_archive_delete">Usunięcie archiwum</string>
+    <string name="settings_archive_delete_button">USUŃ</string>
+    <string name="settings_upload_photo">Zmień zdjęcie profilowe</string>
+    <string name="settings_upload_photo_button">ZMIEŃ</string>
 
 </resources>
