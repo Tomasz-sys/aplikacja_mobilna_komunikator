@@ -99,6 +99,11 @@
                 android:text="@string/settings_invite"
                 android:textAlignment="center"
                 android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/settings_archive_checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
