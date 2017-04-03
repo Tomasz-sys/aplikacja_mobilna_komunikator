@@ -52,5 +52,7 @@
     <string name="settings_archive">Przechowywanie archiwum</string>
     <string name="settings_archive_delete">Usunięcie archiwum</string>
     <string name="settings_archive_delete_button">USUŃ</string>
+    <string name="settings_upload_photo">Zmień zdjęcie profilowe</string>
+    <string name="settings_upload_photo_button">ZMIEŃ</string>
 
 </resources>
