@@ -14,7 +14,7 @@
         android:layout_toLeftOf="@+id/chatSendButton"
         android:layout_toStartOf="@id/chatSendButton"
         android:autoText="true"
-        android:hint="type message"
+        android:hint="@string/type_message_hint"
         tools:ignore="Deprecated" />
 
     <Button
@@ -24,9 +24,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="@color/background_floating_material_dark"
-        android:text="Send MSG"
-        android:textColor="@color/background_material_light" />
+        android:background="@android:color/holo_orange_dark"
+        android:text="@string/send_message"
+        android:textColor="@android:color/white" />
 
     <ListView
         android:id="@+id/messagesContainer"
