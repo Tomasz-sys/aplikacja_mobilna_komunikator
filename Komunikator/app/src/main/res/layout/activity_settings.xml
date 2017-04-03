@@ -18,6 +18,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:text="Dźwięk"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
