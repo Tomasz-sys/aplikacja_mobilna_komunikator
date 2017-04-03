@@ -51,5 +51,6 @@
     <string name="settings_invite">Zgoda na zapraszanie do znajomych</string>
     <string name="settings_archive">Przechowywanie archiwum</string>
     <string name="settings_archive_delete">Usunięcie archiwum</string>
+    <string name="settings_archive_delete_button">USUŃ</string>
 
 </resources>
