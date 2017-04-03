@@ -45,4 +45,8 @@
     <string name="type_message_hint">Wprowadź wiadomość...</string>
     <string name="send_message">Wyślij</string>
 
+    <string name="settings_sound">Dźwięk</string>
+    <string name="settings_location">Lokalizacja</string>
+    <string name="settings_notification">Powiadomienia</string>
+
 </resources>
