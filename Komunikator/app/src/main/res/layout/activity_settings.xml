@@ -78,10 +78,14 @@
                 android:id="@+id/settings_invite_textView"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_notification"
+                android:text="@string/settings_invite"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
+            <CheckBox
+                android:id="@+id/settings_invite_checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 

@@ -48,5 +48,6 @@
     <string name="settings_sound">Dźwięk</string>
     <string name="settings_location">Zgoda na śledzenie lokalizacji</string>
     <string name="settings_notification">Powiadomienia</string>
+    <string name="settings_invite">Zgoda na zapraszanie do znajomych</string>
 
 </resources>
