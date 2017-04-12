@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Komunikator</string>
 
-    <string name="login_question_text">You have an account?\nSign in:</string>
+    <string name="login_question_text">Have you an account?\nSign in:</string>
     <string name="login_text">Login</string>
     <string name="password_text">Password</string>
     <string name="login_button_text">Sign In</string>
-    <string name="lack_of_account_text">You have no account?</string>
+    <string name="lack_of_account_text">Have you no account?</string>
     <string name="register_text">Sign Up!</string>
     <string name="app_icon">App icon</string>
 
@@ -25,7 +25,7 @@
         Suspendisse a pellentesque dui, non felis.
         Maecenas malesuada elit lectus felis, malesuada ultricies.</string>
     <string name="contact_email_placeholder">john.doe@example.com</string>
-    <string name="title_activity_details">Szczegóły</string>
+    <string name="title_activity_details">Details</string>
 
     <string name="details_bold_name">John Doe</string>
     <string name="details_ignore">IGNORE</string>
