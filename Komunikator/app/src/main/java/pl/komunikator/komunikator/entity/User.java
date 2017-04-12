@@ -1,11 +1,10 @@
 package pl.komunikator.komunikator.entity;
 
-import android.location.Location;
-
-import java.sql.Date;
+import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -13,13 +12,29 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class User extends RealmObject {
+    @Ignore
+    private static User instance = null;
     @PrimaryKey
     private Long id;
     private String username;
     private String password;
     private Date birthDate;
-    private Location location;
+    private Long latitude;
+    private Long Longitude;
     private RealmList<Conversation> conversations;
+    private String email;
+
+    public static User getLoggedUser() {
+        return instance;
+    }
+
+    public static void setLoggedUser(User user) {
+        instance = user;
+    }
+
+    public static void logout() {
+        instance = null;
+    }
 
     public Long getId() {
         return id;
@@ -53,12 +68,20 @@ public class User extends RealmObject {
         this.birthDate = birthDate;
     }
 
-    public Location getLocation() {
-        return location;
+    public Long getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLatitude(Long latitude) {
+        this.latitude = latitude;
+    }
+
+    public Long getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(Long longitude) {
+        Longitude = longitude;
     }
 
     public RealmList<Conversation> getConversations() {
@@ -67,5 +90,13 @@ public class User extends RealmObject {
 
     public void setConversations(RealmList<Conversation> conversations) {
         this.conversations = conversations;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

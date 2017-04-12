@@ -1,6 +1,7 @@
 package pl.komunikator.komunikator.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
