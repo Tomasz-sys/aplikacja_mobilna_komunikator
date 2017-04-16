@@ -1,12 +1,9 @@
 package pl.komunikator.komunikator;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +13,7 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 
 import io.realm.Realm;
+import io.realm.RealmObject;
 import io.realm.SyncConfiguration;
 import io.realm.SyncUser;
 import pl.komunikator.komunikator.entity.User;
@@ -56,23 +54,23 @@ public class SignupActivity extends AppCompatActivity {
                 String emailText = email.getText().toString();
                 boolean result = true;
                 if (loginText.isEmpty()) {
-                    login.setError("Pole wymagane");
+                    login.setError(getString(R.string.register_required_field));
                     result = false;
                 }
                 if (emailText.isEmpty()) {
-                    email.setError("Pole wymagane");
+                    email.setError(getString(R.string.register_required_field));
                     result = false;
                 }
                 if (!passwordText.equals(retypeStringText)) {
-                    retypePassword.setError("Hasła się nie zgadzają");
+                    retypePassword.setError(getString(R.string.register_password_different));
                 }
                 if (!rules.isChecked()) {
-                    rules.setError("Pole wymagane");
+                    rules.setError(getString(R.string.register_required_field));
                     result = false;
                 }
 
                 if (!policy.isChecked()) {
-                    policy.setError("Pole wymagane");
+                    policy.setError(getString(R.string.register_required_field));
                     result = false;
                 }
 
@@ -89,26 +87,33 @@ public class SignupActivity extends AppCompatActivity {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                User user = realm.createObject(User.class, realm.where(User.class).max("id").longValue() + 1);
-                user.setUsername(loginText);
-                user.setPassword(Hashing.sha1().hashString(passwordText, Charsets.UTF_8).toString());
-                user.setEmail(emailText);
-                User.setLoggedUser(user);
-
+                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("email", emailText).findFirst();
+                if (object == null) {
+                    Number id = realm.where(User.class).max("id");
+                    User user = realm.createObject(User.class, (id == null) ? 1 : id.longValue() + 1);
+                    user.setUsername(loginText);
+                    user.setPassword(Hashing.sha1().hashString(passwordText, Charsets.UTF_8).toString());
+                    user.setEmail(emailText);
+                    User.setLoggedUser(user);
+                } else {
+                    Snackbar.make(login, R.string.register_login_email_used, Snackbar.LENGTH_SHORT).show();
+                }
             }
         }, new Realm.Transaction.OnSuccess() {
 
             @Override
             public void onSuccess() {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                startActivity(intent);
+                if (User.getLoggedUser() != null) {
+                    Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                    startActivity(intent);
+                }
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                Snackbar.make(password, "Coś poszło nie tak", Snackbar.LENGTH_SHORT).show();
-                Log.e("Sign up", error.getMessage());
+                Snackbar.make(password, R.string.register_something_goes_wrong, Snackbar.LENGTH_SHORT).show();
                 User.logout();
+
             }
         });
     }
