@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginFailed(String errorMsg) {
-        Log.e("asdasdsdsdas", errorMsg);
+        Log.e("LoginActivity", errorMsg);
     }
 
     public void signIn(View view) {
@@ -98,8 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                 .equalTo("password", Hashing.sha1().hashString(password.getText().toString(), Charsets.UTF_8).toString())
                 .findFirst();
         if (user == null) {
-            login.setError("Sprawdź login");
-            password.setError("Sprawdź hasło");
+            login.setError(getString(R.string.login_check_username));
+            password.setError(getString(R.string.login_check_password));
         } else {
             User.setLoggedUser(user);
             Intent intent = new Intent(getApplicationContext(), ListActivity.class);
@@ -109,5 +109,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signUp(View view) {
+        Intent intent = new Intent(getApplicationContext(),SignupActivity.class);
+        startActivity(intent);
     }
 }
