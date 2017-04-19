@@ -18,7 +18,6 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
 
     private List<User> userList;
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, email;
         public ImageView photo;
@@ -26,9 +25,15 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
         public MyViewHolder(View view) {
             super(view);
 
+            name = (TextView) view.findViewById(R.id.contactName);
+            email = (TextView) view.findViewById(R.id.contactEmail);
+            photo = (ImageView) view.findViewById(R.id.contactImageView);
         }
     }
 
+    public SearchedUsersAdapter(List<User> userList) {
+        this.userList = userList;
+    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,4 +49,5 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
     public int getItemCount() {
         return 0;
     }
+
 }
