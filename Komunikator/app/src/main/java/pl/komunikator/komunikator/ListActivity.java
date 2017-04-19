@@ -95,14 +95,25 @@ public class ListActivity extends AppCompatActivity{
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
-        Class fragmentClass;
+        Class fragmentClass = null;
         switch(menuItem.getItemId()) {
-            case R.id.nav_contacts:
+            case R.id.nav_settings:
                 fragmentClass = SettingsFragment.class;
+                setTitle(R.string.contact_placeholder);
+                break;
+            case R.id.nav_contacts:
+                fragmentClass = ListFragment.class;
+                setTitle(R.string.contact_placeholder);
+                break;
+            case R.id.nav_conversations:
+                setTitle(R.string.title_activity_conversations_list);
                 break;
 
+            case  R.id.nav_help:
+                setTitle("Pomoc");
+                break;
             default:
-                fragmentClass = SettingsFragment.class;
+                fragmentClass = ListFragment.class;
         }
 
         try {

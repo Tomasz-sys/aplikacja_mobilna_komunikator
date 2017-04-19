@@ -2,6 +2,7 @@ package pl.komunikator.komunikator;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,9 @@ import java.util.List;
 public class ChatAdapter extends BaseAdapter {
 
     private final List<ChatMessage> chatMessages;
-    private Activity context;
+    private Context context;
 
-    public ChatAdapter(Activity context, List<ChatMessage> chatMessages) {
+    public ChatAdapter(Context context, List<ChatMessage> chatMessages) {
         this.context = context;
         this.chatMessages = chatMessages;
     }

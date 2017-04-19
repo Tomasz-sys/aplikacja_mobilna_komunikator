@@ -1,11 +1,11 @@
 package pl.komunikator.komunikator;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,24 +14,24 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatFragment extends Fragment {
 
     private EditText messageET;
     private ListView messagesContainer;
     private ChatAdapter adapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        initControls(view);
+        return view;
 
-        initControls();
+
     }
 
-    private void initControls() {
-        messagesContainer = (ListView) findViewById(R.id.messagesContainer);
-        messageET = (EditText) findViewById(R.id.messageEdit);
-        Button sendBtn = (Button) findViewById(R.id.chatSendButton);
+    private void initControls(View view) {
+        messagesContainer = (ListView) view.findViewById(R.id.messagesContainer);
+        messageET = (EditText) view.findViewById(R.id.messageEdit);
+        Button sendBtn = (Button) view.findViewById(R.id.chatSendButton);
 
         loadDummyHistory();
 
@@ -83,21 +83,12 @@ public class ChatActivity extends AppCompatActivity {
         msg1.dateTime = DateFormat.getDateTimeInstance().format(new Date());
         chatHistory.add(msg1);
 
-        adapter = new ChatAdapter(ChatActivity.this, new ArrayList<ChatMessage>());
+        adapter = new ChatAdapter(getActivity().getApplicationContext(), new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
 
         for(int i = 0; i < chatHistory.size(); i++) {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.conversations_menu, menu);
-
-        setTitle(R.string.contact_placeholder);
-        return true;
     }
 }
