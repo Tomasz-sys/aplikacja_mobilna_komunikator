@@ -20,6 +20,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_conversation" />
+        tools:listitem="@layout/item_searched_user" />
 
 </android.support.constraint.ConstraintLayout>
