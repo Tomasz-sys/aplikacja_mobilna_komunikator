@@ -16,4 +16,12 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         return view;
     }
+    public static SettingsFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 }
