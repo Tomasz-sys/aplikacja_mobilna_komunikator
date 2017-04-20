@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.net.Uri;
+
 
 public class ListActivity extends AppCompatActivity{
     private DrawerLayout drawer;
@@ -24,15 +26,6 @@ public class ListActivity extends AppCompatActivity{
         setContentView(R.layout.activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -99,7 +92,7 @@ public class ListActivity extends AppCompatActivity{
         switch(menuItem.getItemId()) {
             case R.id.nav_settings:
                 fragmentClass = SettingsFragment.class;
-                setTitle(R.string.contact_placeholder);
+                setTitle(R.string.title_settings);
                 break;
             case R.id.nav_contacts:
                 fragmentClass = ListFragment.class;
@@ -107,10 +100,11 @@ public class ListActivity extends AppCompatActivity{
                 break;
             case R.id.nav_conversations:
                 setTitle(R.string.title_activity_conversations_list);
+                fragmentClass = ListFragment.class;
                 break;
-
             case  R.id.nav_help:
                 setTitle("Pomoc");
+               // Uri.parse("https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki");
                 break;
             default:
                 fragmentClass = ListFragment.class;
@@ -129,7 +123,7 @@ public class ListActivity extends AppCompatActivity{
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
         // Set action bar title
-        setTitle(menuItem.getTitle());
+        //setTitle(menuItem.getTitle());
         // Close the navigation drawer
         drawer.closeDrawers();
     }

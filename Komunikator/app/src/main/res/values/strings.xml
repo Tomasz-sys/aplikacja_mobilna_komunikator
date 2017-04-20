@@ -54,7 +54,7 @@
     <string name="settings_archive_delete_button">USUŃ</string>
     <string name="settings_upload_photo">Zmień zdjęcie profilowe</string>
     <string name="settings_upload_photo_button">ZMIEŃ</string>
-
+    <string name="title_settings">Ustawienia</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
