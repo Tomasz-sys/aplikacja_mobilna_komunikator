@@ -54,12 +54,8 @@
     <string name="settings_archive_delete_button">USUŃ</string>
     <string name="settings_upload_photo">Zmień zdjęcie profilowe</string>
     <string name="settings_upload_photo_button">ZMIEŃ</string>
-
-    <string name="register_required_field">Pole wymagane</string>
-    <string name="register_password_different">Hasła się nie zgadzają</string>
-    <string name="register_login_email_used">Login lub adres email już jest używany</string>
-    <string name="register_something_goes_wrong">Coś poszło nie tak</string>
-    <string name="login_check_username">Sprawdź login</string>
-    <string name="login_check_password">Sprawdź hasło</string>
+    <string name="title_settings">Ustawienia</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
