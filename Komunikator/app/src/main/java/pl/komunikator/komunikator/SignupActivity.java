@@ -14,8 +14,6 @@ import com.google.common.hash.Hashing;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
-import io.realm.SyncConfiguration;
-import io.realm.SyncUser;
 import pl.komunikator.komunikator.entity.User;
 
 /**
@@ -26,17 +24,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private EditText login, email, password, retypePassword;
     private CheckBox rules, policy;
-    private Realm realm;
+    private Realm realm = Realm.getDefaultInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
-        SyncConfiguration config = new SyncConfiguration.Builder(SyncUser.currentUser(), KomunikatorApplication.REALM_URL).build();
-
-        realm = Realm.getInstance(config);
-
         login = (EditText) findViewById(R.id.signupLoginEditText);
         email = (EditText) findViewById(R.id.signupEmailEditText);
         password = (EditText) findViewById(R.id.signupPasswordEditText);

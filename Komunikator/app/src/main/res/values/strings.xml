@@ -61,5 +61,6 @@
     <string name="register_something_goes_wrong">Coś poszło nie tak</string>
     <string name="login_check_username">Sprawdź login</string>
     <string name="login_check_password">Sprawdź hasło</string>
+    <string name="please_wait">Proszę czekać</string>
 
 </resources>
