@@ -88,6 +88,7 @@ public class StartActivity extends AppCompatActivity {
         Realm.setDefaultConfiguration(config);
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void onLoginFailed(String errorMsg) {

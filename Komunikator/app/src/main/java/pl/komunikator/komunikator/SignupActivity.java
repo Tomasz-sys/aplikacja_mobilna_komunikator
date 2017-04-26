@@ -99,6 +99,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (User.getLoggedUser() != null) {
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         }, new Realm.Transaction.OnError() {

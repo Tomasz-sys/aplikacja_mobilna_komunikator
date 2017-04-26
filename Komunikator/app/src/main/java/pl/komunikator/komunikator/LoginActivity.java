@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             User.setLoggedUser(user);
             Intent intent = new Intent(getApplicationContext(), ListActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }

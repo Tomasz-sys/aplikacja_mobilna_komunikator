@@ -1,6 +1,7 @@
 package pl.komunikator.komunikator;
 
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,9 @@ import android.view.MenuItem;
 import android.net.Uri;
 
 
-public class ListActivity extends AppCompatActivity{
+public class ListActivity extends AppCompatActivity {
     private DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +36,10 @@ public class ListActivity extends AppCompatActivity{
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-       setupDrawerContent(navigationView);
+        setupDrawerContent(navigationView);
 
     }
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -89,7 +92,7 @@ public class ListActivity extends AppCompatActivity{
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass = null;
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.nav_settings:
                 fragmentClass = SettingsFragment.class;
                 setTitle(R.string.title_settings);
@@ -102,14 +105,18 @@ public class ListActivity extends AppCompatActivity{
                 setTitle(R.string.title_activity_conversations_list);
                 fragmentClass = ListFragment.class;
                 break;
-            case R.id.nav_search:
+           case R.id.nav_search:
                 setTitle(R.string.title_action_search);
                 fragmentClass = ListFragment.class;
                 break;
-            case  R.id.nav_help:
+            case R.id.nav_help:
                 setTitle("Pomoc");
-               // Uri.parse("https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki");
-                break;
+                String url = "https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki";
+
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(this, Uri.parse(url));
+                return;
             default:
                 fragmentClass = ListFragment.class;
         }
