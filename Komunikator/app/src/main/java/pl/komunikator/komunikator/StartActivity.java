@@ -15,6 +15,7 @@ import io.realm.Realm;
 import io.realm.SyncConfiguration;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
+import pl.komunikator.komunikator.entity.User;
 
 public class StartActivity extends AppCompatActivity {
 

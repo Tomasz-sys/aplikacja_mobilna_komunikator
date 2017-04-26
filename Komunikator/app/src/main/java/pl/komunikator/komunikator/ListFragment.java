@@ -1,14 +1,21 @@
 package pl.komunikator.komunikator;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pl.komunikator.komunikator.entity.User;
+
+import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 public class ListFragment extends Fragment {
 
@@ -19,16 +26,36 @@ public class ListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.list_fragment, container, false);
 
-//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        User user1 = new User();
+        user1.setUsername("Adrian");
+        user1.setEmail("asdas@o2.pl");
+
+        User user2 = new User();
+        user2.setUsername("Marek");
+        user2.setEmail("marek@o2.pl");
+
+        User user3 = new User();
+        user3.setUsername("Przemek");
+        user3.setEmail("przemek@o2.pl");
+
+        List<User> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+
+        SearchedUsersAdapter adapter = new SearchedUsersAdapter(users);
+
+        ConstraintLayout recyclerViewContainer = (ConstraintLayout) view.findViewById(R.id.contentList);
+
+        RecyclerView recyclerView = (RecyclerView) recyclerViewContainer.findViewById(R.id.conversationsView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+
         return view;
     }
 }
