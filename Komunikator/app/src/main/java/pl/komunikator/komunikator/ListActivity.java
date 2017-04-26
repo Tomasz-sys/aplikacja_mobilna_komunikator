@@ -102,6 +102,10 @@ public class ListActivity extends AppCompatActivity{
                 setTitle(R.string.title_activity_conversations_list);
                 fragmentClass = ListFragment.class;
                 break;
+            case R.id.nav_search:
+                setTitle(R.string.title_action_search);
+                fragmentClass = ListFragment.class;
+                break;
             case  R.id.nav_help:
                 setTitle("Pomoc");
                // Uri.parse("https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki");
