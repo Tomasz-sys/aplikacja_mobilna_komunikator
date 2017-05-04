@@ -31,6 +31,7 @@ import pl.komunikator.komunikator.entity.User;
 public class ListActivity extends AppCompatActivity {
 
     private DrawerLayout drawer;
+    public Menu menuBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class ListActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         String searchViewHint = getResources().getString(R.string.search_view_hint);
         searchView.setQueryHint(searchViewHint);
+
+        menuBar = menu;
 
         return true;
     }

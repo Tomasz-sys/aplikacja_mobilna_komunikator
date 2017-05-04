@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 public class ListFragment extends Fragment {
 
+    RecyclerView recyclerView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,17 +34,53 @@ public class ListFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        this.recyclerView = recyclerView;
 
+        showUserFriends();
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ListActivity listActivity = (ListActivity) getActivity();
+
+        final SearchView searchView = (SearchView) listActivity.menuBar.findItem(R.id.action_search).getActionView();
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPossibleFriends();
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                showUserFriends();
+
+                searchView.onActionViewCollapsed();
+
+                return true;
+            }
+        });
+    }
+
+    private void showUserFriends() {
         Realm realm = Realm.getDefaultInstance();
-//        RealmResults<User> allUsers = realm.where(User.class).findAll();
-//        List<User> users = realm.copyFromRealm(allUsers);
-//
         User user = User.getLoggedUser();
         List<User> userFriends = realm.copyFromRealm(user.friends);
         SearchedUsersAdapter adapter = new SearchedUsersAdapter(userFriends);
         recyclerView.setAdapter(adapter);
+    }
 
-        return view;
+    private void showPossibleFriends() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<User> allUsers = realm.where(User.class).findAll();
+        List<User> users = realm.copyFromRealm(allUsers);
+
+        recyclerView.setAdapter(new SearchedUsersAdapter(users));
     }
 
 }
