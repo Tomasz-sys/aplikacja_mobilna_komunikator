@@ -33,10 +33,12 @@ public class ListFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<User> allUsers = realm.where(User.class).findAll();
-        List<User> users = realm.copyFromRealm(allUsers);
-
-        SearchedUsersAdapter adapter = new SearchedUsersAdapter(users);
+//        RealmResults<User> allUsers = realm.where(User.class).findAll();
+//        List<User> users = realm.copyFromRealm(allUsers);
+//
+        User user = User.getLoggedUser();
+        List<User> userFriends = realm.copyFromRealm(user.friends);
+        SearchedUsersAdapter adapter = new SearchedUsersAdapter(userFriends);
         recyclerView.setAdapter(adapter);
 
         return view;
