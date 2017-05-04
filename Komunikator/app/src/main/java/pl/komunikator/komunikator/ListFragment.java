@@ -48,9 +48,7 @@ public class ListFragment extends Fragment {
 
         SearchedUsersAdapter adapter = new SearchedUsersAdapter(users);
 
-        ConstraintLayout recyclerViewContainer = (ConstraintLayout) view.findViewById(R.id.contentList);
-
-        RecyclerView recyclerView = (RecyclerView) recyclerViewContainer.findViewById(R.id.conversationsView);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.conversationsView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
