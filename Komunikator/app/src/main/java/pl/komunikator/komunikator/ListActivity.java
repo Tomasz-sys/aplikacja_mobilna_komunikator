@@ -1,26 +1,23 @@
 package pl.komunikator.komunikator;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.SearchView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.net.Uri;
-
 
 public class ListActivity extends AppCompatActivity {
+
     private DrawerLayout drawer;
 
     @Override
@@ -38,7 +35,6 @@ public class ListActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
-
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -86,9 +82,6 @@ public class ListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-
-
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
@@ -111,7 +104,7 @@ public class ListActivity extends AppCompatActivity {
                 fragmentClass = ListFragment.class;
                 break;
             case R.id.nav_help:
-                setTitle("Pomoc");
+                setTitle(R.string.navigation_help);
                 String url = "https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki";
 
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
