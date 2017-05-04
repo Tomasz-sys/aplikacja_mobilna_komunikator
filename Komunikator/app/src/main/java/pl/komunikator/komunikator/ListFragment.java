@@ -77,7 +77,8 @@ public class ListFragment extends Fragment {
 
     private void showPossibleFriends() {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<User> allUsers = realm.where(User.class).findAll();
+        User loggedUser = User.getLoggedUser();
+        RealmResults<User> allUsers = realm.where(User.class).not().equalTo("id", loggedUser.getId()).findAll();
         List<User> users = realm.copyFromRealm(allUsers);
 
         recyclerView.setAdapter(new SearchedUsersAdapter(users));
