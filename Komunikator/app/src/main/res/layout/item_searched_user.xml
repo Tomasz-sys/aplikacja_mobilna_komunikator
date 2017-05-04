@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:ems="10"
+            android:enabled="false"
             android:inputType="textEmailAddress"
             android:text="@string/contact_email_placeholder"
             android:textColor="@android:color/darker_gray"
