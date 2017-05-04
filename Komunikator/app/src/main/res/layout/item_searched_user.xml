@@ -50,14 +50,17 @@
 
     </LinearLayout>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/contactDetailsImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:background="#0000"
         android:layout_weight="1"
+        android:clickable="true"
         android:tint="@android:color/holo_blue_light"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="ContentDescription" />
+
 </LinearLayout>
