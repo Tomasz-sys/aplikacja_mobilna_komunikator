@@ -12,11 +12,6 @@ import android.view.ViewGroup;
 
 public class ListFragment extends Fragment {
 
-    public static ListFragment newInstance() {
-        ListFragment fragment = new ListFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
