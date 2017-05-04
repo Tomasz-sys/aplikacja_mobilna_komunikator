@@ -74,7 +74,7 @@ public class StartActivity extends AppCompatActivity {
 
             SyncUser.loginAsync(syncCredentials, AUTH_URL, callback);
 
-        }else{
+        } else {
             onLoginSuccess(user);
         }
     }
@@ -82,10 +82,13 @@ public class StartActivity extends AppCompatActivity {
     private void onLoginSuccess(SyncUser user) {
         if (user == null) {
             Log.e("StartActivity", "Error while logging to realm");
+            return;
         }
-        this.user = user;
+
+        StartActivity.user = user;
         SyncConfiguration config = new SyncConfiguration.Builder(user, REALM_URL).build();
         Realm.setDefaultConfiguration(config);
+
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
@@ -95,4 +98,3 @@ public class StartActivity extends AppCompatActivity {
         Log.e("StartActivity", errorMsg);
     }
 }
-
