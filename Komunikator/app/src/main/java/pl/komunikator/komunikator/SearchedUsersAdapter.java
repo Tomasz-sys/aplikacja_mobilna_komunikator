@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import pl.komunikator.komunikator.entity.User;
 
 /**
@@ -61,8 +62,9 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
 
                 Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
-                loggedUserFriends.add(user);
-                user.friends.add(loggedUser);
+                User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
+                loggedUserFriends.add(friend);
+                friend.friends.add(loggedUser);
                 realm.commitTransaction();
 
                 userList.remove(position);
