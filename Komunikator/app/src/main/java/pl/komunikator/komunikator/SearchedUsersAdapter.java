@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, email;
         public ImageView photo;
+        public ImageButton addFriend;
 
         public MyViewHolder(View view) {
             super(view);
@@ -29,6 +31,7 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
             name = (TextView) view.findViewById(R.id.contactName);
             email = (TextView) view.findViewById(R.id.contactEmail);
             photo = (ImageView) view.findViewById(R.id.contactImageView);
+            addFriend = (ImageButton) view.findViewById(R.id.addFriendImageButton);
         }
     }
 
