@@ -70,7 +70,7 @@ public class ListFragment extends Fragment {
         Realm realm = Realm.getDefaultInstance();
         User user = User.getLoggedUser();
         List<User> userFriends = realm.copyFromRealm(user.friends);
-        SearchedUsersAdapter adapter = new SearchedUsersAdapter(userFriends, false);
+        UsersViewAdapter adapter = new UsersViewAdapter(userFriends, false);
         recyclerView.setAdapter(adapter);
     }
 
@@ -85,7 +85,7 @@ public class ListFragment extends Fragment {
 
         differUserLists(loggedUserFriends, allUsers);
 
-        recyclerView.setAdapter(new SearchedUsersAdapter(allUsers, true));
+        recyclerView.setAdapter(new UsersViewAdapter(allUsers, true));
     }
 
     private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {

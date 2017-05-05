@@ -64,7 +64,7 @@ public class StartActivity extends AppCompatActivity {
                             errorMsg = "Account does not exists.";
                             break;
                         case INVALID_CREDENTIALS:
-                            errorMsg = "User name and password does not match";
+                            errorMsg = "User nameTextView and password does not match";
                             break;
                         default:
                             errorMsg = error.toString();

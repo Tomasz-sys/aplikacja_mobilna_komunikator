@@ -17,44 +17,53 @@ import pl.komunikator.komunikator.entity.User;
  * Created by adrian on 19.04.2017.
  */
 
-public class SearchedUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<User> userList;
-    private boolean isSearching;
+    private boolean displaysSearchedUsers;
 
-    public SearchedUsersAdapter(List<User> userList, boolean isSearching) {
+    public UsersViewAdapter(List<User> userList, boolean displaysSearchedUsers) {
         this.userList = userList;
-        this.isSearching = isSearching;
+        this.displaysSearchedUsers = displaysSearchedUsers;
     }
 
-    public class PossibleFriendViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, email;
-        public ImageView photo;
-        public ImageButton addFriend;
+    @Override
+    public int getItemCount() {
+        return userList.size();
+    }
 
-        public PossibleFriendViewHolder(View view) {
+    public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView nameTextView, emailTextView;
+        public ImageView avatarImageView;
+        public ImageButton inviteImageButton;
+
+        public SearchedUserViewHolder(View view) {
             super(view);
 
-            name = (TextView) view.findViewById(R.id.contactName);
-            email = (TextView) view.findViewById(R.id.contactEmail);
-            photo = (ImageView) view.findViewById(R.id.contactImageView);
-            addFriend = (ImageButton) view.findViewById(R.id.addFriendImageButton);
+            nameTextView = (TextView) view.findViewById(R.id.contactName);
+            emailTextView = (TextView) view.findViewById(R.id.contactEmail);
+            avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
+            inviteImageButton = (ImageButton) view.findViewById(R.id.addFriendImageButton);
         }
+
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, email;
-        public ImageView photo;
-        public ImageView contactDetails;
+
+        public TextView nameTextView, emailTextView;
+        public ImageView avatarImageView;
+        public ImageView detailsImageView;
 
         public ContactViewHolder(View view) {
             super(view);
 
-            name = (TextView) view.findViewById(R.id.contactName);
-            email = (TextView) view.findViewById(R.id.contactEmail);
-            photo = (ImageView) view.findViewById(R.id.contactImageView);
-            contactDetails = (ImageView) view.findViewById(R.id.contactDetailsImageView);
+            nameTextView = (TextView) view.findViewById(R.id.contactName);
+            emailTextView = (TextView) view.findViewById(R.id.contactEmail);
+            avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
+            detailsImageView = (ImageView) view.findViewById(R.id.contactDetailsImageView);
         }
+
     }
 
     @Override
@@ -62,9 +71,9 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<RecyclerView.View
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        if (isSearching) {
+        if (displaysSearchedUsers) {
             View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
-            viewHolder = new PossibleFriendViewHolder(v1);
+            viewHolder = new SearchedUserViewHolder(v1);
         } else {
             View v1 = inflater.inflate(R.layout.item_contact, parent, false);
             viewHolder = new ContactViewHolder(v1);
@@ -78,11 +87,12 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         final User user = userList.get(position);
 
-        if (isSearching) {
-            PossibleFriendViewHolder friendViewHolder = (PossibleFriendViewHolder) holder;
-            friendViewHolder.name.setText(user.getUsername());
-            friendViewHolder.email.setText(user.getEmail());
-            friendViewHolder.addFriend.setOnClickListener(new View.OnClickListener() {
+        if (displaysSearchedUsers) {
+            SearchedUserViewHolder friendViewHolder = (SearchedUserViewHolder) holder;
+            friendViewHolder.nameTextView.setText(user.getUsername());
+            friendViewHolder.emailTextView.setText(user.getEmail());
+            friendViewHolder.inviteImageButton.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
                     User loggedUser = User.getLoggedUser();
@@ -100,16 +110,12 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyItemRangeChanged(position, getItemCount());
                 }
             });
+
         } else {
             ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
-            contactViewHolder.name.setText(user.getUsername());
-            contactViewHolder.email.setText(user.getEmail());
+            contactViewHolder.nameTextView.setText(user.getUsername());
+            contactViewHolder.emailTextView.setText(user.getEmail());
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return userList.size();
     }
 
 }
