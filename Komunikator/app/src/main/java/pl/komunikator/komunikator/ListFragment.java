@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -90,10 +92,13 @@ public class ListFragment extends Fragment {
 
     private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {
         for (User loggedUserFriend : loggedUserFriends) {
-            for (User user: allUsers) {
-                if (user.getId() == loggedUserFriend.getId()) {
-                    allUsers.remove(user);
-                }
+            Iterator<User> allUserIterator = allUsers.iterator();
+
+            while (allUserIterator.hasNext()) {
+                User user = allUserIterator.next();
+
+                if (user.getId() == loggedUserFriend.getId())
+                    allUserIterator.remove();
             }
         }
     }
