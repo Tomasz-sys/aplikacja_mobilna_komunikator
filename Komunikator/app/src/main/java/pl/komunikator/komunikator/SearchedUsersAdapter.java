@@ -11,23 +11,28 @@ import android.widget.TextView;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import pl.komunikator.komunikator.entity.User;
 
 /**
  * Created by adrian on 19.04.2017.
  */
 
-public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdapter.MyViewHolder> {
+public class SearchedUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<User> userList;
+    private boolean isSearching;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public SearchedUsersAdapter(List<User> userList, boolean isSearching) {
+        this.userList = userList;
+        this.isSearching = isSearching;
+    }
+
+    public class PossibleFriendViewHolder extends RecyclerView.ViewHolder {
         public TextView name, email;
         public ImageView photo;
         public ImageButton addFriend;
 
-        public MyViewHolder(View view) {
+        public PossibleFriendViewHolder(View view) {
             super(view);
 
             name = (TextView) view.findViewById(R.id.contactName);
@@ -37,41 +42,69 @@ public class SearchedUsersAdapter extends RecyclerView.Adapter<SearchedUsersAdap
         }
     }
 
-    public SearchedUsersAdapter(List<User> userList) {
-        this.userList = userList;
+    public class ContactViewHolder extends RecyclerView.ViewHolder {
+        public TextView name, email;
+        public ImageView photo;
+        public ImageView contactDetails;
+
+        public ContactViewHolder(View view) {
+            super(view);
+
+            name = (TextView) view.findViewById(R.id.contactName);
+            email = (TextView) view.findViewById(R.id.contactEmail);
+            photo = (ImageView) view.findViewById(R.id.contactImageView);
+            contactDetails = (ImageView) view.findViewById(R.id.contactDetailsImageView);
+        }
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_searched_user, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        return new MyViewHolder(itemView);
+        if (isSearching) {
+            View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
+            viewHolder = new PossibleFriendViewHolder(v1);
+        } else {
+            View v1 = inflater.inflate(R.layout.item_contact, parent, false);
+            viewHolder = new ContactViewHolder(v1);
+        }
+
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
         final User user = userList.get(position);
-        holder.name.setText(user.getUsername());
-        holder.email.setText(user.getEmail());
-        holder.addFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                User loggedUser = User.getLoggedUser();
-                List<User> loggedUserFriends = loggedUser.friends;
 
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
-                loggedUserFriends.add(friend);
-                friend.friends.add(loggedUser);
-                realm.commitTransaction();
+        if (isSearching) {
+            PossibleFriendViewHolder friendViewHolder = (PossibleFriendViewHolder) holder;
+            friendViewHolder.name.setText(user.getUsername());
+            friendViewHolder.email.setText(user.getEmail());
+            friendViewHolder.addFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    User loggedUser = User.getLoggedUser();
+                    List<User> loggedUserFriends = loggedUser.friends;
 
-                userList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, getItemCount());
-            }
-        });
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.beginTransaction();
+                    User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
+                    loggedUserFriends.add(friend);
+                    friend.friends.add(loggedUser);
+                    realm.commitTransaction();
+
+                    userList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, getItemCount());
+                }
+            });
+        } else {
+            ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
+            contactViewHolder.name.setText(user.getUsername());
+            contactViewHolder.email.setText(user.getEmail());
+        }
     }
 
     @Override
