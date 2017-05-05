@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import pl.komunikator.komunikator.entity.User;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
@@ -78,10 +77,25 @@ public class ListFragment extends Fragment {
     private void showPossibleFriends() {
         Realm realm = Realm.getDefaultInstance();
         User loggedUser = User.getLoggedUser();
-        RealmResults<User> allUsers = realm.where(User.class).not().equalTo("id", loggedUser.getId()).findAll();
-        List<User> users = realm.copyFromRealm(allUsers);
 
-        recyclerView.setAdapter(new SearchedUsersAdapter(users));
+        List<User> allUsers = realm.where(User.class).notEqualTo("id", loggedUser.getId()).findAll();
+        allUsers = realm.copyFromRealm(allUsers);
+
+        List<User> loggedUserFriends = realm.copyFromRealm(loggedUser.friends);
+
+        differUserLists(loggedUserFriends, allUsers);
+
+        recyclerView.setAdapter(new SearchedUsersAdapter(allUsers));
+    }
+
+    private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {
+        for (User loggedUserFriend : loggedUserFriends) {
+            for (User user: allUsers) {
+                if (user.getId() == loggedUserFriend.getId()) {
+                    allUsers.remove(user);
+                }
+            }
+        }
     }
 
 }
