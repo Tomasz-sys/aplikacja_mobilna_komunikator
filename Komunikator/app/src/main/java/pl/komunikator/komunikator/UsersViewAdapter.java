@@ -53,7 +53,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public TextView nameTextView, emailTextView;
         public ImageView avatarImageView;
-        public ImageView detailsImageView;
+        public ImageButton detailsImageButton;
 
         public ContactViewHolder(View view) {
             super(view);
@@ -61,7 +61,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             nameTextView = (TextView) view.findViewById(R.id.contactName);
             emailTextView = (TextView) view.findViewById(R.id.contactEmail);
             avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
-            detailsImageView = (ImageView) view.findViewById(R.id.contactDetailsImageView);
+            detailsImageButton = (ImageButton) view.findViewById(R.id.contactDetailsImageButton);
         }
 
     }
@@ -115,6 +115,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.nameTextView.setText(user.getUsername());
             contactViewHolder.emailTextView.setText(user.getEmail());
+            contactViewHolder.detailsImageButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    /* TODO show user details */
+                }
+            });
         }
     }
 
