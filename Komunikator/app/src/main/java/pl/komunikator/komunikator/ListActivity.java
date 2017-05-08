@@ -7,6 +7,12 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,10 +21,17 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.net.Uri;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import pl.komunikator.komunikator.entity.User;
 
 public class ListActivity extends AppCompatActivity {
 
     private DrawerLayout drawer;
+    public Menu menuBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +80,8 @@ public class ListActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         String searchViewHint = getResources().getString(R.string.search_view_hint);
         searchView.setQueryHint(searchViewHint);
+
+        menuBar = menu;
 
         return true;
     }

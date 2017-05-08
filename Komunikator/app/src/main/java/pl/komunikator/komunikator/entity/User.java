@@ -24,6 +24,8 @@ public class User extends RealmObject {
     private RealmList<Conversation> conversations;
     private String email;
 
+    public RealmList<User> friends;
+
     public static User getLoggedUser() {
         return instance;
     }

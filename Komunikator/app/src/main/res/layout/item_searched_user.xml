@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:ems="10"
+            android:enabled="false"
             android:inputType="textEmailAddress"
             android:text="@string/contact_email_placeholder"
             android:textColor="@android:color/darker_gray"
@@ -49,14 +50,17 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/contactDetailsImageView"
+    <ImageButton
+        android:id="@+id/addFriendImageButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_weight="1"
+        android:background="#0000"
+        android:clickable="true"
         android:tint="@android:color/holo_blue_light"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="ContentDescription" />
+
 </LinearLayout>

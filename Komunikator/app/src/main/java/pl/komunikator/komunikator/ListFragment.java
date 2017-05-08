@@ -1,16 +1,27 @@
 package pl.komunikator.komunikator;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import io.realm.Realm;
+import pl.komunikator.komunikator.entity.User;
+
+import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 public class ListFragment extends Fragment {
+
+    RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,15 +31,76 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_fragment, container, false);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.conversationsView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        this.recyclerView = recyclerView;
 
-//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        showUserFriends();
+
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ListActivity listActivity = (ListActivity) getActivity();
+
+        final SearchView searchView = (SearchView) listActivity.menuBar.findItem(R.id.action_search).getActionView();
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPossibleFriends();
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                showUserFriends();
+
+                searchView.onActionViewCollapsed();
+
+                return true;
+            }
+        });
+    }
+
+    private void showUserFriends() {
+        Realm realm = Realm.getDefaultInstance();
+        User user = User.getLoggedUser();
+        List<User> userFriends = realm.copyFromRealm(user.friends);
+        UsersViewAdapter adapter = new UsersViewAdapter(userFriends, false);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void showPossibleFriends() {
+        Realm realm = Realm.getDefaultInstance();
+        User loggedUser = User.getLoggedUser();
+
+        List<User> allUsers = realm.where(User.class).notEqualTo("id", loggedUser.getId()).findAll();
+        allUsers = realm.copyFromRealm(allUsers);
+
+        List<User> loggedUserFriends = realm.copyFromRealm(loggedUser.friends);
+
+        differUserLists(loggedUserFriends, allUsers);
+
+        recyclerView.setAdapter(new UsersViewAdapter(allUsers, true));
+    }
+
+    private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {
+        for (User loggedUserFriend : loggedUserFriends) {
+            Iterator<User> allUserIterator = allUsers.iterator();
+
+            while (allUserIterator.hasNext()) {
+                User user = allUserIterator.next();
+
+                if (user.getId() == loggedUserFriend.getId())
+                    allUserIterator.remove();
+            }
+        }
+    }
+
 }
