@@ -11,8 +11,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        app:srcCompat="@android:color/holo_blue_light"
-        android:contentDescription="@string/app_icon" />
+        android:contentDescription="@string/app_icon"
+        app:srcCompat="@drawable/ic_app_icon" />
 
     <TextView
         android:id="@+id/loginQuestionTextView"
