@@ -56,6 +56,20 @@ public class ListFragment extends Fragment {
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                UsersViewAdapter adapter = (UsersViewAdapter) recyclerView.getAdapter();
+                adapter.filterUserList(newText);
+                return false;
+            }
+        });
+
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {

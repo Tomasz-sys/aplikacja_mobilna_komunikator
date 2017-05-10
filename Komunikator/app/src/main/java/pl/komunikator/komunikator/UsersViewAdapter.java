@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -20,16 +22,44 @@ import pl.komunikator.komunikator.entity.User;
 public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<User> userList;
+    private List<User> filteredUsers;
     private boolean displaysSearchedUsers;
+    private boolean isTyping;
 
     public UsersViewAdapter(List<User> userList, boolean displaysSearchedUsers) {
         this.userList = userList;
         this.displaysSearchedUsers = displaysSearchedUsers;
     }
 
+    public void filterUserList(String text) {
+        isTyping = !text.isEmpty();
+
+        if (!isTyping) {
+            notifyDataSetChanged();
+            return;
+        }
+
+        filteredUsers = new ArrayList<>(userList);
+            Iterator<User> allUserIterator = filteredUsers.iterator();
+        int i = 0;
+
+            while (allUserIterator.hasNext()) {
+                User user = allUserIterator.next();
+                String userName = user.getUsername();
+
+                if (!userName.contains(text)) {
+                    allUserIterator.remove();
+                    notifyItemRemoved(i);
+                    notifyItemRangeChanged(i, getItemCount());
+                }
+
+                i += 1;
+            }
+    }
+
     @Override
     public int getItemCount() {
-        return userList.size();
+        return isTyping ? filteredUsers.size() : userList.size();
     }
 
     public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
@@ -85,7 +115,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        final User user = userList.get(position);
+        final User user = isTyping ? filteredUsers.get(position) : userList.get(position);
 
         if (displaysSearchedUsers) {
             SearchedUserViewHolder friendViewHolder = (SearchedUserViewHolder) holder;
@@ -105,7 +135,23 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     friend.friends.add(loggedUser);
                     realm.commitTransaction();
 
-                    userList.remove(position);
+
+                    if (isTyping) {
+                        long removedUserId = filteredUsers.remove(position).getId();
+
+                        Iterator<User> allUserIterator = userList.iterator();
+
+                        while (allUserIterator.hasNext()) {
+                            User user = allUserIterator.next();
+
+                            if (user.getId() == removedUserId) {
+                                allUserIterator.remove();
+                            }
+                        }
+
+                    } else {
+                        userList.remove(position);
+                    }
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, getItemCount());
                 }
