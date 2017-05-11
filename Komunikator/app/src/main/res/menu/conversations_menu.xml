@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
-        android:icon="@android:drawable/ic_menu_add"
+        android:id="@+id/action_add_friends"
         android:orderInCategory="100"
         android:title="Dodaj znajomych"
-        app:showAsAction="always" />
+        app:actionViewClass="android.view.MenuItem"
+        app:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always" />
 
 </menu>

@@ -7,10 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,12 +49,6 @@ public class ListFragment extends Fragment {
         ListActivity listActivity = (ListActivity) getActivity();
 
         final SearchView searchView = (SearchView) listActivity.menuBar.findItem(R.id.action_search).getActionView();
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPossibleFriends();
-            }
-        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -70,12 +64,24 @@ public class ListFragment extends Fragment {
             }
         });
 
+        final MenuItem addFriendsMenuItem = listActivity.menuBar.findItem(R.id.action_add_friends);
+        addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                showPossibleFriends();
+                searchView.setIconified(false);
+                addFriendsMenuItem.setEnabled(false);
+                return false;
+            }
+        });
+
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
                 showUserFriends();
 
                 searchView.onActionViewCollapsed();
+                addFriendsMenuItem.setEnabled(true);
 
                 return true;
             }
