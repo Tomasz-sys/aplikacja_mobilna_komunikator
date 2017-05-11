@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -56,6 +57,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 if (!passwordText.equals(retypeStringText)) {
                     retypePassword.setError(getString(R.string.register_password_different));
+                    result = false;
                 }
                 if (!rules.isChecked()) {
                     rules.setError(getString(R.string.register_required_field));
@@ -80,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("emailTextView", emailText).findFirst();
+                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("email", emailText).findFirst();
                 if (object == null) {
                     Number id = realm.where(User.class).max("id");
                     User user = realm.createObject(User.class, (id == null) ? 1 : id.longValue() + 1);
@@ -99,6 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (User.getLoggedUser() != null) {
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                     startActivity(intent);
+
                     finish();
                 }
             }
@@ -106,10 +109,16 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable error) {
                 Snackbar.make(password, R.string.register_something_goes_wrong, Snackbar.LENGTH_SHORT).show();
+                Log.e("Sign Up",error.getMessage(),error);
                 User.logout();
 
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
 }
