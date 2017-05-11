@@ -7,10 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,10 +49,29 @@ public class ListFragment extends Fragment {
         ListActivity listActivity = (ListActivity) getActivity();
 
         final SearchView searchView = (SearchView) listActivity.menuBar.findItem(R.id.action_search).getActionView();
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                UsersViewAdapter adapter = (UsersViewAdapter) recyclerView.getAdapter();
+                adapter.filterUserList(newText);
+                return false;
+            }
+        });
+
+        final MenuItem addFriendsMenuItem = listActivity.menuBar.findItem(R.id.action_add_friends);
+        addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
                 showPossibleFriends();
+                searchView.setIconified(false);
+                addFriendsMenuItem.setEnabled(false);
+                return false;
             }
         });
 
@@ -62,6 +81,7 @@ public class ListFragment extends Fragment {
                 showUserFriends();
 
                 searchView.onActionViewCollapsed();
+                addFriendsMenuItem.setEnabled(true);
 
                 return true;
             }
@@ -72,7 +92,7 @@ public class ListFragment extends Fragment {
         Realm realm = Realm.getDefaultInstance();
         User user = User.getLoggedUser();
         List<User> userFriends = realm.copyFromRealm(user.friends);
-        UsersViewAdapter adapter = new UsersViewAdapter(userFriends, false);
+        UsersViewAdapter adapter = new UsersViewAdapter(userFriends, true);
         recyclerView.setAdapter(adapter);
     }
 
@@ -87,7 +107,7 @@ public class ListFragment extends Fragment {
 
         differUserLists(loggedUserFriends, allUsers);
 
-        recyclerView.setAdapter(new UsersViewAdapter(allUsers, true));
+        recyclerView.setAdapter(new UsersViewAdapter(allUsers, false));
     }
 
     private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {

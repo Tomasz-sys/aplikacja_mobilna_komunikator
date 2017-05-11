@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -19,17 +21,36 @@ import pl.komunikator.komunikator.entity.User;
 
 public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int NO_RESULTS_CODE = 404;
     private List<User> userList;
-    private boolean displaysSearchedUsers;
+    private List<User> filteredUsers;
+    private boolean displaysContacts;
 
-    public UsersViewAdapter(List<User> userList, boolean displaysSearchedUsers) {
+    public UsersViewAdapter(List<User> userList, boolean displaysContacts) {
         this.userList = userList;
-        this.displaysSearchedUsers = displaysSearchedUsers;
+        filteredUsers = new ArrayList<>(userList);
+
+        this.displaysContacts = displaysContacts;
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        int size = filteredUsers.size();
+        if (size > 0) {
+            return size;
+        } else {
+            size += 1;
+            return size;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (filteredUsers.size() == 0) {
+            return NO_RESULTS_CODE;
+        } else {
+            return super.getItemViewType(position);
+        }
     }
 
     public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
@@ -66,28 +87,58 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder;
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+    public class NoResultsViewHolder extends RecyclerView.ViewHolder {
 
-        if (displaysSearchedUsers) {
-            View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
-            viewHolder = new SearchedUserViewHolder(v1);
-        } else {
-            View v1 = inflater.inflate(R.layout.item_contact, parent, false);
-            viewHolder = new ContactViewHolder(v1);
+        public TextView textView;
+
+        public NoResultsViewHolder(View view) {
+            super(view);
+
+            textView = (TextView) view.findViewById(R.id.textView);
         }
 
-        return viewHolder;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view;
+
+        if (viewType == NO_RESULTS_CODE) {
+            view = inflater.inflate(R.layout.item_no_results, parent, false);
+            return new NoResultsViewHolder(view);
+        }
+
+        if (displaysContacts) {
+            view = inflater.inflate(R.layout.item_contact, parent, false);
+            return new ContactViewHolder(view);
+        } else {
+            view = inflater.inflate(R.layout.item_searched_user, parent, false);
+            return new SearchedUserViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        final User user = userList.get(position);
+        if (getItemViewType(position) == NO_RESULTS_CODE) {
+            return;
+        }
 
-        if (displaysSearchedUsers) {
+        final User user = filteredUsers.get(position);
+
+        if (displaysContacts) {
+            ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
+            contactViewHolder.nameTextView.setText(user.getUsername());
+            contactViewHolder.emailTextView.setText(user.getEmail());
+            contactViewHolder.detailsImageButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    /* TODO show user details */
+                }
+            });
+        } else {
             SearchedUserViewHolder friendViewHolder = (SearchedUserViewHolder) holder;
             friendViewHolder.nameTextView.setText(user.getUsername());
             friendViewHolder.emailTextView.setText(user.getEmail());
@@ -105,24 +156,41 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     friend.friends.add(loggedUser);
                     realm.commitTransaction();
 
-                    userList.remove(position);
+                    long removedUserId = filteredUsers.remove(position).getId();
+
+                    Iterator<User> allUserIterator = userList.iterator();
+
+                    while (allUserIterator.hasNext()) {
+                        User user = allUserIterator.next();
+
+                        if (user.getId() == removedUserId) {
+                            allUserIterator.remove();
+                        }
+                    }
+
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
+                    notifyItemRangeChanged(position, filteredUsers.size());
                 }
             });
 
-        } else {
-            ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
-            contactViewHolder.nameTextView.setText(user.getUsername());
-            contactViewHolder.emailTextView.setText(user.getEmail());
-            contactViewHolder.detailsImageButton.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    /* TODO show user details */
-                }
-            });
         }
+    }
+
+    public void filterUserList(String text) {
+        filteredUsers = new ArrayList<>(userList);
+        Iterator<User> allUserIterator = filteredUsers.iterator();
+
+        while (allUserIterator.hasNext()) {
+            User user = allUserIterator.next();
+            String userName = user.getUsername();
+            String userEmail = user.getEmail();
+
+            if (!userName.contains(text) && !userEmail.contains(text)) {
+                allUserIterator.remove();
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
 }
