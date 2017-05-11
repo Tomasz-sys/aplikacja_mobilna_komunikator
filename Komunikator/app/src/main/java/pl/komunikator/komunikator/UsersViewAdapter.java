@@ -50,7 +50,22 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return filteredUsers.size();
+        int size = filteredUsers.size();
+        if (size > 0) {
+            return size;
+        } else {
+            size += 1;
+            return size;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (filteredUsers.size() == 0) {
+            return 404;
+        } else {
+            return super.getItemViewType(position);
+        }
     }
 
     public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
@@ -87,24 +102,45 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder;
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+    public class NoResultsViewHolder extends RecyclerView.ViewHolder {
 
-        if (displaysContacts) {
-            View v1 = inflater.inflate(R.layout.item_contact, parent, false);
-            viewHolder = new ContactViewHolder(v1);
-        } else {
-            View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
-            viewHolder = new SearchedUserViewHolder(v1);
+        public TextView textView;
+
+        public NoResultsViewHolder(View view) {
+            super(view);
+
+            textView = (TextView) view.findViewById(R.id.textView);
         }
 
-        return viewHolder;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view;
+
+        if (viewType == 404) {
+            view = inflater.inflate(R.layout.item_no_results_item, parent, false);
+            return new NoResultsViewHolder(view);
+        }
+
+        if (displaysContacts) {
+            view = inflater.inflate(R.layout.item_contact, parent, false);
+            return new ContactViewHolder(view);
+        } else {
+            view = inflater.inflate(R.layout.item_searched_user, parent, false);
+            return new SearchedUserViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+        if (filteredUsers.size() == 0) {
+//            NoResultsViewHolder noResultsViewHolder = (NoResultsViewHolder) holder;
+//            noResultsViewHolder.textView.setText("akjsdnasjkdnjaksdnas");
+            return;
+        }
 
         final User user = filteredUsers.get(position);
 
