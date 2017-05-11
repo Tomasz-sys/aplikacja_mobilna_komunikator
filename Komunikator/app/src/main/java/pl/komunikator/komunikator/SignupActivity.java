@@ -2,6 +2,9 @@ package pl.komunikator.komunikator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,9 +26,20 @@ import pl.komunikator.komunikator.entity.User;
 
 public class SignupActivity extends AppCompatActivity {
 
+    private static final int USER_MESSAGE_WHAT = 3455;
     private EditText login, email, password, retypePassword;
     private CheckBox rules, policy;
     private Realm realm = Realm.getDefaultInstance();
+    private Handler mHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == USER_MESSAGE_WHAT)
+            {
+                //Long user = (Long)msg.obj;
+               // User.setLoggedUser(user);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +103,9 @@ public class SignupActivity extends AppCompatActivity {
                     user.setUsername(loginText);
                     user.setPassword(Hashing.sha1().hashString(passwordText, Charsets.UTF_8).toString());
                     user.setEmail(emailText);
-                    User.setLoggedUser(user);
+                    // TODO RealmObject can't be passed by Threads
+                    Message mgs = mHandler.obtainMessage(USER_MESSAGE_WHAT,user.getId());
+                    mgs.sendToTarget();
                 } else {
                     Snackbar.make(login, R.string.register_login_email_used, Snackbar.LENGTH_SHORT).show();
                 }
