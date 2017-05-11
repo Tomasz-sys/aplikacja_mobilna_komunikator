@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import io.realm.Realm;
 import pl.komunikator.komunikator.entity.User;
 
 /**
@@ -23,22 +22,16 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<User> userList;
     private List<User> filteredUsers;
-    private boolean displaysSearchedUsers;
-    private boolean isTyping;
+    private boolean isSearching;
 
-    public UsersViewAdapter(List<User> userList, boolean displaysSearchedUsers) {
+    public UsersViewAdapter(List<User> userList, boolean isSearching) {
         this.userList = userList;
-        this.displaysSearchedUsers = displaysSearchedUsers;
+        filteredUsers = new ArrayList<>(userList);
+
+        this.isSearching = isSearching;
     }
 
     public void filterUserList(String text) {
-        isTyping = !text.isEmpty();
-
-        if (!isTyping) {
-            notifyDataSetChanged();
-            return;
-        }
-
         filteredUsers = new ArrayList<>(userList);
         Iterator<User> allUserIterator = filteredUsers.iterator();
 
@@ -49,14 +42,15 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (!userName.contains(text) && !userEmail.contains(text)) {
                 allUserIterator.remove();
-                notifyDataSetChanged();
             }
         }
+
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return isTyping ? filteredUsers.size() : userList.size();
+        return isSearching ? filteredUsers.size() : userList.size();
     }
 
     public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
@@ -98,7 +92,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        if (displaysSearchedUsers) {
+        if (isSearching) {
             View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
             viewHolder = new SearchedUserViewHolder(v1);
         } else {
@@ -112,9 +106,9 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        final User user = isTyping ? filteredUsers.get(position) : userList.get(position);
+        final User user = isSearching ? filteredUsers.get(position) : userList.get(position);
 
-        if (displaysSearchedUsers) {
+        if (isSearching) {
             SearchedUserViewHolder friendViewHolder = (SearchedUserViewHolder) holder;
             friendViewHolder.nameTextView.setText(user.getUsername());
             friendViewHolder.emailTextView.setText(user.getEmail());
@@ -133,7 +127,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //                    realm.commitTransaction();
 
 
-                    if (isTyping) {
                         long removedUserId = filteredUsers.remove(position).getId();
 
                         Iterator<User> allUserIterator = userList.iterator();
@@ -146,9 +139,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             }
                         }
 
-                    } else {
-                        userList.remove(position);
-                    }
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, filteredUsers.size());
                 }
