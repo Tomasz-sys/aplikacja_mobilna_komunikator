@@ -22,13 +22,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<User> userList;
     private List<User> filteredUsers;
-    private boolean isSearching;
+    private boolean displaysContacts;
 
-    public UsersViewAdapter(List<User> userList, boolean isSearching) {
+    public UsersViewAdapter(List<User> userList, boolean displaysContacts) {
         this.userList = userList;
         filteredUsers = new ArrayList<>(userList);
 
-        this.isSearching = isSearching;
+        this.displaysContacts = displaysContacts;
     }
 
     public void filterUserList(String text) {
@@ -50,7 +50,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return isSearching ? filteredUsers.size() : userList.size();
+        return filteredUsers.size();
     }
 
     public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
@@ -92,12 +92,12 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        if (isSearching) {
-            View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
-            viewHolder = new SearchedUserViewHolder(v1);
-        } else {
+        if (displaysContacts) {
             View v1 = inflater.inflate(R.layout.item_contact, parent, false);
             viewHolder = new ContactViewHolder(v1);
+        } else {
+            View v1 = inflater.inflate(R.layout.item_searched_user, parent, false);
+            viewHolder = new SearchedUserViewHolder(v1);
         }
 
         return viewHolder;
@@ -106,9 +106,20 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        final User user = isSearching ? filteredUsers.get(position) : userList.get(position);
+        final User user = filteredUsers.get(position);
 
-        if (isSearching) {
+        if (displaysContacts) {
+            ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
+            contactViewHolder.nameTextView.setText(user.getUsername());
+            contactViewHolder.emailTextView.setText(user.getEmail());
+            contactViewHolder.detailsImageButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    /* TODO show user details */
+                }
+            });
+        } else {
             SearchedUserViewHolder friendViewHolder = (SearchedUserViewHolder) holder;
             friendViewHolder.nameTextView.setText(user.getUsername());
             friendViewHolder.emailTextView.setText(user.getEmail());
@@ -144,17 +155,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
 
-        } else {
-            ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
-            contactViewHolder.nameTextView.setText(user.getUsername());
-            contactViewHolder.emailTextView.setText(user.getEmail());
-            contactViewHolder.detailsImageButton.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    /* TODO show user details */
-                }
-            });
         }
     }
 

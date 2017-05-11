@@ -92,7 +92,7 @@ public class ListFragment extends Fragment {
         Realm realm = Realm.getDefaultInstance();
         User user = User.getLoggedUser();
         List<User> userFriends = realm.copyFromRealm(user.friends);
-        UsersViewAdapter adapter = new UsersViewAdapter(userFriends, false);
+        UsersViewAdapter adapter = new UsersViewAdapter(userFriends, true);
         recyclerView.setAdapter(adapter);
     }
 
@@ -107,7 +107,7 @@ public class ListFragment extends Fragment {
 
         differUserLists(loggedUserFriends, allUsers);
 
-        recyclerView.setAdapter(new UsersViewAdapter(allUsers, true));
+        recyclerView.setAdapter(new UsersViewAdapter(allUsers, false));
     }
 
     private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {
