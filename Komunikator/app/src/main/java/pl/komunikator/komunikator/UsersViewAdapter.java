@@ -51,7 +51,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (!userName.contains(text) && !userEmail.contains(text)) {
                 allUserIterator.remove();
                 notifyItemRemoved(i);
-                notifyItemRangeChanged(i, getItemCount());
+                notifyItemRangeChanged(i, filteredUsers.size() - 1);
             }
 
             i += 1;
@@ -154,7 +154,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         userList.remove(position);
                     }
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
+                    notifyItemRangeChanged(position, filteredUsers.size() - 1);
                 }
             });
 
