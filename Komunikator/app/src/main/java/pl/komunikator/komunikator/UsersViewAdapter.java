@@ -40,21 +40,22 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         filteredUsers = new ArrayList<>(userList);
-            Iterator<User> allUserIterator = filteredUsers.iterator();
+        Iterator<User> allUserIterator = filteredUsers.iterator();
         int i = 0;
 
-            while (allUserIterator.hasNext()) {
-                User user = allUserIterator.next();
-                String userName = user.getUsername();
+        while (allUserIterator.hasNext()) {
+            User user = allUserIterator.next();
+            String userName = user.getUsername();
+            String userEmail = user.getEmail();
 
-                if (!userName.contains(text)) {
-                    allUserIterator.remove();
-                    notifyItemRemoved(i);
-                    notifyItemRangeChanged(i, getItemCount());
-                }
-
-                i += 1;
+            if (!userName.contains(text) && !userEmail.contains(text)) {
+                allUserIterator.remove();
+                notifyItemRemoved(i);
+                notifyItemRangeChanged(i, getItemCount());
             }
+
+            i += 1;
+        }
     }
 
     @Override
