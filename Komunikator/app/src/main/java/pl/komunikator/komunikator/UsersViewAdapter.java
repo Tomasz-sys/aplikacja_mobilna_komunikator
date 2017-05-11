@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import io.realm.Realm;
 import pl.komunikator.komunikator.entity.User;
 
 /**
@@ -148,25 +149,24 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     User loggedUser = User.getLoggedUser();
                     List<User> loggedUserFriends = loggedUser.friends;
 
-//                    Realm realm = Realm.getDefaultInstance();
-//                    realm.beginTransaction();
-//                    User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
-//                    loggedUserFriends.add(friend);
-//                    friend.friends.add(loggedUser);
-//                    realm.commitTransaction();
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.beginTransaction();
+                    User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
+                    loggedUserFriends.add(friend);
+                    friend.friends.add(loggedUser);
+                    realm.commitTransaction();
 
+                    long removedUserId = filteredUsers.remove(position).getId();
 
-                        long removedUserId = filteredUsers.remove(position).getId();
+                    Iterator<User> allUserIterator = userList.iterator();
 
-                        Iterator<User> allUserIterator = userList.iterator();
+                    while (allUserIterator.hasNext()) {
+                        User user = allUserIterator.next();
 
-                        while (allUserIterator.hasNext()) {
-                            User user = allUserIterator.next();
-
-                            if (user.getId() == removedUserId) {
-                                allUserIterator.remove();
-                            }
+                        if (user.getId() == removedUserId) {
+                            allUserIterator.remove();
                         }
+                    }
 
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, filteredUsers.size());
