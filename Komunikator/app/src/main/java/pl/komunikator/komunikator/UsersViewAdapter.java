@@ -20,6 +20,7 @@ import pl.komunikator.komunikator.entity.User;
 
 public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int NO_RESULTS_CODE = 404;
     private List<User> userList;
     private List<User> filteredUsers;
     private boolean displaysContacts;
@@ -29,23 +30,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         filteredUsers = new ArrayList<>(userList);
 
         this.displaysContacts = displaysContacts;
-    }
-
-    public void filterUserList(String text) {
-        filteredUsers = new ArrayList<>(userList);
-        Iterator<User> allUserIterator = filteredUsers.iterator();
-
-        while (allUserIterator.hasNext()) {
-            User user = allUserIterator.next();
-            String userName = user.getUsername();
-            String userEmail = user.getEmail();
-
-            if (!userName.contains(text) && !userEmail.contains(text)) {
-                allUserIterator.remove();
-            }
-        }
-
-        notifyDataSetChanged();
     }
 
     @Override
@@ -62,7 +46,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemViewType(int position) {
         if (filteredUsers.size() == 0) {
-            return 404;
+            return NO_RESULTS_CODE;
         } else {
             return super.getItemViewType(position);
         }
@@ -119,7 +103,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
 
-        if (viewType == 404) {
+        if (viewType == NO_RESULTS_CODE) {
             view = inflater.inflate(R.layout.item_no_results, parent, false);
             return new NoResultsViewHolder(view);
         }
@@ -136,10 +120,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        if (filteredUsers.size() == 0) {
-            NoResultsViewHolder noResultsViewHolder = (NoResultsViewHolder) holder;
-            String text = displaysContacts ? "Brak dodanych kontaktów" : "Nic nie znaleziono...";
-            noResultsViewHolder.textView.setText(text);
+        if (getItemViewType(position) == NO_RESULTS_CODE) {
             return;
         }
 
@@ -193,6 +174,23 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
 
         }
+    }
+
+    public void filterUserList(String text) {
+        filteredUsers = new ArrayList<>(userList);
+        Iterator<User> allUserIterator = filteredUsers.iterator();
+
+        while (allUserIterator.hasNext()) {
+            User user = allUserIterator.next();
+            String userName = user.getUsername();
+            String userEmail = user.getEmail();
+
+            if (!userName.contains(text) && !userEmail.contains(text)) {
+                allUserIterator.remove();
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
 }
