@@ -41,7 +41,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         filteredUsers = new ArrayList<>(userList);
         Iterator<User> allUserIterator = filteredUsers.iterator();
-        int i = 0;
 
         while (allUserIterator.hasNext()) {
             User user = allUserIterator.next();
@@ -50,11 +49,8 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (!userName.contains(text) && !userEmail.contains(text)) {
                 allUserIterator.remove();
-                notifyItemRemoved(i);
-                notifyItemRangeChanged(i, filteredUsers.size() - 1);
+                notifyDataSetChanged();
             }
-
-            i += 1;
         }
     }
 
@@ -129,12 +125,12 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     User loggedUser = User.getLoggedUser();
                     List<User> loggedUserFriends = loggedUser.friends;
 
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.beginTransaction();
-                    User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
-                    loggedUserFriends.add(friend);
-                    friend.friends.add(loggedUser);
-                    realm.commitTransaction();
+//                    Realm realm = Realm.getDefaultInstance();
+//                    realm.beginTransaction();
+//                    User friend = realm.where(User.class).equalTo("id", user.getId()).findFirst();
+//                    loggedUserFriends.add(friend);
+//                    friend.friends.add(loggedUser);
+//                    realm.commitTransaction();
 
 
                     if (isTyping) {
@@ -154,7 +150,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         userList.remove(position);
                     }
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, filteredUsers.size() - 1);
+                    notifyItemRangeChanged(position, filteredUsers.size());
                 }
             });
 
