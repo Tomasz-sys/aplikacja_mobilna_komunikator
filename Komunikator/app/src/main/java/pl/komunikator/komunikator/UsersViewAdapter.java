@@ -120,7 +120,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         View view;
 
         if (viewType == 404) {
-            view = inflater.inflate(R.layout.item_no_results_item, parent, false);
+            view = inflater.inflate(R.layout.item_no_results, parent, false);
             return new NoResultsViewHolder(view);
         }
 
@@ -137,8 +137,9 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (filteredUsers.size() == 0) {
-//            NoResultsViewHolder noResultsViewHolder = (NoResultsViewHolder) holder;
-//            noResultsViewHolder.textView.setText("akjsdnasjkdnjaksdnas");
+            NoResultsViewHolder noResultsViewHolder = (NoResultsViewHolder) holder;
+            String text = displaysContacts ? "Brak dodanych kontaktów" : "Nic nie znaleziono...";
+            noResultsViewHolder.textView.setText(text);
             return;
         }
 
