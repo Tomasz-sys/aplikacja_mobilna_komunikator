@@ -2,8 +2,12 @@ package pl.komunikator.komunikator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,9 +26,21 @@ import pl.komunikator.komunikator.entity.User;
 
 public class SignupActivity extends AppCompatActivity {
 
+    private static final int USER_MESSAGE_WHAT = 3455;
     private EditText login, email, password, retypePassword;
     private CheckBox rules, policy;
     private Realm realm = Realm.getDefaultInstance();
+    private Handler mHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == USER_MESSAGE_WHAT)
+            {
+                Long userId = (Long)msg.obj;
+                User user = realm.where(User.class).equalTo("id",userId).findFirst();
+                User.setLoggedUser(user);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +72,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 if (!passwordText.equals(retypeStringText)) {
                     retypePassword.setError(getString(R.string.register_password_different));
+                    result = false;
                 }
                 if (!rules.isChecked()) {
                     rules.setError(getString(R.string.register_required_field));
@@ -75,19 +92,20 @@ public class SignupActivity extends AppCompatActivity {
         });
 
     }
-
+    Long userId = null;
     private void register(final String loginText, final String passwordText, final String emailText) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("emailTextView", emailText).findFirst();
+                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("email", emailText).findFirst();
                 if (object == null) {
                     Number id = realm.where(User.class).max("id");
                     User user = realm.createObject(User.class, (id == null) ? 1 : id.longValue() + 1);
                     user.setUsername(loginText);
                     user.setPassword(Hashing.sha1().hashString(passwordText, Charsets.UTF_8).toString());
                     user.setEmail(emailText);
-                    User.setLoggedUser(user);
+                    userId = user.getId();
+
                 } else {
                     Snackbar.make(login, R.string.register_login_email_used, Snackbar.LENGTH_SHORT).show();
                 }
@@ -96,9 +114,12 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess() {
-                if (User.getLoggedUser() != null) {
+                if (userId != null) {
+                    Message mgs = mHandler.obtainMessage(USER_MESSAGE_WHAT,userId);
+                    mgs.sendToTarget();
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                     startActivity(intent);
+
                     finish();
                 }
             }
@@ -106,10 +127,16 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable error) {
                 Snackbar.make(password, R.string.register_something_goes_wrong, Snackbar.LENGTH_SHORT).show();
+                Log.e("Sign Up",error.getMessage(),error);
                 User.logout();
 
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
 }

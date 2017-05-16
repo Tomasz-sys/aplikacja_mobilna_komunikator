@@ -38,7 +38,6 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void initRealm() {
-        Realm.init(this);
         user = SyncUser.currentUser();
         if (user == null) {
             final ProgressDialog progressDialog = new ProgressDialog(StartActivity.this);
