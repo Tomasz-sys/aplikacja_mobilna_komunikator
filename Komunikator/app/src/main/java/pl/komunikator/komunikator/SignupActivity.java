@@ -35,8 +35,9 @@ public class SignupActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if(msg.what == USER_MESSAGE_WHAT)
             {
-                //Long user = (Long)msg.obj;
-               // User.setLoggedUser(user);
+                Long userId = (Long)msg.obj;
+                User user = realm.where(User.class).equalTo("id",userId).findFirst();
+                User.setLoggedUser(user);
             }
         }
     };
@@ -91,7 +92,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
     }
-
+    Long userId = null;
     private void register(final String loginText, final String passwordText, final String emailText) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -103,9 +104,8 @@ public class SignupActivity extends AppCompatActivity {
                     user.setUsername(loginText);
                     user.setPassword(Hashing.sha1().hashString(passwordText, Charsets.UTF_8).toString());
                     user.setEmail(emailText);
-                    // TODO RealmObject can't be passed by Threads
-                    Message mgs = mHandler.obtainMessage(USER_MESSAGE_WHAT,user.getId());
-                    mgs.sendToTarget();
+                    userId = user.getId();
+
                 } else {
                     Snackbar.make(login, R.string.register_login_email_used, Snackbar.LENGTH_SHORT).show();
                 }
@@ -114,7 +114,9 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess() {
-                if (User.getLoggedUser() != null) {
+                if (userId != null) {
+                    Message mgs = mHandler.obtainMessage(USER_MESSAGE_WHAT,userId);
+                    mgs.sendToTarget();
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                     startActivity(intent);
 
