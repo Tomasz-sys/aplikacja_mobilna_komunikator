@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +130,16 @@ public class ListActivity extends AppCompatActivity {
                 return;
             case R.id.nav_report:
                 setTitle(R.string.navigation_report);
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"gderacz.komunikator@gmail.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Bug Report");
+                i.putExtra(Intent.EXTRA_TEXT   , "");
+                try {
+                    startActivity(Intent.createChooser(i, ""));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "Brak aplikacji obsługującej pocztę", Toast.LENGTH_SHORT).show();
+                }
                 return;
             default:
                 fragmentClass = ListFragment.class;
