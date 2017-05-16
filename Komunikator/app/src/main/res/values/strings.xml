@@ -66,5 +66,6 @@
     <string name="login_check_username">Sprawdź login</string>
     <string name="login_check_password">Sprawdź hasło</string>
     <string name="please_wait">Proszę czekać</string>
+    <string name="navigation_report">Zgłoś błąd</string>
 
 </resources>

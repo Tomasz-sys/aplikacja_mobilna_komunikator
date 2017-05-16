@@ -126,6 +126,9 @@ public class ListActivity extends AppCompatActivity {
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
                 return;
+            case R.id.nav_report:
+                setTitle(R.string.navigation_report);
+                return;
             default:
                 fragmentClass = ListFragment.class;
         }
