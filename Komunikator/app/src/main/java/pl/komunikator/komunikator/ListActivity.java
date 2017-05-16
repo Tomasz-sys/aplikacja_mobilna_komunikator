@@ -132,13 +132,13 @@ public class ListActivity extends AppCompatActivity {
                 setTitle(R.string.navigation_report);
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"gderacz.komunikator@gmail.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT, "Bug Report");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{getString(R.string.company_email)});
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.report_subject));
                 i.putExtra(Intent.EXTRA_TEXT   , "");
                 try {
                     startActivity(Intent.createChooser(i, ""));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(this, "Brak aplikacji obsługującej pocztę", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.no_email_app, Toast.LENGTH_SHORT).show();
                 }
                 return;
             default:

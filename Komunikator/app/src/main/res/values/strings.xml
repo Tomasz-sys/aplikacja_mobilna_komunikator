@@ -67,5 +67,8 @@
     <string name="login_check_password">Sprawdź hasło</string>
     <string name="please_wait">Proszę czekać</string>
     <string name="navigation_report">Zgłoś błąd</string>
+    <string name="no_email_app">Brak aplikacji obsługującej pocztę</string>
+    <string name="report_subject">Zgłoszenie błędu</string>
+    <string name="company_email">gderacz.komunikator@gmail.com</string>
 
 </resources>

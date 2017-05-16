@@ -56,4 +56,9 @@
     <string name="settings_upload_photo">Change avatar</string>
     <string name="settings_upload_photo_button">CHANGE</string>
 
+    <string name="navigation_report">Error reporting</string>
+    <string name="no_email_app">You have no app supports email</string>
+    <string name="report_subject">Error reporting</string>
+    <string name="company_email">gderacz.komunikator@gmail.com</string>
+
 </resources>
