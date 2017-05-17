@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +127,19 @@ public class ListActivity extends AppCompatActivity {
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(url));
+                return;
+            case R.id.nav_report:
+                setTitle(R.string.navigation_report);
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{getString(R.string.company_email)});
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.report_subject));
+                i.putExtra(Intent.EXTRA_TEXT   , "");
+                try {
+                    startActivity(Intent.createChooser(i, ""));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, R.string.no_email_app, Toast.LENGTH_SHORT).show();
+                }
                 return;
             default:
                 fragmentClass = ListFragment.class;
