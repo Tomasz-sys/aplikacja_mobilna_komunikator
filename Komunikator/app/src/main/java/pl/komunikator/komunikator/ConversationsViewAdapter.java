@@ -4,9 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -52,13 +49,23 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
 
         ConversationViewHolder viewHolder = (ConversationViewHolder) holder;
 
-        String usersText = "";
-        for (User user : conversation.getUsers()) {
-            usersText += user.getUsername() + ", ";
+        StringBuilder result = new StringBuilder();
+        for(User user : conversation.getUsers()) {
+            result.append(user.getUsername());
+            result.append(", ");
         }
+        String usersText = result.length() > 0 ? result.substring(0, result.length() - 2) : "";
 
         viewHolder.contactTextView.setText(usersText);
-        viewHolder.lastMessageTextView.setText(conversation.getMessages().last().getContent());
+
+        String lastMessage;
+        try {
+            lastMessage = conversation.getMessages().last().getContent();
+            viewHolder.lastMessageTextView.setText(lastMessage);
+        } catch (NullPointerException e) {
+            viewHolder.lastMessageTextView.setText("Nie wymieniono jeszcze wiadomości...");
+        }
+
     }
 
     @Override
