@@ -114,7 +114,7 @@ public class ContainerActivity extends AppCompatActivity {
                 break;
             case R.id.nav_conversations:
                 setTitle(R.string.title_activity_conversations_list);
-                fragmentClass = ContactsFragment.class;
+                fragmentClass = ConversationsFragment.class;
                 break;
            case R.id.nav_search:
                 setTitle(R.string.title_action_search);
