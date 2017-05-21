@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,6 +26,7 @@ import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 public class ContactsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    OnUserSelectedListener mCallback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,20 @@ public class ContactsFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnUserSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
     private void showUserFriends() {
         Realm realm = Realm.getDefaultInstance();
         User user = User.getLoggedUser();
@@ -124,6 +140,10 @@ public class ContactsFragment extends Fragment {
                     allUserIterator.remove();
             }
         }
+    }
+
+    public interface OnUserSelectedListener {
+        void onContactSelected(int position);
     }
 
 }

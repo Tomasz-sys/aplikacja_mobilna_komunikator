@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.fragment;
 
 
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import pl.komunikator.komunikator.adapter.ConversationsViewAdapter;
+import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.Message;
 import pl.komunikator.komunikator.entity.User;

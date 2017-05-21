@@ -18,11 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
 
-public class ContainerActivity extends AppCompatActivity {
+public class ContainerActivity extends AppCompatActivity implements ContactsFragment.OnUserSelectedListener {
 
     private DrawerLayout mDrawer;
     private Menu mMenu;
@@ -162,9 +163,16 @@ public class ContainerActivity extends AppCompatActivity {
         // Close the navigation mDrawer
         mDrawer.closeDrawers();
     }
-
-
+    
     public Menu getMenu() {
         return mMenu;
     }
+
+    @Override
+    public void onContactSelected(int position) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(conversationsMenuItem);
+    }
+
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.activity.ContainerActivity;
 import pl.komunikator.komunikator.entity.User;
 
 /**
@@ -137,6 +138,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View view) {
                     /* TODO show user details */
+                }
+            });
+            contactViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ContainerActivity container = (ContainerActivity) view.getContext();
+                    container.onContactSelected(position);
                 }
             });
         } else {
