@@ -46,9 +46,9 @@ public class ListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        ListActivity listActivity = (ListActivity) getActivity();
+        ContainerActivity containerActivity = (ContainerActivity) getActivity();
 
-        final SearchView searchView = (SearchView) listActivity.getMenu().findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) containerActivity.getMenu().findItem(R.id.action_search).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -64,7 +64,7 @@ public class ListFragment extends Fragment {
             }
         });
 
-        final MenuItem addFriendsMenuItem = listActivity.getMenu().findItem(R.id.action_add_friends);
+        final MenuItem addFriendsMenuItem = containerActivity.getMenu().findItem(R.id.action_add_friends);
         addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

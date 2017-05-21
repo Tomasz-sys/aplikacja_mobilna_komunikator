@@ -15,7 +15,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity" />
         <activity
-            android:name=".ListActivity"
+            android:name=".ContainerActivity"
             android:label="@string/title_activity_conversations_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StartActivity">

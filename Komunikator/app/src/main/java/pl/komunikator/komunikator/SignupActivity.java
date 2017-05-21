@@ -117,7 +117,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (userId != null) {
                     Message mgs = mHandler.obtainMessage(USER_MESSAGE_WHAT,userId);
                     mgs.sendToTarget();
-                    Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ContainerActivity.class);
                     startActivity(intent);
 
                     finish();
