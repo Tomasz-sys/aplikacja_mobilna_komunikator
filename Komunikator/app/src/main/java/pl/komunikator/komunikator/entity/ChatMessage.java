@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.entity;
 
 /**
  * Created by adrian on 30.03.2017.

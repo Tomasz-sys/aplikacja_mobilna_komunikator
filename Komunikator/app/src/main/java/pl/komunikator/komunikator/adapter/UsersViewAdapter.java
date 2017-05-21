@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
+import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.entity.User;
 
 /**

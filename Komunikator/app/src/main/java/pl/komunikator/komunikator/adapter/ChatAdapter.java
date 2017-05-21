@@ -1,8 +1,6 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
+import pl.komunikator.komunikator.entity.ChatMessage;
+import pl.komunikator.komunikator.R;
 
 /**
  * Created by adrian on 30.03.2017.

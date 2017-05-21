@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +15,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
+import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.activity.ContainerActivity;
+import pl.komunikator.komunikator.adapter.UsersViewAdapter;
 import pl.komunikator.komunikator.entity.User;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;

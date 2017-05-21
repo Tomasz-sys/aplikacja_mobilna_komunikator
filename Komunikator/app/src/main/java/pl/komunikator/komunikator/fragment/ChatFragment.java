@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,10 @@ import android.widget.ListView;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.adapter.ChatAdapter;
+import pl.komunikator.komunikator.entity.ChatMessage;
 
 public class ChatFragment extends Fragment {
 

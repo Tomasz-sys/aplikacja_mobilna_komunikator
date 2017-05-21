@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import pl.komunikator.komunikator.fragment.ContactsFragment;
+import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.fragment.SettingsFragment;
 
 public class ContainerActivity extends AppCompatActivity {
 
