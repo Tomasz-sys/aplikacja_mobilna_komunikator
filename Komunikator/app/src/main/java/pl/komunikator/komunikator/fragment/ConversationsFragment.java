@@ -15,6 +15,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 import pl.komunikator.komunikator.adapter.ConversationsViewAdapter;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.entity.Conversation;
@@ -48,21 +49,8 @@ public class ConversationsFragment extends Fragment {
 
         Realm realm = Realm.getDefaultInstance();
 
-        List<Conversation> conversations = new ArrayList<>();
-
-        Conversation conversation = new Conversation();
-
-        List<User> allUsers = realm.where(User.class).findAll();
-        RealmList<User> allUsersList = new RealmList<>();
-        allUsersList.addAll(allUsers);
-        conversation.setUsers(allUsersList);
-
-        Message message = new Message();
-        message.setContent("Lorem ipsum");
-
-//        conversation.setMessages(new RealmList<>(message));
-
-        conversations.add(conversation);
+        RealmResults<Conversation> results = realm.where(Conversation.class).findAll();
+        List<Conversation> conversations = realm.copyFromRealm(results);
 
         ConversationsViewAdapter adapter = new ConversationsViewAdapter(conversations);
         mRecyclerView.setAdapter(adapter);

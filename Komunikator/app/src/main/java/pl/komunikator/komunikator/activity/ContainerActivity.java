@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
@@ -169,7 +170,7 @@ public class ContainerActivity extends AppCompatActivity implements ContactsFrag
     }
 
     @Override
-    public void onContactSelected(int position) {
+    public void onContactSelected(User contact) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(conversationsMenuItem);

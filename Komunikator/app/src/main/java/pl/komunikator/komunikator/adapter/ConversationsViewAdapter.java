@@ -63,7 +63,7 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         try {
             lastMessage = conversation.getMessages().last().getContent();
             viewHolder.lastMessageTextView.setText(lastMessage);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             viewHolder.lastMessageTextView.setText("Nie wymieniono jeszcze wiadomości...");
         }
 

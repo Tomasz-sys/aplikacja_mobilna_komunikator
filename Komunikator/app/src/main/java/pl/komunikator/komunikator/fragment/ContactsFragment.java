@@ -143,7 +143,7 @@ public class ContactsFragment extends Fragment {
     }
 
     public interface OnUserSelectedListener {
-        void onContactSelected(int position);
+        void onContactSelected(User contact);
     }
 
 }

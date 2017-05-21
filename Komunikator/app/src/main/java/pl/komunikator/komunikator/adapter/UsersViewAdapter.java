@@ -144,7 +144,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View view) {
                     ContainerActivity container = (ContainerActivity) view.getContext();
-                    container.onContactSelected(position);
+                    container.onContactSelected(userList.get(position));
                 }
             });
         } else {
