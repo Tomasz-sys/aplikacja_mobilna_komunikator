@@ -19,7 +19,7 @@ import pl.komunikator.komunikator.entity.User;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
-public class ListFragment extends Fragment {
+public class ContactsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
 
@@ -30,7 +30,7 @@ public class ListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.conversationsView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);

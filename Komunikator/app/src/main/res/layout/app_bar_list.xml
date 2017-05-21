@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/list_fragment" />
+    <include layout="@layout/fragment_contacts" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

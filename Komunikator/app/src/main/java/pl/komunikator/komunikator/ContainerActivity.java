@@ -105,16 +105,16 @@ public class ContainerActivity extends AppCompatActivity {
                 setTitle(R.string.title_settings);
                 break;
             case R.id.nav_contacts:
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
                 setTitle(R.string.contact_placeholder);
                 break;
             case R.id.nav_conversations:
                 setTitle(R.string.title_activity_conversations_list);
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
                 break;
            case R.id.nav_search:
                 setTitle(R.string.title_action_search);
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
                 break;
             case R.id.nav_help:
                 setTitle(R.string.navigation_help);
@@ -138,7 +138,7 @@ public class ContainerActivity extends AppCompatActivity {
                 }
                 return;
             default:
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
         }
 
         try {
