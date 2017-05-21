@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/contact_placeholder"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -25,6 +27,8 @@
         android:layout_marginBottom="10dp"
         android:background="@null"
         android:text="@string/message_placeholder"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="13sp" />
 
     <View
