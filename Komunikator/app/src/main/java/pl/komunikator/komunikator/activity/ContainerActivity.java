@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,44 +8,36 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.net.Uri;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import pl.komunikator.komunikator.fragment.ContactsFragment;
+import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.fragment.SettingsFragment;
 
-import pl.komunikator.komunikator.entity.User;
+public class ContainerActivity extends AppCompatActivity {
 
-public class ListActivity extends AppCompatActivity {
-
-    private DrawerLayout drawer;
-    public Menu menuBar;
+    private DrawerLayout mDrawer;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_container);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -76,23 +68,31 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the mMenu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.conversations_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         String searchViewHint = getResources().getString(R.string.search_view_hint);
         searchView.setQueryHint(searchViewHint);
 
-        menuBar = menu;
+        mMenu = menu;
+
+        selectConversationsMenuItem();
 
         return true;
+    }
+
+    private void selectConversationsMenuItem() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem item = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(item);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                drawer.openDrawer(GravityCompat.START);
+                mDrawer.openDrawer(GravityCompat.START);
                 return true;
         }
 
@@ -109,16 +109,16 @@ public class ListActivity extends AppCompatActivity {
                 setTitle(R.string.title_settings);
                 break;
             case R.id.nav_contacts:
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
                 setTitle(R.string.contact_placeholder);
                 break;
             case R.id.nav_conversations:
                 setTitle(R.string.title_activity_conversations_list);
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
                 break;
            case R.id.nav_search:
                 setTitle(R.string.title_action_search);
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
                 break;
             case R.id.nav_help:
                 setTitle(R.string.navigation_help);
@@ -142,7 +142,7 @@ public class ListActivity extends AppCompatActivity {
                 }
                 return;
             default:
-                fragmentClass = ListFragment.class;
+                fragmentClass = ContactsFragment.class;
         }
 
         try {
@@ -159,8 +159,12 @@ public class ListActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         // Set action bar title
         //setTitle(menuItem.getTitle());
-        // Close the navigation drawer
-        drawer.closeDrawers();
+        // Close the navigation mDrawer
+        mDrawer.closeDrawers();
     }
 
+
+    public Menu getMenu() {
+        return mMenu;
+    }
 }

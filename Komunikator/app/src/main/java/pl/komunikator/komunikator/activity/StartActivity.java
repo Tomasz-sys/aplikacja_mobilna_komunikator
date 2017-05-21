@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -15,7 +15,7 @@ import io.realm.Realm;
 import io.realm.SyncConfiguration;
 import io.realm.SyncCredentials;
 import io.realm.SyncUser;
-import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.R;
 
 public class StartActivity extends AppCompatActivity {
 

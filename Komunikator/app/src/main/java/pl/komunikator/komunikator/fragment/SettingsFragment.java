@@ -1,10 +1,12 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import pl.komunikator.komunikator.R;
 
 
 public class SettingsFragment extends Fragment {

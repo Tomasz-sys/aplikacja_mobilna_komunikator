@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator;
+package pl.komunikator.komunikator.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,13 +15,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
+import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.activity.ContainerActivity;
+import pl.komunikator.komunikator.adapter.UsersViewAdapter;
 import pl.komunikator.komunikator.entity.User;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
-public class ListFragment extends Fragment {
+public class ContactsFragment extends Fragment {
 
-    RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,12 +33,12 @@ public class ListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.conversationsView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        this.recyclerView = recyclerView;
+        mRecyclerView = recyclerView;
 
         showUserFriends();
 
@@ -46,9 +49,9 @@ public class ListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        ListActivity listActivity = (ListActivity) getActivity();
+        ContainerActivity containerActivity = (ContainerActivity) getActivity();
 
-        final SearchView searchView = (SearchView) listActivity.menuBar.findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) containerActivity.getMenu().findItem(R.id.action_search).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -58,13 +61,13 @@ public class ListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                UsersViewAdapter adapter = (UsersViewAdapter) recyclerView.getAdapter();
+                UsersViewAdapter adapter = (UsersViewAdapter) mRecyclerView.getAdapter();
                 adapter.filterUserList(newText);
                 return false;
             }
         });
 
-        final MenuItem addFriendsMenuItem = listActivity.menuBar.findItem(R.id.action_add_friends);
+        final MenuItem addFriendsMenuItem = containerActivity.getMenu().findItem(R.id.action_add_friends);
         addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -93,7 +96,7 @@ public class ListFragment extends Fragment {
         User user = User.getLoggedUser();
         List<User> userFriends = realm.copyFromRealm(user.friends);
         UsersViewAdapter adapter = new UsersViewAdapter(userFriends, true);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);
     }
 
     private void showPossibleFriends() {
@@ -107,7 +110,7 @@ public class ListFragment extends Fragment {
 
         differUserLists(loggedUserFriends, allUsers);
 
-        recyclerView.setAdapter(new UsersViewAdapter(allUsers, false));
+        mRecyclerView.setAdapter(new UsersViewAdapter(allUsers, false));
     }
 
     private void differUserLists(List<User> loggedUserFriends, List<User> allUsers) {
