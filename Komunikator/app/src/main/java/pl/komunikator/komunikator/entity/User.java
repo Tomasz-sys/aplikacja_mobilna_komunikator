@@ -1,5 +1,7 @@
 package pl.komunikator.komunikator.entity;
 
+import android.support.annotation.NonNull;
+
 import java.util.Date;
 
 import io.realm.RealmList;
@@ -11,7 +13,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Tenek on 11.04.2017.
  */
 
-public class User extends RealmObject {
+public class User extends RealmObject implements Comparable {
     @Ignore
     private static User instance = null;
     @PrimaryKey
@@ -101,4 +103,21 @@ public class User extends RealmObject {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        try {
+            User user = (User) o;
+            if (id < user.id) {
+                return -1;
+            } else if (id > user.id) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 }
