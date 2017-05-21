@@ -85,7 +85,15 @@ public class ListActivity extends AppCompatActivity {
 
         menuBar = menu;
 
+        selectConversationsMenuItem();
+
         return true;
+    }
+
+    private void selectConversationsMenuItem() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem item = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(item);
     }
 
     @Override
