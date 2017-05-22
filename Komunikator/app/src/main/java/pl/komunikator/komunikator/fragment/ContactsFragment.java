@@ -18,6 +18,7 @@ import java.util.List;
 import io.realm.Realm;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.activity.ContainerActivity;
+import pl.komunikator.komunikator.adapter.ConversationCreatorAdapter;
 import pl.komunikator.komunikator.adapter.UsersViewAdapter;
 import pl.komunikator.komunikator.entity.User;
 
@@ -73,7 +74,7 @@ public class ContactsFragment extends Fragment {
         createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-
+                showConversationCreator();
                 return false;
             }
         });
@@ -119,9 +120,7 @@ public class ContactsFragment extends Fragment {
     }
 
     private void showUserFriends() {
-        Realm realm = Realm.getDefaultInstance();
-        User user = User.getLoggedUser();
-        List<User> userFriends = realm.copyFromRealm(user.friends);
+        List<User> userFriends = getCopyOfUserFriends();
         UsersViewAdapter adapter = new UsersViewAdapter(userFriends, true);
         mRecyclerView.setAdapter(adapter);
     }
@@ -151,6 +150,18 @@ public class ContactsFragment extends Fragment {
                     allUserIterator.remove();
             }
         }
+    }
+
+    private void showConversationCreator() {
+        List<User> userFriends = getCopyOfUserFriends();
+        ConversationCreatorAdapter adapter = new ConversationCreatorAdapter(userFriends);
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    private List<User> getCopyOfUserFriends() {
+        Realm realm = Realm.getDefaultInstance();
+        User user = User.getLoggedUser();
+        return realm.copyFromRealm(user.friends);
     }
 
     public interface OnUserSelectedListener {
