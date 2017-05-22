@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -25,18 +24,24 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         this.conversations = conversations;
     }
 
-    public class ConversationViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView contactTextView;
-        public TextView lastMessageTextView;
-
-        public ConversationViewHolder(View view) {
-            super(view);
-
-            contactTextView = (TextView) view.findViewById(R.id.contactTextView);
-            lastMessageTextView = (TextView) view.findViewById(R.id.lastMessageTextView);
+    @Override
+    public int getItemCount() {
+        int size = conversations.size();
+        if (size > 0) {
+            return size;
+        } else {
+            size += 1;
+            return size;
         }
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (conversations.size() == 0) {
+            return EMPTY_LIST;
+        } else {
+            return super.getItemViewType(position);
+        }
     }
 
     @Override
@@ -83,26 +88,6 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
             viewHolder.lastMessageTextView.setText("Nie wymieniono jeszcze wiadomości...");
         }
 
-    }
-
-    @Override
-    public int getItemCount() {
-        int size = conversations.size();
-        if (size > 0) {
-            return size;
-        } else {
-            size += 1;
-            return size;
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (conversations.size() == 0) {
-            return EMPTY_LIST;
-        } else {
-            return super.getItemViewType(position);
-        }
     }
 
 }
