@@ -18,6 +18,7 @@ import pl.komunikator.komunikator.entity.User;
 
 public class ConversationsViewAdapter extends RecyclerView.Adapter {
 
+    private static final int EMPTY_LIST = 404;
     private List<Conversation> conversations;
 
     public ConversationsViewAdapter(List<Conversation> conversations) {
@@ -41,11 +42,26 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new ConversationViewHolder(inflater.inflate(R.layout.item_conversation, parent, false));
+        View view;
+
+        if (viewType == EMPTY_LIST) {
+            view = inflater.inflate(R.layout.item_no_results, parent, false);
+            return new EmptyViewHolder(view);
+        } else {
+            view = inflater.inflate(R.layout.item_conversation, parent, false);
+            return new ConversationViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        if (getItemViewType(position) == EMPTY_LIST) {
+            EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
+            emptyViewHolder.textView.setText(R.string.empty_conversations);
+            return;
+        }
+
         Conversation conversation = conversations.get(position);
 
         ConversationViewHolder viewHolder = (ConversationViewHolder) holder;
@@ -71,6 +87,22 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return conversations.size();
+        int size = conversations.size();
+        if (size > 0) {
+            return size;
+        } else {
+            size += 1;
+            return size;
+        }
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (conversations.size() == 0) {
+            return EMPTY_LIST;
+        } else {
+            return super.getItemViewType(position);
+        }
+    }
+
 }

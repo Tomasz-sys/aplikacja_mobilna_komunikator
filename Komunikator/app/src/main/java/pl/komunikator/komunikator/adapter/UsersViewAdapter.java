@@ -89,18 +89,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    public class NoResultsViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView textView;
-
-        public NoResultsViewHolder(View view) {
-            super(view);
-
-            textView = (TextView) view.findViewById(R.id.textView);
-        }
-
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -108,7 +96,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (viewType == NO_RESULTS_CODE) {
             view = inflater.inflate(R.layout.item_no_results, parent, false);
-            return new NoResultsViewHolder(view);
+            return new EmptyViewHolder(view);
         }
 
         if (displaysContacts) {
