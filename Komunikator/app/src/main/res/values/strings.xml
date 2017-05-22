@@ -71,5 +71,6 @@
     <string name="no_email_app">Brak aplikacji obsługującej pocztę</string>
     <string name="report_subject">Zgłoszenie błędu</string>
     <string name="company_email">gderacz.komunikator@gmail.com</string>
+    <string name="empty_contacts">Lista kontaktów jest pusta. Dodaj znajomych w celu przeprowadzania konwersacji...</string>
 
 </resources>

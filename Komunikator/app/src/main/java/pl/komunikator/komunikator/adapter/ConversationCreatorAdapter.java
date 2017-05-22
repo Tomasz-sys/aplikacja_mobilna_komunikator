@@ -81,6 +81,8 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (getItemViewType(position) == NO_CONTACTS) {
+            EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
+            emptyViewHolder.textView.setText(R.string.empty_contacts);
             return;
         }
 
