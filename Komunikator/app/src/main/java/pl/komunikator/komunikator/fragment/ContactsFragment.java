@@ -69,6 +69,15 @@ public class ContactsFragment extends Fragment {
             }
         });
 
+        final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
+        createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                return false;
+            }
+        });
+
         final MenuItem addFriendsMenuItem = containerActivity.getMenu().findItem(R.id.action_add_friends);
         addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -76,6 +85,7 @@ public class ContactsFragment extends Fragment {
                 showPossibleFriends();
                 searchView.setIconified(false);
                 addFriendsMenuItem.setEnabled(false);
+                createConversationMenuItem.setEnabled(false);
                 return false;
             }
         });
@@ -87,6 +97,7 @@ public class ContactsFragment extends Fragment {
 
                 searchView.onActionViewCollapsed();
                 addFriendsMenuItem.setEnabled(true);
+                createConversationMenuItem.setEnabled(true);
 
                 return true;
             }
