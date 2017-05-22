@@ -13,6 +13,9 @@ import io.realm.Realm;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.activity.ContainerActivity;
 import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.viewHolder.ContactViewHolder;
+import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
+import pl.komunikator.komunikator.viewHolder.SearchedUserViewHolder;
 
 /**
  * Created by adrian on 19.04.2017.

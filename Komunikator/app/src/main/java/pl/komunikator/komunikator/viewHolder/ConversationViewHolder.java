@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator.adapter;
+package pl.komunikator.komunikator.viewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator.adapter;
+package pl.komunikator.komunikator.viewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,19 +11,19 @@ import pl.komunikator.komunikator.R;
 /**
  * Created by adrian on 22.05.2017.
  */
-public class ContactViewHolder extends RecyclerView.ViewHolder {
+public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
 
     public TextView nameTextView, emailTextView;
     public ImageView avatarImageView;
-    public ImageButton detailsImageButton;
+    public ImageButton inviteImageButton;
 
-    public ContactViewHolder(View view) {
+    public SearchedUserViewHolder(View view) {
         super(view);
 
         nameTextView = (TextView) view.findViewById(R.id.contactName);
         emailTextView = (TextView) view.findViewById(R.id.contactEmail);
         avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
-        detailsImageButton = (ImageButton) view.findViewById(R.id.contactDetailsImageButton);
+        inviteImageButton = (ImageButton) view.findViewById(R.id.addFriendImageButton);
     }
 
 }

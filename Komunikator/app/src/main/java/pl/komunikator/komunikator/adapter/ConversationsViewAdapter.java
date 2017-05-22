@@ -10,6 +10,8 @@ import java.util.List;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.viewHolder.ConversationViewHolder;
+import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
 
 /**
  * Created by adrian on 20.05.2017.
