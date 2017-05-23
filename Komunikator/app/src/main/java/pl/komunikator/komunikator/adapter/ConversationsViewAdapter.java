@@ -19,16 +19,16 @@ import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
 
 public class ConversationsViewAdapter extends RecyclerView.Adapter {
 
-    private static final int EMPTY_LIST = 404;
-    private List<Conversation> conversations;
+    private static final int sEMPTY_LIST = 404;
+    private List<Conversation> mConversations;
 
     public ConversationsViewAdapter(List<Conversation> conversations) {
-        this.conversations = conversations;
+        mConversations = conversations;
     }
 
     @Override
     public int getItemCount() {
-        int size = conversations.size();
+        int size = mConversations.size();
         if (size > 0) {
             return size;
         } else {
@@ -39,8 +39,8 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (conversations.size() == 0) {
-            return EMPTY_LIST;
+        if (mConversations.size() == 0) {
+            return sEMPTY_LIST;
         } else {
             return super.getItemViewType(position);
         }
@@ -51,7 +51,7 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
 
-        if (viewType == EMPTY_LIST) {
+        if (viewType == sEMPTY_LIST) {
             view = inflater.inflate(R.layout.item_no_results, parent, false);
             return new EmptyViewHolder(view);
         } else {
@@ -63,13 +63,13 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (getItemViewType(position) == EMPTY_LIST) {
+        if (getItemViewType(position) == sEMPTY_LIST) {
             EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
             emptyViewHolder.textView.setText(R.string.empty_conversations);
             return;
         }
 
-        Conversation conversation = conversations.get(position);
+        Conversation conversation = mConversations.get(position);
 
         ConversationViewHolder viewHolder = (ConversationViewHolder) holder;
 

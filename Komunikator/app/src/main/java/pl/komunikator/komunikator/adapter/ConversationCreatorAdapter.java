@@ -20,7 +20,7 @@ import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
 
 public class ConversationCreatorAdapter extends RecyclerView.Adapter {
 
-    private static final int NO_CONTACTS = 404;
+    private static final int sNO_CONTACTS = 404;
     private List<User> mContacts;
 
     public ConversationCreatorAdapter(List<User> contacts) {
@@ -41,7 +41,7 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (mContacts.size() == 0) {
-            return NO_CONTACTS;
+            return sNO_CONTACTS;
         } else {
             return super.getItemViewType(position);
         }
@@ -68,7 +68,7 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
 
-        if (viewType == NO_CONTACTS) {
+        if (viewType == sNO_CONTACTS) {
             view = inflater.inflate(R.layout.item_no_results, parent, false);
             return new EmptyViewHolder(view);
         } else {
@@ -80,7 +80,7 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (getItemViewType(position) == NO_CONTACTS) {
+        if (getItemViewType(position) == sNO_CONTACTS) {
             EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
             emptyViewHolder.textView.setText(R.string.empty_contacts);
             return;

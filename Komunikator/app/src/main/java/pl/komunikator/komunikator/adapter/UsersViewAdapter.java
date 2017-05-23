@@ -23,21 +23,21 @@ import pl.komunikator.komunikator.viewHolder.SearchedUserViewHolder;
 
 public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int NO_RESULTS_CODE = 404;
-    private List<User> userList;
-    private List<User> filteredUsers;
-    private boolean displaysContacts;
+    private static final int sNO_RESULTS_CODE = 404;
+    private List<User> mUsers;
+    private List<User> mFilteredUsers;
+    private boolean mDisplaysContacts;
 
-    public UsersViewAdapter(List<User> userList, boolean displaysContacts) {
-        this.userList = userList;
-        filteredUsers = new ArrayList<>(userList);
+    public UsersViewAdapter(List<User> users, boolean displaysContacts) {
+        mUsers = users;
+        mFilteredUsers = new ArrayList<>(users);
 
-        this.displaysContacts = displaysContacts;
+        mDisplaysContacts = displaysContacts;
     }
 
     @Override
     public int getItemCount() {
-        int size = filteredUsers.size();
+        int size = mFilteredUsers.size();
         if (size > 0) {
             return size;
         } else {
@@ -48,8 +48,8 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (filteredUsers.size() == 0) {
-            return NO_RESULTS_CODE;
+        if (mFilteredUsers.size() == 0) {
+            return sNO_RESULTS_CODE;
         } else {
             return super.getItemViewType(position);
         }
@@ -60,12 +60,12 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
 
-        if (viewType == NO_RESULTS_CODE) {
+        if (viewType == sNO_RESULTS_CODE) {
             view = inflater.inflate(R.layout.item_no_results, parent, false);
             return new EmptyViewHolder(view);
         }
 
-        if (displaysContacts) {
+        if (mDisplaysContacts) {
             view = inflater.inflate(R.layout.item_contact, parent, false);
             return new ContactViewHolder(view);
         } else {
@@ -77,13 +77,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        if (getItemViewType(position) == NO_RESULTS_CODE) {
+        if (getItemViewType(position) == sNO_RESULTS_CODE) {
             return;
         }
 
-        final User user = filteredUsers.get(position);
+        final User user = mFilteredUsers.get(position);
 
-        if (displaysContacts) {
+        if (mDisplaysContacts) {
             ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.nameTextView.setText(user.getUsername());
             contactViewHolder.emailTextView.setText(user.getEmail());
@@ -98,7 +98,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View view) {
                     ContainerActivity container = (ContainerActivity) view.getContext();
-                    container.onContactSelected(userList.get(position));
+                    container.onContactSelected(mUsers.get(position));
                 }
             });
         } else {
@@ -119,9 +119,9 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     friend.friends.add(loggedUser);
                     realm.commitTransaction();
 
-                    long removedUserId = filteredUsers.remove(position).getId();
+                    long removedUserId = mFilteredUsers.remove(position).getId();
 
-                    Iterator<User> allUserIterator = userList.iterator();
+                    Iterator<User> allUserIterator = mUsers.iterator();
 
                     while (allUserIterator.hasNext()) {
                         User user = allUserIterator.next();
@@ -132,7 +132,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
 
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, filteredUsers.size());
+                    notifyItemRangeChanged(position, mFilteredUsers.size());
                 }
             });
 
@@ -140,8 +140,8 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void filterUserList(String text) {
-        filteredUsers = new ArrayList<>(userList);
-        Iterator<User> allUserIterator = filteredUsers.iterator();
+        mFilteredUsers = new ArrayList<>(mUsers);
+        Iterator<User> allUserIterator = mFilteredUsers.iterator();
 
         while (allUserIterator.hasNext()) {
             User user = allUserIterator.next();

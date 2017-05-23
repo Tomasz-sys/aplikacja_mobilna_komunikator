@@ -19,10 +19,10 @@ import pl.komunikator.komunikator.R;
 
 public class StartActivity extends AppCompatActivity {
 
-    public static String REALM_URL = "realm://81.2.250.203:9080/~/komunikator";
-    public static String AUTH_URL = "http://81.2.250.203:9080/auth";
-    public static SyncUser user = null;
-    private static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 666;
+    private static final String sREALM_URL = "realm://81.2.250.203:9080/~/komunikator";
+    private static final String sAUTH_URL = "http://81.2.250.203:9080/auth";
+    private static SyncUser sUser = null;
+    private static final int sMY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 666;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +31,20 @@ public class StartActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 ActivityCompat.requestPermissions(this
-                        , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                        , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, sMY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             }
         }
         initRealm();
     }
 
     private void initRealm() {
-        user = SyncUser.currentUser();
-        if (user == null) {
+        sUser = SyncUser.currentUser();
+        if (sUser == null) {
             final ProgressDialog progressDialog = new ProgressDialog(StartActivity.this);
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage(getString(R.string.please_wait));
             progressDialog.show();
-            SyncCredentials syncCredentials = SyncCredentials.usernamePassword("user", "user", false);
+            SyncCredentials syncCredentials = SyncCredentials.usernamePassword("sUser", "sUser", false);
             Log.e("StartActivity", syncCredentials.getUserIdentifier());
 
             SyncUser.Callback callback = new SyncUser.Callback() {
@@ -72,10 +72,10 @@ public class StartActivity extends AppCompatActivity {
                 }
             };
 
-            SyncUser.loginAsync(syncCredentials, AUTH_URL, callback);
+            SyncUser.loginAsync(syncCredentials, sAUTH_URL, callback);
 
         } else {
-            onLoginSuccess(user);
+            onLoginSuccess(sUser);
         }
     }
 
@@ -85,8 +85,8 @@ public class StartActivity extends AppCompatActivity {
             return;
         }
 
-        StartActivity.user = user;
-        SyncConfiguration config = new SyncConfiguration.Builder(user, REALM_URL).build();
+        StartActivity.sUser = user;
+        SyncConfiguration config = new SyncConfiguration.Builder(user, sREALM_URL).build();
         Realm.setDefaultConfiguration(config);
 
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

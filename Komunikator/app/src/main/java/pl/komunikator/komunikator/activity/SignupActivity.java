@@ -19,8 +19,6 @@ import com.google.common.hash.Hashing;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import pl.komunikator.komunikator.R;
-import pl.komunikator.komunikator.activity.ContainerActivity;
-import pl.komunikator.komunikator.activity.LoginActivity;
 import pl.komunikator.komunikator.entity.User;
 
 /**
@@ -30,16 +28,16 @@ import pl.komunikator.komunikator.entity.User;
 public class SignupActivity extends AppCompatActivity {
 
     private static final int USER_MESSAGE_WHAT = 3455;
-    private EditText login, email, password, retypePassword;
-    private CheckBox rules, policy;
-    private Realm realm = Realm.getDefaultInstance();
+    private EditText mLoginEditText, mEmailEditText, mPasswordEditText, mRetypePasswordEditText;
+    private CheckBox mRulesCheckBox, mPolicyCheckBox;
+    private Realm mRealm = Realm.getDefaultInstance();
     private Handler mHandler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg) {
             if(msg.what == USER_MESSAGE_WHAT)
             {
                 Long userId = (Long)msg.obj;
-                User user = realm.where(User.class).equalTo("id",userId).findFirst();
+                User user = mRealm.where(User.class).equalTo("id",userId).findFirst();
                 User.setLoggedUser(user);
             }
         }
@@ -49,41 +47,41 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        login = (EditText) findViewById(R.id.signupLoginEditText);
-        email = (EditText) findViewById(R.id.signupEmailEditText);
-        password = (EditText) findViewById(R.id.signupPasswordEditText);
-        retypePassword = (EditText) findViewById(R.id.signupRetypePasswordEditText);
-        rules = (CheckBox) findViewById(R.id.signupCheckboxRules);
-        policy = (CheckBox) findViewById(R.id.signupCheckboxPolicy);
+        mLoginEditText = (EditText) findViewById(R.id.signupLoginEditText);
+        mEmailEditText = (EditText) findViewById(R.id.signupEmailEditText);
+        mPasswordEditText = (EditText) findViewById(R.id.signupPasswordEditText);
+        mRetypePasswordEditText = (EditText) findViewById(R.id.signupRetypePasswordEditText);
+        mRulesCheckBox = (CheckBox) findViewById(R.id.signupCheckboxRules);
+        mPolicyCheckBox = (CheckBox) findViewById(R.id.signupCheckboxPolicy);
         Button register = (Button) findViewById(R.id.signupButton);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String loginText = login.getText().toString();
-                String passwordText = password.getText().toString();
-                String retypeStringText = retypePassword.getText().toString();
-                String emailText = email.getText().toString();
+                String loginText = mLoginEditText.getText().toString();
+                String passwordText = mPasswordEditText.getText().toString();
+                String retypeStringText = mRetypePasswordEditText.getText().toString();
+                String emailText = mEmailEditText.getText().toString();
                 boolean result = true;
                 if (loginText.isEmpty()) {
-                    login.setError(getString(R.string.register_required_field));
+                    mLoginEditText.setError(getString(R.string.register_required_field));
                     result = false;
                 }
                 if (emailText.isEmpty()) {
-                    email.setError(getString(R.string.register_required_field));
+                    mEmailEditText.setError(getString(R.string.register_required_field));
                     result = false;
                 }
                 if (!passwordText.equals(retypeStringText)) {
-                    retypePassword.setError(getString(R.string.register_password_different));
+                    mRetypePasswordEditText.setError(getString(R.string.register_password_different));
                     result = false;
                 }
-                if (!rules.isChecked()) {
-                    rules.setError(getString(R.string.register_required_field));
+                if (!mRulesCheckBox.isChecked()) {
+                    mRulesCheckBox.setError(getString(R.string.register_required_field));
                     result = false;
                 }
 
-                if (!policy.isChecked()) {
-                    policy.setError(getString(R.string.register_required_field));
+                if (!mPolicyCheckBox.isChecked()) {
+                    mPolicyCheckBox.setError(getString(R.string.register_required_field));
                     result = false;
                 }
 
@@ -97,10 +95,10 @@ public class SignupActivity extends AppCompatActivity {
     }
     Long userId = null;
     private void register(final String loginText, final String passwordText, final String emailText) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("email", emailText).findFirst();
+                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("mEmailEditText", emailText).findFirst();
                 if (object == null) {
                     Number id = realm.where(User.class).max("id");
                     User user = realm.createObject(User.class, (id == null) ? 1 : id.longValue() + 1);
@@ -110,7 +108,7 @@ public class SignupActivity extends AppCompatActivity {
                     userId = user.getId();
 
                 } else {
-                    Snackbar.make(login, R.string.register_login_email_used, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mLoginEditText, R.string.register_login_email_used, Snackbar.LENGTH_SHORT).show();
                 }
             }
         }, new Realm.Transaction.OnSuccess() {
@@ -129,7 +127,7 @@ public class SignupActivity extends AppCompatActivity {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                Snackbar.make(password, R.string.register_something_goes_wrong, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mPasswordEditText, R.string.register_something_goes_wrong, Snackbar.LENGTH_SHORT).show();
                 Log.e("Sign Up",error.getMessage(),error);
                 User.logout();
 
