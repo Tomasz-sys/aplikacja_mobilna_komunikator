@@ -18,11 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
+import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
-public class ContainerActivity extends AppCompatActivity {
+public class ContainerActivity extends AppCompatActivity implements OnConversationCreatedListener {
 
     private DrawerLayout mDrawer;
     private Menu mMenu;
@@ -114,7 +117,7 @@ public class ContainerActivity extends AppCompatActivity {
                 break;
             case R.id.nav_conversations:
                 setTitle(R.string.title_activity_conversations_list);
-                fragmentClass = ContactsFragment.class;
+                fragmentClass = ConversationsFragment.class;
                 break;
            case R.id.nav_search:
                 setTitle(R.string.title_action_search);
@@ -151,20 +154,33 @@ public class ContainerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
-        // Set action bar title
-        //setTitle(menuItem.getTitle());
-        // Close the navigation mDrawer
         mDrawer.closeDrawers();
     }
-
-
+    
     public Menu getMenu() {
         return mMenu;
     }
+
+    @Override
+    public void onContactSelected(User contact) {
+        /* TODO handle creating 1-1 conversation */
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(conversationsMenuItem);
+    }
+
+    @Override
+    public void onCreateButtonClicked() {
+        /* TODO handle creating grouped conversation */
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(conversationsMenuItem);
+    }
+
 }

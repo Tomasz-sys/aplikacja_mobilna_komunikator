@@ -4,9 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +11,11 @@ import java.util.List;
 
 import io.realm.Realm;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.activity.ContainerActivity;
 import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.viewHolder.ContactViewHolder;
+import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
+import pl.komunikator.komunikator.viewHolder.SearchedUserViewHolder;
 
 /**
  * Created by adrian on 19.04.2017.
@@ -54,52 +55,6 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView nameTextView, emailTextView;
-        public ImageView avatarImageView;
-        public ImageButton inviteImageButton;
-
-        public SearchedUserViewHolder(View view) {
-            super(view);
-
-            nameTextView = (TextView) view.findViewById(R.id.contactName);
-            emailTextView = (TextView) view.findViewById(R.id.contactEmail);
-            avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
-            inviteImageButton = (ImageButton) view.findViewById(R.id.addFriendImageButton);
-        }
-
-    }
-
-    public class ContactViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView nameTextView, emailTextView;
-        public ImageView avatarImageView;
-        public ImageButton detailsImageButton;
-
-        public ContactViewHolder(View view) {
-            super(view);
-
-            nameTextView = (TextView) view.findViewById(R.id.contactName);
-            emailTextView = (TextView) view.findViewById(R.id.contactEmail);
-            avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
-            detailsImageButton = (ImageButton) view.findViewById(R.id.contactDetailsImageButton);
-        }
-
-    }
-
-    public class NoResultsViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView textView;
-
-        public NoResultsViewHolder(View view) {
-            super(view);
-
-            textView = (TextView) view.findViewById(R.id.textView);
-        }
-
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -107,7 +62,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (viewType == NO_RESULTS_CODE) {
             view = inflater.inflate(R.layout.item_no_results, parent, false);
-            return new NoResultsViewHolder(view);
+            return new EmptyViewHolder(view);
         }
 
         if (displaysContacts) {
@@ -137,6 +92,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View view) {
                     /* TODO show user details */
+                }
+            });
+            contactViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ContainerActivity container = (ContainerActivity) view.getContext();
+                    container.onContactSelected(userList.get(position));
                 }
             });
         } else {

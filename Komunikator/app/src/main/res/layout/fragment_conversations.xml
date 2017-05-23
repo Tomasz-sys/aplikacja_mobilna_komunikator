@@ -5,17 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="pl.komunikator.komunikator.activity.ContainerActivity"
-    tools:showIn="@layout/app_bar_list"
-    android:orientation="vertical">
+    tools:context="pl.komunikator.komunikator.ListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/conversationsView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:listitem="@layout/item_searched_user" />
-
-    <include android:id="@+id/button_bar_contacts" layout="@layout/button_bar_contacts" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_conversation" />
 
 </LinearLayout>
