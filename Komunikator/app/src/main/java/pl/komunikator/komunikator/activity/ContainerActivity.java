@@ -154,15 +154,10 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
             e.printStackTrace();
         }
 
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
-        // Set action bar title
-        //setTitle(menuItem.getTitle());
-        // Close the navigation mDrawer
         mDrawer.closeDrawers();
     }
     
@@ -172,6 +167,8 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
 
     @Override
     public void onContactSelected(User contact) {
+        /* TODO handle creating 1-1 conversation */
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(conversationsMenuItem);
@@ -179,6 +176,8 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
 
     @Override
     public void onCreateButtonClicked() {
+        /* TODO handle creating grouped conversation */
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(conversationsMenuItem);

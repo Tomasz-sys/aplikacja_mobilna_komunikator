@@ -112,6 +112,7 @@ public class ContactsFragment extends Fragment {
                 showPossibleFriends();
                 searchView.setIconified(false);
                 addFriendsMenuItem.setEnabled(false);
+                createConversationMenuItem.setEnabled(true);
                 buttonBar.setVisibility(View.GONE);
                 return false;
             }
@@ -168,9 +169,9 @@ public class ContactsFragment extends Fragment {
             Iterator<User> allUserIterator = allUsers.iterator();
 
             while (allUserIterator.hasNext()) {
-                User user = allUserIterator.next();
+                Long userId = allUserIterator.next().getId();
 
-                if (user.getId() == loggedUserFriend.getId())
+                if (userId.equals(loggedUserFriend.getId()))
                     allUserIterator.remove();
             }
         }

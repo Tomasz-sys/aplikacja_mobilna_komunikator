@@ -26,7 +26,7 @@ import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 public class ConversationsFragment extends Fragment {
 
-    RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +42,6 @@ public class ConversationsFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -55,4 +54,5 @@ public class ConversationsFragment extends Fragment {
         ConversationsViewAdapter adapter = new ConversationsViewAdapter(conversations);
         mRecyclerView.setAdapter(adapter);
     }
+
 }
