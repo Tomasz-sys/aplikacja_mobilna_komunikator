@@ -22,6 +22,7 @@ import pl.komunikator.komunikator.activity.ContainerActivity;
 import pl.komunikator.komunikator.adapter.ConversationCreatorAdapter;
 import pl.komunikator.komunikator.adapter.UsersViewAdapter;
 import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
@@ -180,11 +181,6 @@ public class ContactsFragment extends Fragment {
         Realm realm = Realm.getDefaultInstance();
         User user = User.getLoggedUser();
         return realm.copyFromRealm(user.friends);
-    }
-
-    public interface OnConversationCreatedListener {
-        void onContactSelected(User contact);
-        void onCreateButtonClicked();
     }
 
 }

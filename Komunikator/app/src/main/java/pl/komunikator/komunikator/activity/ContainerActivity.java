@@ -23,8 +23,9 @@ import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
+import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
-public class ContainerActivity extends AppCompatActivity implements ContactsFragment.OnConversationCreatedListener {
+public class ContainerActivity extends AppCompatActivity implements OnConversationCreatedListener {
 
     private DrawerLayout mDrawer;
     private Menu mMenu;
