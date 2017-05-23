@@ -73,4 +73,7 @@
     <string name="company_email">gderacz.komunikator@gmail.com</string>
     <string name="empty_contacts">Lista kontaktów jest pusta. Dodaj znajomych w celu przeprowadzania konwersacji...</string>
 
+    <string name="create_bar_button_text">Utwórz</string>
+    <string name="cancel_bar_button_text">Anuluj</string>
+
 </resources>
