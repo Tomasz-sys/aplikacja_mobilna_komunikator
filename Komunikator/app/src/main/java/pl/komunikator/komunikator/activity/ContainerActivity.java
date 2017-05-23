@@ -24,7 +24,7 @@ import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
 
-public class ContainerActivity extends AppCompatActivity implements ContactsFragment.OnUserSelectedListener {
+public class ContainerActivity extends AppCompatActivity implements ContactsFragment.OnConversationCreatedListener {
 
     private DrawerLayout mDrawer;
     private Menu mMenu;
@@ -171,6 +171,13 @@ public class ContainerActivity extends AppCompatActivity implements ContactsFrag
 
     @Override
     public void onContactSelected(User contact) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(conversationsMenuItem);
+    }
+
+    @Override
+    public void onCreateButtonClicked() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(conversationsMenuItem);

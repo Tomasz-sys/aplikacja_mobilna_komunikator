@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +28,7 @@ import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 public class ContactsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    OnUserSelectedListener mCallback;
+    private OnConversationCreatedListener mCallback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,11 +71,29 @@ public class ContactsFragment extends Fragment {
             }
         });
 
+        final View buttonBar = getView().findViewById(R.id.button_bar_contacts);
+        Button createButton = (Button) buttonBar.findViewById(R.id.createBarButton);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallback.onCreateButtonClicked();
+            }
+        });
+        Button cancelButton = (Button) buttonBar.findViewById(R.id.cancelBarButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showUserFriends();
+                buttonBar.setVisibility(View.GONE);
+            }
+        });
+
         final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
         createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 showConversationCreator();
+                buttonBar.setVisibility(View.VISIBLE);
                 return false;
             }
         });
@@ -87,6 +106,7 @@ public class ContactsFragment extends Fragment {
                 searchView.setIconified(false);
                 addFriendsMenuItem.setEnabled(false);
                 createConversationMenuItem.setEnabled(false);
+                buttonBar.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -109,13 +129,11 @@ public class ContactsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
-            mCallback = (OnUserSelectedListener) context;
+            mCallback = (OnConversationCreatedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnConversationCreatedListener");
         }
     }
 
@@ -164,8 +182,9 @@ public class ContactsFragment extends Fragment {
         return realm.copyFromRealm(user.friends);
     }
 
-    public interface OnUserSelectedListener {
+    public interface OnConversationCreatedListener {
         void onContactSelected(User contact);
+        void onCreateButtonClicked();
     }
 
 }
