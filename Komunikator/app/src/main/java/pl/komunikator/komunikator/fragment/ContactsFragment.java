@@ -73,29 +73,35 @@ public class ContactsFragment extends Fragment {
         });
 
         final View buttonBar = getView().findViewById(R.id.button_bar_contacts);
-        Button createButton = (Button) buttonBar.findViewById(R.id.createBarButton);
+
+        final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
+        createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                searchView.setIconified(true);
+                createConversationMenuItem.setEnabled(false);
+                showConversationCreator();
+                buttonBar.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+        final Button createButton = (Button) buttonBar.findViewById(R.id.createBarButton);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCallback.onCreateButtonClicked();
+                createConversationMenuItem.setEnabled(true);
             }
         });
+
         Button cancelButton = (Button) buttonBar.findViewById(R.id.cancelBarButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showUserFriends();
                 buttonBar.setVisibility(View.GONE);
-            }
-        });
-
-        final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
-        createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                showConversationCreator();
-                buttonBar.setVisibility(View.VISIBLE);
-                return false;
+                createConversationMenuItem.setEnabled(true);
             }
         });
 
@@ -106,7 +112,6 @@ public class ContactsFragment extends Fragment {
                 showPossibleFriends();
                 searchView.setIconified(false);
                 addFriendsMenuItem.setEnabled(false);
-                createConversationMenuItem.setEnabled(false);
                 buttonBar.setVisibility(View.GONE);
                 return false;
             }
