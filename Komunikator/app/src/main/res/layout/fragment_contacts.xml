@@ -16,4 +16,6 @@
         android:layout_weight="1"
         tools:listitem="@layout/item_searched_user" />
 
+    <include android:id="@+id/button_bar_contacts" layout="@layout/button_bar_contacts" />
+
 </LinearLayout>
