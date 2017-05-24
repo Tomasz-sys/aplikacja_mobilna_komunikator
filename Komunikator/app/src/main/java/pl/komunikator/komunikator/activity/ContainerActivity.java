@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -205,6 +206,18 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(conversationsMenuItem);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK) {
+                List<Long> userIds = (ArrayList<Long>) data.getSerializableExtra("ids");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
 }

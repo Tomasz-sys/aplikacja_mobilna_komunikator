@@ -29,7 +29,7 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
 
     public ConversationCreatorAdapter(List<User> contacts) {
         mContacts = contacts;
-        mSelectedItemsIds = new ArrayList<>(contacts.size());
+        mSelectedItemsIds = new ArrayList<>(Collections.<Long>nCopies(mContacts.size(), null));
     }
 
     @Override

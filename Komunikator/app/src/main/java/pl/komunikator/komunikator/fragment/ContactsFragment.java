@@ -159,7 +159,7 @@ public class ContactsFragment extends Fragment {
     private void showConversationCreator() {
         Activity container = getActivity();
         Intent intent = new Intent(container, CreateConversationActivity.class);
-        container.startActivity(intent);
+        container.startActivityForResult(intent, 1);
     }
 
     private List<User> getCopyOfUserFriends() {
