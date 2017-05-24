@@ -5,8 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
+import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
@@ -20,9 +19,9 @@ import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
 public class ConversationsViewAdapter extends RecyclerView.Adapter {
 
     private static final int sEMPTY_LIST = 404;
-    private List<Conversation> mConversations;
+    private RealmList<Conversation> mConversations;
 
-    public ConversationsViewAdapter(List<Conversation> conversations) {
+    public ConversationsViewAdapter(RealmList<Conversation> conversations) {
         mConversations = conversations;
     }
 

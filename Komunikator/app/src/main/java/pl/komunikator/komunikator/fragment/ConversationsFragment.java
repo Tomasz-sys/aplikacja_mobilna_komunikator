@@ -46,10 +46,8 @@ public class ConversationsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Realm realm = Realm.getDefaultInstance();
-
-        RealmResults<Conversation> results = realm.where(Conversation.class).findAll();
-        List<Conversation> conversations = realm.copyFromRealm(results);
+        User loggedUser = User.getLoggedUser();
+        RealmList<Conversation> conversations = loggedUser.getConversations();
 
         ConversationsViewAdapter adapter = new ConversationsViewAdapter(conversations);
         mRecyclerView.setAdapter(adapter);
