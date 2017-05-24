@@ -89,6 +89,13 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
             viewHolder.lastMessageTextView.setText("Nie wymieniono jeszcze wiadomości...");
         }
 
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* TODO go to ChatActivity */
+            }
+        });
+
     }
 
 }
