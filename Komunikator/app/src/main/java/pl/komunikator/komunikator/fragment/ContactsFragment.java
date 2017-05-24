@@ -1,6 +1,8 @@
 package pl.komunikator.komunikator.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +21,7 @@ import java.util.List;
 import io.realm.Realm;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.activity.ContainerActivity;
+import pl.komunikator.komunikator.activity.CreateConversationActivity;
 import pl.komunikator.komunikator.adapter.ConversationCreatorAdapter;
 import pl.komunikator.komunikator.adapter.UsersViewAdapter;
 import pl.komunikator.komunikator.entity.User;
@@ -54,7 +57,7 @@ public class ContactsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        ContainerActivity containerActivity = (ContainerActivity) getActivity();
+        final ContainerActivity containerActivity = (ContainerActivity) getActivity();
 
         final SearchView searchView = (SearchView) containerActivity.getMenu().findItem(R.id.action_search).getActionView();
 
@@ -72,36 +75,13 @@ public class ContactsFragment extends Fragment {
             }
         });
 
-        final View buttonBar = getView().findViewById(R.id.button_bar_contacts);
-
         final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
         createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                searchView.setIconified(true);
-                createConversationMenuItem.setEnabled(false);
                 showConversationCreator();
-                buttonBar.setVisibility(View.VISIBLE);
+                searchView.setIconified(true);
                 return false;
-            }
-        });
-
-        final Button createButton = (Button) buttonBar.findViewById(R.id.createBarButton);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallback.onCreateButtonClicked();
-                createConversationMenuItem.setEnabled(true);
-            }
-        });
-
-        Button cancelButton = (Button) buttonBar.findViewById(R.id.cancelBarButton);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showUserFriends();
-                buttonBar.setVisibility(View.GONE);
-                createConversationMenuItem.setEnabled(true);
             }
         });
 
@@ -113,7 +93,6 @@ public class ContactsFragment extends Fragment {
                 searchView.setIconified(false);
                 addFriendsMenuItem.setEnabled(false);
                 createConversationMenuItem.setEnabled(true);
-                buttonBar.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -178,9 +157,9 @@ public class ContactsFragment extends Fragment {
     }
 
     private void showConversationCreator() {
-        List<User> userFriends = getCopyOfUserFriends();
-        ConversationCreatorAdapter adapter = new ConversationCreatorAdapter(userFriends);
-        mRecyclerView.setAdapter(adapter);
+        Activity container = getActivity();
+        Intent intent = new Intent(container, CreateConversationActivity.class);
+        container.startActivity(intent);
     }
 
     private List<User> getCopyOfUserFriends() {
