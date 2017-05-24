@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.adapter.ChatAdapter;
 import pl.komunikator.komunikator.entity.ChatMessage;
+import pl.komunikator.komunikator.entity.Conversation;
 
 public class ConversationActivity extends AppCompatActivity {
 
@@ -22,12 +24,15 @@ public class ConversationActivity extends AppCompatActivity {
     private ListView messagesContainer;
     private ChatAdapter adapter;
 
+    private Conversation mConversation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
 
         initControls();
+        initConversation();
     }
 
     private void initControls() {
@@ -92,6 +97,12 @@ public class ConversationActivity extends AppCompatActivity {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
+    }
+
+    private void initConversation() {
+        long id = getIntent().getLongExtra("id", 0);
+        RealmUtilities realm = new RealmUtilities();
+        mConversation = realm.getConversation(id);
     }
 
 }

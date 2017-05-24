@@ -71,7 +71,7 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
             return;
         }
 
-        Conversation conversation = mConversations.get(position);
+        final Conversation conversation = mConversations.get(position);
 
         ConversationViewHolder viewHolder = (ConversationViewHolder) holder;
 
@@ -97,6 +97,7 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 ContainerActivity container = (ContainerActivity) view.getContext();
                 Intent intent = new Intent(container, ConversationActivity.class);
+                intent.putExtra("id", conversation.getId());
                 container.startActivity(intent);
             }
         });

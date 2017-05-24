@@ -2,8 +2,12 @@ package pl.komunikator.komunikator;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmModel;
+import io.realm.RealmObject;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
+
+import static android.R.attr.id;
 
 /**
  * Created by adrian on 24.05.2017.
@@ -14,7 +18,15 @@ public class RealmUtilities {
     private Realm mRealm = Realm.getDefaultInstance();
 
     public User getUser(long id) {
-        return mRealm.where(User.class).equalTo("id", id).findFirst();
+        return (User) getObject(id, User.class);
+    }
+
+    public Conversation getConversation(long id) {
+        return (Conversation) getObject(id, Conversation.class);
+    }
+
+    private RealmModel getObject(long id, Class type) {
+        return mRealm.where(type).equalTo("id", id).findFirst();
     }
 
     public void createConversation(RealmList<User> users) {
