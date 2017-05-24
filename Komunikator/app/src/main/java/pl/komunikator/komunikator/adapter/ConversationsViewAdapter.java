@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 
 import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.activity.ContainerActivity;
+import pl.komunikator.komunikator.activity.ConversationActivity;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.viewHolder.ConversationViewHolder;
@@ -92,7 +95,9 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* TODO go to ChatActivity */
+                ContainerActivity container = (ContainerActivity) view.getContext();
+                Intent intent = new Intent(container, ConversationActivity.class);
+                container.startActivity(intent);
             }
         });
 
