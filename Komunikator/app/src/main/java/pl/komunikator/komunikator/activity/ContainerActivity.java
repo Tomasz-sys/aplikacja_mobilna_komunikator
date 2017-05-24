@@ -20,6 +20,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import pl.komunikator.komunikator.RealmUtilities;
+import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
@@ -179,7 +187,11 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
 
     @Override
     public void onContactSelected(User contact) {
-        /* TODO handle creating 1-1 conversation */
+        RealmUtilities realm = new RealmUtilities();
+        User contactFromRealm = realm.getUser(contact.getId());
+        User loggedUser = User.getLoggedUser();
+
+        realm.createConversation(new RealmList<>(loggedUser, contactFromRealm));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
