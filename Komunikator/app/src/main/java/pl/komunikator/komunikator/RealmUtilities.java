@@ -33,9 +33,12 @@ public class RealmUtilities {
         Number id = getConversationMaxId();
 
         mRealm.beginTransaction();
+
         Conversation conversation = mRealm.createObject(Conversation.class, (id == null) ? 1 : id.longValue() + 1);
         conversation.setUsers(users);
         assignConversation(conversation, users);
+        setConversationName(conversation);
+
         mRealm.commitTransaction();
     }
 
@@ -54,4 +57,15 @@ public class RealmUtilities {
             }
         }
     }
+
+    private void setConversationName(Conversation conversation) {
+        StringBuilder result = new StringBuilder();
+        for(User user : conversation.getUsers()) {
+            result.append(user.getUsername());
+            result.append(", ");
+        }
+        String usersText = result.length() > 0 ? result.substring(0, result.length() - 2) : "";
+        conversation.setName(usersText);
+    }
+
 }

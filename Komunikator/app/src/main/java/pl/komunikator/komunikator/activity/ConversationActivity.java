@@ -103,6 +103,8 @@ public class ConversationActivity extends AppCompatActivity {
         long id = getIntent().getLongExtra("id", 0);
         RealmUtilities realm = new RealmUtilities();
         mConversation = realm.getConversation(id);
+
+        setTitle(mConversation.getName());
     }
 
 }

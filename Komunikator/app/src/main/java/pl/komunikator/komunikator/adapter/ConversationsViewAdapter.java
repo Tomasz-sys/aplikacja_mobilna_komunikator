@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.activity.ContainerActivity;
@@ -74,15 +75,7 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         final Conversation conversation = mConversations.get(position);
 
         ConversationViewHolder viewHolder = (ConversationViewHolder) holder;
-
-        StringBuilder result = new StringBuilder();
-        for(User user : conversation.getUsers()) {
-            result.append(user.getUsername());
-            result.append(", ");
-        }
-        String usersText = result.length() > 0 ? result.substring(0, result.length() - 2) : "";
-
-        viewHolder.contactTextView.setText(usersText);
+        viewHolder.contactTextView.setText(conversation.getName());
 
         String lastMessage;
         try {
