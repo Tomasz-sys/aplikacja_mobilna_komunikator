@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pl.komunikator.komunikator.R;
@@ -22,9 +25,11 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
 
     private static final int sNO_CONTACTS = 404;
     private List<User> mContacts;
+    private List<Long> mSelectedItemsIds;
 
     public ConversationCreatorAdapter(List<User> contacts) {
         mContacts = contacts;
+        mSelectedItemsIds = new ArrayList<>(contacts.size());
     }
 
     @Override
@@ -78,7 +83,7 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (getItemViewType(position) == sNO_CONTACTS) {
             EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
@@ -86,11 +91,28 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
             return;
         }
 
-        User contact = mContacts.get(position);
+        final User contact = mContacts.get(position);
 
         CheckBoxedContactViewHolder viewHolder = (CheckBoxedContactViewHolder) holder;
         viewHolder.nameTextView.setText(contact.getUsername());
         viewHolder.emailTextView.setText(contact.getEmail());
+        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    mSelectedItemsIds.add(position, contact.getId());
+                } else {
+                    mSelectedItemsIds.remove(position);
+                }
+            }
+        });
+    }
+
+    public List<Long> getIds() {
+        List<Long> ids = new ArrayList<>(mSelectedItemsIds);
+        ids.removeAll(Collections.singleton(null));
+
+        return ids;
     }
 
 }
