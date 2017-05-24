@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import pl.komunikator.komunikator.entity.User;
@@ -44,10 +46,20 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View v = navigationView.getHeaderView(0);
+        TextView userEmailTextView = (TextView ) v.findViewById(R.id.userEmailTextView);
+        userEmailTextView.setText(User.getLoggedUser().getEmail());
+
+        TextView userNameTextView = (TextView ) v.findViewById(R.id.userNameTextView);
+        userNameTextView.setText(User.getLoggedUser().getUsername());
+
         setupDrawerContent(navigationView);
+
+
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
