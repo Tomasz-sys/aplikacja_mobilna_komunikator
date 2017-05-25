@@ -1,5 +1,7 @@
 package pl.komunikator.komunikator;
 
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmModel;
@@ -29,7 +31,7 @@ public class RealmUtilities {
         return mRealm.where(type).equalTo("id", id).findFirst();
     }
 
-    public void createConversation(RealmList<User> users) {
+    public Conversation createConversation(RealmList<User> users) {
         Number id = getConversationMaxId();
 
         mRealm.beginTransaction();
@@ -40,6 +42,8 @@ public class RealmUtilities {
         setConversationName(conversation);
 
         mRealm.commitTransaction();
+
+        return conversation;
     }
 
     private Number getConversationMaxId() {
@@ -66,6 +70,16 @@ public class RealmUtilities {
         }
         String usersText = result.length() > 0 ? result.substring(0, result.length() - 2) : "";
         conversation.setName(usersText);
+    }
+
+    public Conversation createConversation(List<Long> usersIds) {
+        RealmList<User> users = new RealmList<>();
+
+        for (Long id : usersIds) {
+            users.add(getUser(id));
+        }
+
+        return createConversation(users);
     }
 
 }

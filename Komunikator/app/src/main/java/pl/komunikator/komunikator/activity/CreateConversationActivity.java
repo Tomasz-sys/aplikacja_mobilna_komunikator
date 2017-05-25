@@ -14,7 +14,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.adapter.ConversationCreatorAdapter;
+import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
 
 public class CreateConversationActivity extends AppCompatActivity {
@@ -60,10 +62,15 @@ public class CreateConversationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<Long> ids = mAdapter.getIds();
+                ids.add(0, User.getLoggedUser().getId());
 
-                Intent intent = new Intent(activity, ContainerActivity.class);
-                intent.putExtra("ids", (Serializable) ids);
-                activity.setResult(RESULT_OK, intent);
+                RealmUtilities realm = new RealmUtilities();
+                Conversation conversation = realm.createConversation(ids);
+
+                Intent intent = new Intent(activity, ConversationActivity.class);
+                intent.putExtra("id", conversation.getId());
+
+                activity.startActivity(intent);
                 activity.finish();
             }
         });

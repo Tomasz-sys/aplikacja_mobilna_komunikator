@@ -208,16 +208,4 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         selectDrawerItem(conversationsMenuItem);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK) {
-                List<Long> userIds = (ArrayList<Long>) data.getSerializableExtra("ids");
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
-        }
-    }
-
 }
