@@ -1,18 +1,14 @@
 package pl.komunikator.komunikator;
 
-import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
-
-import static android.R.attr.id;
 
 /**
  * Created by adrian on 24.05.2017.
@@ -41,7 +37,7 @@ public class RealmUtilities {
 
         Conversation conversation = mRealm.createObject(Conversation.class, (id == null) ? 1 : id.longValue() + 1);
         conversation.setUsers(users);
-        assignConversation(conversation, users);
+        bindObjects(conversation, users);
         setConversationName(conversation);
 
         mRealm.commitTransaction();
@@ -53,7 +49,26 @@ public class RealmUtilities {
         return mRealm.where(Conversation.class).max("id");
     }
 
-    private void assignConversation(Conversation conversation, RealmList<User> users) {
+    public void bindObjects(Conversation conversation, List<Long> ids) {
+        RealmList<User> users = new RealmList<>();
+        for (Long id : ids) {
+            users.add(getUser(id));
+        }
+
+        mRealm.beginTransaction();
+
+        bindObjects(conversation, users);
+        assignUsersTo(conversation, users);
+        setConversationName(conversation);
+
+        mRealm.commitTransaction();
+    }
+
+    private void assignUsersTo(Conversation conversation, RealmList<User> users) {
+        conversation.getUsers().addAll(users);
+    }
+
+    private void bindObjects(Conversation conversation, RealmList<User> users) {
         for (User u : users) {
             try {
                 RealmList<Conversation> userConversations = u.getConversations();

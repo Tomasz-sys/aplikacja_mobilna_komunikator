@@ -10,10 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.Serializable;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.RealmUtilities;
@@ -79,13 +77,16 @@ public class CreateConversationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<Long> ids = mAdapter.getIds();
-                ids.add(0, User.getLoggedUser().getId());
-
-                RealmUtilities realm = new RealmUtilities();
-                Conversation conversation = realm.createConversation(ids);
-
                 Intent intent = new Intent(activity, ConversationActivity.class);
-                intent.putExtra("id", conversation.getId());
+
+                if (mConversationToEdit != null) {
+                    realm.bindObjects(mConversationToEdit, ids);
+                    intent.putExtra("id", mConversationToEdit.getId());
+                } else {
+                    ids.add(0, User.getLoggedUser().getId());
+                    Conversation conversation = realm.createConversation(ids);
+                    intent.putExtra("id", conversation.getId());
+                }
 
                 activity.startActivity(intent);
                 activity.finish();
