@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.entity.Conversation;
