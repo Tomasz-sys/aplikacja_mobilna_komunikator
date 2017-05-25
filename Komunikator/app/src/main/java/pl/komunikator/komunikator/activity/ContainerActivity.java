@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import io.realm.RealmList;
 import pl.komunikator.komunikator.RealmUtilities;
+import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
@@ -184,11 +185,8 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         User contactFromRealm = realm.getUser(contact.getId());
         User loggedUser = User.getLoggedUser();
 
-        realm.createConversation(new RealmList<>(loggedUser, contactFromRealm));
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
-        selectDrawerItem(conversationsMenuItem);
+        Conversation conversation = realm.createConversation(new RealmList<>(loggedUser, contactFromRealm));
+        ConversationActivity.show(this, conversation.getId());
     }
 
     @Override

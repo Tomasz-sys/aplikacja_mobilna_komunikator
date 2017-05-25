@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -88,10 +89,7 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContainerActivity container = (ContainerActivity) view.getContext();
-                Intent intent = new Intent(container, ConversationActivity.class);
-                intent.putExtra("id", conversation.getId());
-                container.startActivity(intent);
+                ConversationActivity.show((Activity) view.getContext(), conversation.getId());
             }
         });
 

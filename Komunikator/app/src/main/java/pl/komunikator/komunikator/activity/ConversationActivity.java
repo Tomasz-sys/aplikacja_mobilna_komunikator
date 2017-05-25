@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -114,5 +115,11 @@ public class ConversationActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, ContainerActivity.class);
         startActivityForResult(intent, BACK_PRESS_CODE);
+    }
+
+    public static void show(Activity startActivity, long conversationId) {
+        Intent intent = new Intent(startActivity, ConversationActivity.class);
+        intent.putExtra("id", conversationId);
+        startActivity.startActivity(intent);
     }
 }
