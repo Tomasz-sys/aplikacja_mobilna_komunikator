@@ -3,7 +3,6 @@ package pl.komunikator.komunikator.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +34,8 @@ public class CreateConversationActivity extends AppCompatActivity {
         initRecyclerView();
         initAdapter();
         initButtonBar();
+
+        setTitle("Utwórz konwersację");
     }
 
     private void initRecyclerView() {
