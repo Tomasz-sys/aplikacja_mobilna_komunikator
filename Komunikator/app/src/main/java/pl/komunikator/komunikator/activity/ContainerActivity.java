@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -201,7 +202,9 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ConversationActivity.BACK_PRESS_CODE) {
-            selectConversationsMenuItem();
+            if (resultCode == Activity.RESULT_OK) {
+                selectConversationsMenuItem();
+            }
         }
     }
 
