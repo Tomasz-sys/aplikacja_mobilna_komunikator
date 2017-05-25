@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -77,6 +78,12 @@ public class CreateConversationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<Long> ids = mAdapter.getIds();
+
+                if (ids.size() == 0) {
+                    Toast.makeText(activity, "Nie wybrano żadnego kontaktu...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent intent = new Intent(activity, ConversationActivity.class);
 
                 if (mConversationToEdit != null) {
