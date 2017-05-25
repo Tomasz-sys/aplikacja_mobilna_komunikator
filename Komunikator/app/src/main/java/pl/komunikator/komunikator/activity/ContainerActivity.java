@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.entity.Conversation;
@@ -89,7 +88,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the mMenu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.contacts_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_fragment_contacts, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         String searchViewHint = getResources().getString(R.string.search_view_hint);
