@@ -13,6 +13,8 @@ import android.widget.Button;
 import java.io.Serializable;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.adapter.ConversationCreatorAdapter;
@@ -23,13 +25,22 @@ public class CreateConversationActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private ConversationCreatorAdapter mAdapter;
+    private Conversation mConversationToEdit;
+
+    private RealmUtilities realm = new RealmUtilities();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_conversation);
 
+        initConversationToEditIfExists();
         initViews();
+    }
+
+    private void initConversationToEditIfExists() {
+        long id = getIntent().getLongExtra("editId", 0);
+        mConversationToEdit = realm.getConversation(id);
     }
 
     private void initViews() {
@@ -48,7 +59,13 @@ public class CreateConversationActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        ConversationCreatorAdapter adapter = new ConversationCreatorAdapter(User.getLoggedUser().friends);
+        ConversationCreatorAdapter adapter;
+        try {
+            RealmList<User> filteredUserContacts = realm.getFilteredUserContacts(mConversationToEdit.getUsers());
+            adapter = new ConversationCreatorAdapter(filteredUserContacts);
+        } catch (NullPointerException e) {
+            adapter = new ConversationCreatorAdapter(User.getLoggedUser().friends);
+        }
         mRecyclerView.setAdapter(adapter);
         mAdapter = adapter;
     }

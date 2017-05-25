@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -109,6 +111,23 @@ public class ConversationActivity extends AppCompatActivity {
         mConversation = realm.getConversation(id);
 
         setTitle(mConversation.getName());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_conversation_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_conversation_menu_item) {
+            long conversationId = mConversation.getId();
+            Intent intent = new Intent(this, CreateConversationActivity.class);
+            intent.putExtra("editId", conversationId);
+            startActivity(intent);
+        }
+        return true;
     }
 
     @Override

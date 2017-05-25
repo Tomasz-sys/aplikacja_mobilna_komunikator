@@ -1,11 +1,14 @@
 package pl.komunikator.komunikator;
 
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmObject;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
 
@@ -80,6 +83,20 @@ public class RealmUtilities {
         }
 
         return createConversation(users);
+    }
+
+    public RealmList<User> getFilteredUserContacts(RealmList<User> usersToDrop) {
+        RealmQuery<User> friendQuery = RealmQuery.createQueryFromList(User.getLoggedUser().friends);
+        for (User user : usersToDrop) {
+            long userId = user.getId();
+
+            friendQuery.notEqualTo("id", userId);
+        }
+
+        RealmResults<User> filteredContactsResults = friendQuery.findAll();
+        RealmList<User> filteredContacts = new RealmList<>();
+        filteredContacts.addAll(filteredContactsResults.subList(0, filteredContactsResults.size()));
+        return filteredContacts;
     }
 
 }
