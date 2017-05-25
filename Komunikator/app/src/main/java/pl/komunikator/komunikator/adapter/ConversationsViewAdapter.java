@@ -1,19 +1,15 @@
 package pl.komunikator.komunikator.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
-import pl.komunikator.komunikator.activity.ContainerActivity;
 import pl.komunikator.komunikator.activity.ConversationActivity;
 import pl.komunikator.komunikator.entity.Conversation;
-import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.viewHolder.ConversationViewHolder;
 import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
 
@@ -56,10 +52,10 @@ public class ConversationsViewAdapter extends RecyclerView.Adapter {
         View view;
 
         if (viewType == sEMPTY_LIST) {
-            view = inflater.inflate(R.layout.item_no_results, parent, false);
+            view = inflater.inflate(R.layout.item_all_empty_list, parent, false);
             return new EmptyViewHolder(view);
         } else {
-            view = inflater.inflate(R.layout.item_conversation, parent, false);
+            view = inflater.inflate(R.layout.item_fragment_conversations, parent, false);
             return new ConversationViewHolder(view);
         }
     }

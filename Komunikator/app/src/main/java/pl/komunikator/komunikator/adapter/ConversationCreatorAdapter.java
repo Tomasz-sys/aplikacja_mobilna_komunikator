@@ -74,10 +74,10 @@ public class ConversationCreatorAdapter extends RecyclerView.Adapter {
         View view;
 
         if (viewType == sNO_CONTACTS) {
-            view = inflater.inflate(R.layout.item_no_results, parent, false);
+            view = inflater.inflate(R.layout.item_all_empty_list, parent, false);
             return new EmptyViewHolder(view);
         } else {
-            view = inflater.inflate(R.layout.item_contact_checkbox, parent, false);
+            view = inflater.inflate(R.layout.item_activity_create_conversation, parent, false);
             return new CheckBoxedContactViewHolder(view);
         }
     }

@@ -61,15 +61,15 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         View view;
 
         if (viewType == sNO_RESULTS_CODE) {
-            view = inflater.inflate(R.layout.item_no_results, parent, false);
+            view = inflater.inflate(R.layout.item_all_empty_list, parent, false);
             return new EmptyViewHolder(view);
         }
 
         if (mDisplaysContacts) {
-            view = inflater.inflate(R.layout.item_contact, parent, false);
+            view = inflater.inflate(R.layout.item_fragment_contacts, parent, false);
             return new ContactViewHolder(view);
         } else {
-            view = inflater.inflate(R.layout.item_searched_user, parent, false);
+            view = inflater.inflate(R.layout.item_fragment_contacts_possible_friend, parent, false);
             return new SearchedUserViewHolder(view);
         }
     }

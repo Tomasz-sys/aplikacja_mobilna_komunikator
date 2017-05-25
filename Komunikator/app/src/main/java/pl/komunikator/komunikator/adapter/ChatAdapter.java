@@ -59,7 +59,7 @@ public class ChatAdapter extends BaseAdapter {
         LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            convertView = vi.inflate(R.layout.list_item_chat_message, null);
+            convertView = vi.inflate(R.layout.item_activity_conversation_message, null);
             holder = createViewHolder(convertView);
             convertView.setTag(holder);
         } else {

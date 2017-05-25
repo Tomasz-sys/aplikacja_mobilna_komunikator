@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        tools:listitem="@layout/item_contact_checkbox" />
+        tools:listitem="@layout/item_activity_create_conversation" />
 
-    <include android:id="@+id/button_bar_contacts" layout="@layout/button_bar_contacts" />
+    <include android:id="@+id/button_bar_contacts" layout="@layout/button_bar_activity_create_conversation" />
 
 </LinearLayout>

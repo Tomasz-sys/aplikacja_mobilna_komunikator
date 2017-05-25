@@ -11,6 +11,6 @@
         android:id="@+id/conversationsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_conversation" />
+        tools:listitem="@layout/item_fragment_conversations" />
 
 </LinearLayout>
