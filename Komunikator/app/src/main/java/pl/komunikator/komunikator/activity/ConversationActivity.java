@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -25,6 +26,8 @@ public class ConversationActivity extends AppCompatActivity {
     private ChatAdapter adapter;
 
     private Conversation mConversation;
+
+    public static final int BACK_PRESS_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,4 +110,9 @@ public class ConversationActivity extends AppCompatActivity {
         setTitle(mConversation.getName());
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, ContainerActivity.class);
+        startActivityForResult(intent, BACK_PRESS_CODE);
+    }
 }
