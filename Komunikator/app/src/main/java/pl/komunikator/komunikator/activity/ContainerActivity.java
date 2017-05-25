@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+import pl.komunikator.komunikator.RealmUtilities;
+import pl.komunikator.komunikator.entity.Conversation;
 import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
@@ -31,6 +36,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
 
     private DrawerLayout mDrawer;
     private Menu mMenu;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +51,16 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View v = navigationView.getHeaderView(0);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        View v = mNavigationView.getHeaderView(0);
+        
         TextView userEmailTextView = (TextView ) v.findViewById(R.id.userEmailTextView);
         userEmailTextView.setText(User.getLoggedUser().getEmail());
 
         TextView userNameTextView = (TextView ) v.findViewById(R.id.userNameTextView);
         userNameTextView.setText(User.getLoggedUser().getUsername());
 
-        setupDrawerContent(navigationView);
-
-
+        setupDrawerContent(mNavigationView);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -84,7 +89,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the mMenu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.conversations_menu, menu);
+        getMenuInflater().inflate(R.menu.contacts_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         String searchViewHint = getResources().getString(R.string.search_view_hint);
@@ -98,8 +103,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
     }
 
     private void selectConversationsMenuItem() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem item = navigationView.getMenu().findItem(R.id.nav_conversations);
+        MenuItem item = mNavigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(item);
     }
 
@@ -179,11 +183,12 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
 
     @Override
     public void onContactSelected(User contact) {
-        /* TODO handle creating 1-1 conversation */
+        RealmUtilities realm = new RealmUtilities();
+        User contactFromRealm = realm.getUser(contact.getId());
+        User loggedUser = User.getLoggedUser();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
-        selectDrawerItem(conversationsMenuItem);
+        Conversation conversation = realm.createConversation(new RealmList<>(loggedUser, contactFromRealm));
+        ConversationActivity.show(this, conversation.getId());
     }
 
     @Override
@@ -193,6 +198,15 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(conversationsMenuItem);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ConversationActivity.BACK_PRESS_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                selectConversationsMenuItem();
+            }
+        }
     }
 
 }
