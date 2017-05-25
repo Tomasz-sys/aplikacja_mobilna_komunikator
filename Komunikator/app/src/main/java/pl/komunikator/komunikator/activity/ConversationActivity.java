@@ -115,7 +115,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_conversation_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_conversation, menu);
         return true;
     }
 
