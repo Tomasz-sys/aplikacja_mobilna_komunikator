@@ -47,7 +47,8 @@ public class CreateConversationActivity extends AppCompatActivity {
         initAdapter();
         initButtonBar();
 
-        setTitle("Utwórz konwersację");
+        String title = mConversationToEdit == null ? "Utwórz konwersację" : "Dodaj uczestników";
+        setTitle(title);
     }
 
     private void initRecyclerView() {
