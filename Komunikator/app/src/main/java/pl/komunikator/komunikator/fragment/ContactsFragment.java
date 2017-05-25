@@ -1,5 +1,8 @@
 package pl.komunikator.komunikator.fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.Iterator;
 import java.util.List;
@@ -17,14 +21,18 @@ import java.util.List;
 import io.realm.Realm;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.activity.ContainerActivity;
+import pl.komunikator.komunikator.activity.CreateConversationActivity;
+import pl.komunikator.komunikator.adapter.ConversationCreatorAdapter;
 import pl.komunikator.komunikator.adapter.UsersViewAdapter;
 import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
 public class ContactsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private OnConversationCreatedListener mCallback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +57,7 @@ public class ContactsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        ContainerActivity containerActivity = (ContainerActivity) getActivity();
+        final ContainerActivity containerActivity = (ContainerActivity) getActivity();
 
         final SearchView searchView = (SearchView) containerActivity.getMenu().findItem(R.id.action_search).getActionView();
 
@@ -67,6 +75,16 @@ public class ContactsFragment extends Fragment {
             }
         });
 
+        final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
+        createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                showConversationCreator();
+                searchView.setIconified(true);
+                return false;
+            }
+        });
+
         final MenuItem addFriendsMenuItem = containerActivity.getMenu().findItem(R.id.action_add_friends);
         addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -74,6 +92,7 @@ public class ContactsFragment extends Fragment {
                 showPossibleFriends();
                 searchView.setIconified(false);
                 addFriendsMenuItem.setEnabled(false);
+                createConversationMenuItem.setEnabled(true);
                 return false;
             }
         });
@@ -85,16 +104,27 @@ public class ContactsFragment extends Fragment {
 
                 searchView.onActionViewCollapsed();
                 addFriendsMenuItem.setEnabled(true);
+                createConversationMenuItem.setEnabled(true);
 
                 return true;
             }
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnConversationCreatedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnConversationCreatedListener");
+        }
+    }
+
     private void showUserFriends() {
-        Realm realm = Realm.getDefaultInstance();
-        User user = User.getLoggedUser();
-        List<User> userFriends = realm.copyFromRealm(user.friends);
+        List<User> userFriends = getCopyOfUserFriends();
         UsersViewAdapter adapter = new UsersViewAdapter(userFriends, true);
         mRecyclerView.setAdapter(adapter);
     }
@@ -118,12 +148,24 @@ public class ContactsFragment extends Fragment {
             Iterator<User> allUserIterator = allUsers.iterator();
 
             while (allUserIterator.hasNext()) {
-                User user = allUserIterator.next();
+                Long userId = allUserIterator.next().getId();
 
-                if (user.getId() == loggedUserFriend.getId())
+                if (userId.equals(loggedUserFriend.getId()))
                     allUserIterator.remove();
             }
         }
+    }
+
+    private void showConversationCreator() {
+        Activity container = getActivity();
+        Intent intent = new Intent(container, CreateConversationActivity.class);
+        container.startActivityForResult(intent, 1);
+    }
+
+    private List<User> getCopyOfUserFriends() {
+        Realm realm = Realm.getDefaultInstance();
+        User user = User.getLoggedUser();
+        return realm.copyFromRealm(user.friends);
     }
 
 }

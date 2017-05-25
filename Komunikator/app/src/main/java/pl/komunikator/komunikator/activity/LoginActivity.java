@@ -19,27 +19,27 @@ import pl.komunikator.komunikator.entity.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText login, password;
-    private Realm realm = Realm.getDefaultInstance();
+    private EditText mLoginEditText, mPasswordEditText;
+    private Realm mRealm = Realm.getDefaultInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = (EditText) findViewById(R.id.loginEditText);
-        password = (EditText) findViewById(R.id.passwordEditText);
+        mLoginEditText = (EditText) findViewById(R.id.loginEditText);
+        mPasswordEditText = (EditText) findViewById(R.id.passwordEditText);
 
     }
 
     public void signIn(View view) {
-        User user = realm.where(User.class)
-                .equalTo("username", login.getText().toString())
-                .equalTo("password", Hashing.sha1().hashString(password.getText().toString(), Charsets.UTF_8).toString())
+        User user = mRealm.where(User.class)
+                .equalTo("username", mLoginEditText.getText().toString())
+                .equalTo("password", Hashing.sha1().hashString(mPasswordEditText.getText().toString(), Charsets.UTF_8).toString())
                 .findFirst();
         if (user == null) {
-            login.setError(getString(R.string.login_check_username));
-            password.setError(getString(R.string.login_check_password));
+            mLoginEditText.setError(getString(R.string.login_check_username));
+            mPasswordEditText.setError(getString(R.string.login_check_password));
         } else {
             User.setLoggedUser(user);
             Intent intent = new Intent(getApplicationContext(), ContainerActivity.class);

@@ -1,5 +1,6 @@
 package pl.komunikator.komunikator.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,16 +17,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import io.realm.RealmList;
+import pl.komunikator.komunikator.RealmUtilities;
+import pl.komunikator.komunikator.entity.Conversation;
+import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
+import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
-public class ContainerActivity extends AppCompatActivity {
+public class ContainerActivity extends AppCompatActivity implements OnConversationCreatedListener {
 
     private DrawerLayout mDrawer;
     private Menu mMenu;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +50,20 @@ public class ContainerActivity extends AppCompatActivity {
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        setupDrawerContent(navigationView);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        View v = mNavigationView.getHeaderView(0);
+        
+        TextView userEmailTextView = (TextView ) v.findViewById(R.id.userEmailTextView);
+        userEmailTextView.setText(User.getLoggedUser().getEmail());
+
+        TextView userNameTextView = (TextView ) v.findViewById(R.id.userNameTextView);
+        userNameTextView.setText(User.getLoggedUser().getUsername());
+
+        setupDrawerContent(mNavigationView);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -69,7 +88,7 @@ public class ContainerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the mMenu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.conversations_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_fragment_contacts, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         String searchViewHint = getResources().getString(R.string.search_view_hint);
@@ -83,8 +102,7 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private void selectConversationsMenuItem() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem item = navigationView.getMenu().findItem(R.id.nav_conversations);
+        MenuItem item = mNavigationView.getMenu().findItem(R.id.nav_conversations);
         selectDrawerItem(item);
     }
 
@@ -114,7 +132,7 @@ public class ContainerActivity extends AppCompatActivity {
                 break;
             case R.id.nav_conversations:
                 setTitle(R.string.title_activity_conversations_list);
-                fragmentClass = ContactsFragment.class;
+                fragmentClass = ConversationsFragment.class;
                 break;
            case R.id.nav_search:
                 setTitle(R.string.title_action_search);
@@ -151,20 +169,43 @@ public class ContainerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
-        // Set action bar title
-        //setTitle(menuItem.getTitle());
-        // Close the navigation mDrawer
         mDrawer.closeDrawers();
     }
-
-
+    
     public Menu getMenu() {
         return mMenu;
     }
+
+    @Override
+    public void onContactSelected(User contact) {
+        RealmUtilities realm = new RealmUtilities();
+        User contactFromRealm = realm.getUser(contact.getId());
+        User loggedUser = User.getLoggedUser();
+
+        Conversation conversation = realm.createConversation(new RealmList<>(loggedUser, contactFromRealm));
+        ConversationActivity.show(this, conversation.getId());
+    }
+
+    @Override
+    public void onCreateButtonClicked() {
+        /* TODO handle creating grouped conversation */
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
+        selectDrawerItem(conversationsMenuItem);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ConversationActivity.BACK_PRESS_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                selectConversationsMenuItem();
+            }
+        }
+    }
+
 }

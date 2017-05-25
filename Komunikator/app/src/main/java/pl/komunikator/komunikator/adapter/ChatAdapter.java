@@ -21,18 +21,18 @@ import pl.komunikator.komunikator.R;
 
 public class ChatAdapter extends BaseAdapter {
 
-    private final List<ChatMessage> chatMessages;
-    private Context context;
+    private final List<ChatMessage> mChatMessages;
+    private Context mContext;
 
     public ChatAdapter(Context context, List<ChatMessage> chatMessages) {
-        this.context = context;
-        this.chatMessages = chatMessages;
+        mContext = context;
+        mChatMessages = chatMessages;
     }
 
     @Override
     public int getCount() {
-        if (chatMessages != null) {
-            return chatMessages.size();
+        if (mChatMessages != null) {
+            return mChatMessages.size();
         } else {
             return 0;
         }
@@ -40,8 +40,8 @@ public class ChatAdapter extends BaseAdapter {
 
     @Override
     public ChatMessage getItem(int position) {
-        if (chatMessages != null) {
-            return chatMessages.get(position);
+        if (mChatMessages != null) {
+            return mChatMessages.get(position);
         } else {
             return null;
         }
@@ -56,10 +56,10 @@ public class ChatAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         ChatMessage chatMessage = getItem(position);
-        LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            convertView = vi.inflate(R.layout.list_item_chat_message, null);
+            convertView = vi.inflate(R.layout.item_activity_conversation_message, null);
             holder = createViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -76,11 +76,11 @@ public class ChatAdapter extends BaseAdapter {
     }
 
     public void add(ChatMessage message) {
-        chatMessages.add(message);
+        mChatMessages.add(message);
     }
 
     public void add(List<ChatMessage> messages) {
-        chatMessages.addAll(messages);
+        mChatMessages.addAll(messages);
     }
 
     private void setAlignment(ViewHolder holder, boolean isMe) {

@@ -1,11 +1,13 @@
-package pl.komunikator.komunikator.fragment;
+package pl.komunikator.komunikator.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,27 +17,34 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.adapter.ChatAdapter;
 import pl.komunikator.komunikator.entity.ChatMessage;
+import pl.komunikator.komunikator.entity.Conversation;
 
-public class ChatFragment extends Fragment {
+public class ConversationActivity extends AppCompatActivity {
 
     private EditText messageET;
     private ListView messagesContainer;
     private ChatAdapter adapter;
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+    private Conversation mConversation;
+
+    public static final int BACK_PRESS_CODE = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_chat, container, false);
-        initControls(view);
-        return view;
+        setContentView(R.layout.activity_conversation);
 
-
+        initControls();
+        initConversation();
     }
 
-    private void initControls(View view) {
-        messagesContainer = (ListView) view.findViewById(R.id.messagesContainer);
-        messageET = (EditText) view.findViewById(R.id.messageEdit);
-        Button sendBtn = (Button) view.findViewById(R.id.chatSendButton);
+    private void initControls() {
+        messagesContainer = (ListView) findViewById(R.id.messagesContainer);
+        messageET = (EditText) findViewById(R.id.messageEdit);
+        Button sendBtn = (Button) findViewById(R.id.chatSendButton);
 
         loadDummyHistory();
 
@@ -87,12 +96,49 @@ public class ChatFragment extends Fragment {
         msg1.dateTime = DateFormat.getDateTimeInstance().format(new Date());
         chatHistory.add(msg1);
 
-        adapter = new ChatAdapter(getActivity().getApplicationContext(), new ArrayList<ChatMessage>());
+        adapter = new ChatAdapter(getApplicationContext(), new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
 
         for(int i = 0; i < chatHistory.size(); i++) {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
+    }
+
+    private void initConversation() {
+        long id = getIntent().getLongExtra("id", 0);
+        RealmUtilities realm = new RealmUtilities();
+        mConversation = realm.getConversation(id);
+
+        setTitle(mConversation.getName());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_conversation, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_conversation_menu_item) {
+            long conversationId = mConversation.getId();
+            Intent intent = new Intent(this, CreateConversationActivity.class);
+            intent.putExtra("editId", conversationId);
+            startActivity(intent);
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, ContainerActivity.class);
+        startActivityForResult(intent, BACK_PRESS_CODE);
+    }
+
+    public static void show(Activity startActivity, long conversationId) {
+        Intent intent = new Intent(startActivity, ConversationActivity.class);
+        intent.putExtra("id", conversationId);
+        startActivity.startActivity(intent);
     }
 }

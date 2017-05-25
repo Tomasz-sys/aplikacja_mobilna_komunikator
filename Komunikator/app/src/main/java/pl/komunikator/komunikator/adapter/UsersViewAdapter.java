@@ -4,9 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +11,11 @@ import java.util.List;
 
 import io.realm.Realm;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.activity.ContainerActivity;
 import pl.komunikator.komunikator.entity.User;
+import pl.komunikator.komunikator.viewHolder.ContactViewHolder;
+import pl.komunikator.komunikator.viewHolder.EmptyViewHolder;
+import pl.komunikator.komunikator.viewHolder.SearchedUserViewHolder;
 
 /**
  * Created by adrian on 19.04.2017.
@@ -22,21 +23,21 @@ import pl.komunikator.komunikator.entity.User;
 
 public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int NO_RESULTS_CODE = 404;
-    private List<User> userList;
-    private List<User> filteredUsers;
-    private boolean displaysContacts;
+    private static final int sNO_RESULTS_CODE = 404;
+    private List<User> mUsers;
+    private List<User> mFilteredUsers;
+    private boolean mDisplaysContacts;
 
-    public UsersViewAdapter(List<User> userList, boolean displaysContacts) {
-        this.userList = userList;
-        filteredUsers = new ArrayList<>(userList);
+    public UsersViewAdapter(List<User> users, boolean displaysContacts) {
+        mUsers = users;
+        mFilteredUsers = new ArrayList<>(users);
 
-        this.displaysContacts = displaysContacts;
+        mDisplaysContacts = displaysContacts;
     }
 
     @Override
     public int getItemCount() {
-        int size = filteredUsers.size();
+        int size = mFilteredUsers.size();
         if (size > 0) {
             return size;
         } else {
@@ -47,57 +48,11 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (filteredUsers.size() == 0) {
-            return NO_RESULTS_CODE;
+        if (mFilteredUsers.size() == 0) {
+            return sNO_RESULTS_CODE;
         } else {
             return super.getItemViewType(position);
         }
-    }
-
-    public class SearchedUserViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView nameTextView, emailTextView;
-        public ImageView avatarImageView;
-        public ImageButton inviteImageButton;
-
-        public SearchedUserViewHolder(View view) {
-            super(view);
-
-            nameTextView = (TextView) view.findViewById(R.id.contactName);
-            emailTextView = (TextView) view.findViewById(R.id.contactEmail);
-            avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
-            inviteImageButton = (ImageButton) view.findViewById(R.id.addFriendImageButton);
-        }
-
-    }
-
-    public class ContactViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView nameTextView, emailTextView;
-        public ImageView avatarImageView;
-        public ImageButton detailsImageButton;
-
-        public ContactViewHolder(View view) {
-            super(view);
-
-            nameTextView = (TextView) view.findViewById(R.id.contactName);
-            emailTextView = (TextView) view.findViewById(R.id.contactEmail);
-            avatarImageView = (ImageView) view.findViewById(R.id.contactImageView);
-            detailsImageButton = (ImageButton) view.findViewById(R.id.contactDetailsImageButton);
-        }
-
-    }
-
-    public class NoResultsViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView textView;
-
-        public NoResultsViewHolder(View view) {
-            super(view);
-
-            textView = (TextView) view.findViewById(R.id.textView);
-        }
-
     }
 
     @Override
@@ -105,16 +60,16 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
 
-        if (viewType == NO_RESULTS_CODE) {
-            view = inflater.inflate(R.layout.item_no_results, parent, false);
-            return new NoResultsViewHolder(view);
+        if (viewType == sNO_RESULTS_CODE) {
+            view = inflater.inflate(R.layout.item_all_empty_list, parent, false);
+            return new EmptyViewHolder(view);
         }
 
-        if (displaysContacts) {
-            view = inflater.inflate(R.layout.item_contact, parent, false);
+        if (mDisplaysContacts) {
+            view = inflater.inflate(R.layout.item_fragment_contacts, parent, false);
             return new ContactViewHolder(view);
         } else {
-            view = inflater.inflate(R.layout.item_searched_user, parent, false);
+            view = inflater.inflate(R.layout.item_fragment_contacts_possible_friend, parent, false);
             return new SearchedUserViewHolder(view);
         }
     }
@@ -122,13 +77,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        if (getItemViewType(position) == NO_RESULTS_CODE) {
+        if (getItemViewType(position) == sNO_RESULTS_CODE) {
             return;
         }
 
-        final User user = filteredUsers.get(position);
+        final User user = mFilteredUsers.get(position);
 
-        if (displaysContacts) {
+        if (mDisplaysContacts) {
             ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.nameTextView.setText(user.getUsername());
             contactViewHolder.emailTextView.setText(user.getEmail());
@@ -137,6 +92,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View view) {
                     /* TODO show user details */
+                }
+            });
+            contactViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ContainerActivity container = (ContainerActivity) view.getContext();
+                    container.onContactSelected(mUsers.get(position));
                 }
             });
         } else {
@@ -157,9 +119,9 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     friend.friends.add(loggedUser);
                     realm.commitTransaction();
 
-                    long removedUserId = filteredUsers.remove(position).getId();
+                    long removedUserId = mFilteredUsers.remove(position).getId();
 
-                    Iterator<User> allUserIterator = userList.iterator();
+                    Iterator<User> allUserIterator = mUsers.iterator();
 
                     while (allUserIterator.hasNext()) {
                         User user = allUserIterator.next();
@@ -170,7 +132,7 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
 
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, filteredUsers.size());
+                    notifyItemRangeChanged(position, mFilteredUsers.size());
                 }
             });
 
@@ -178,8 +140,8 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void filterUserList(String text) {
-        filteredUsers = new ArrayList<>(userList);
-        Iterator<User> allUserIterator = filteredUsers.iterator();
+        mFilteredUsers = new ArrayList<>(mUsers);
+        Iterator<User> allUserIterator = mFilteredUsers.iterator();
 
         while (allUserIterator.hasNext()) {
             User user = allUserIterator.next();
