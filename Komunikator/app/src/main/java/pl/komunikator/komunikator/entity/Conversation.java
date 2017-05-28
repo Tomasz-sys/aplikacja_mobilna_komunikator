@@ -44,6 +44,7 @@ public class Conversation extends RealmObject {
     }
 
     public RealmList<User> getUsers() {
+        if (users == null) return new RealmList<>();
         return users;
     }
 
@@ -52,6 +53,8 @@ public class Conversation extends RealmObject {
     }
 
     public RealmList<Message> getMessages() {
+
+        if (messages == null) return new RealmList<>();
         return messages;
     }
 
