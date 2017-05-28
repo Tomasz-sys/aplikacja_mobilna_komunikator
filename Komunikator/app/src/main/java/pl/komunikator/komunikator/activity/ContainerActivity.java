@@ -46,11 +46,11 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View v = navigationView.getHeaderView(0);
-        TextView userEmailTextView = (TextView ) v.findViewById(R.id.userEmailTextView);
+        View headerView = navigationView.getHeaderView(0);
+        TextView userEmailTextView = (TextView ) headerView.findViewById(R.id.userEmailTextView);
         userEmailTextView.setText(User.getLoggedUser().getEmail());
 
-        TextView userNameTextView = (TextView ) v.findViewById(R.id.userNameTextView);
+        TextView userNameTextView = (TextView ) headerView.findViewById(R.id.userNameTextView);
         userNameTextView.setText(User.getLoggedUser().getUsername());
 
         setupDrawerContent(navigationView);
