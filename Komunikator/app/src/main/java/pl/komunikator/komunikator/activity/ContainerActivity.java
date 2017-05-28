@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.fragment.DetailsFragment;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
 import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
@@ -50,16 +52,36 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        View v = mNavigationView.getHeaderView(0);
-        
-        TextView userEmailTextView = (TextView ) v.findViewById(R.id.userEmailTextView);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView userEmailTextView = (TextView ) headerView.findViewById(R.id.userEmailTextView);
         userEmailTextView.setText(User.getLoggedUser().getEmail());
 
-        TextView userNameTextView = (TextView ) v.findViewById(R.id.userNameTextView);
+        TextView userNameTextView = (TextView ) headerView.findViewById(R.id.userNameTextView);
         userNameTextView.setText(User.getLoggedUser().getUsername());
 
-        setupDrawerContent(mNavigationView);
+        ImageView logo = (ImageView) headerView.findViewById(R.id.imageView);
+
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = null;
+                setTitle(R.string.details);
+                try {
+                    fragment = (Fragment) DetailsFragment.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                mDrawer.closeDrawers();
+            }
+        });
+
+        setupDrawerContent(navigationView);
+
+
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
