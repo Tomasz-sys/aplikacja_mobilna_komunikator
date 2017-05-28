@@ -18,6 +18,10 @@ public class DetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         TextView details_bold_name = (TextView) view.findViewById(R.id.details_bold_name);
         details_bold_name.setText(User.getLoggedUser().getUsername());
+
+        TextView details_email = (TextView) view.findViewById(R.id.details_email);
+        details_email.setText(User.getLoggedUser().getEmail());
+        
         return view;
     }
 
