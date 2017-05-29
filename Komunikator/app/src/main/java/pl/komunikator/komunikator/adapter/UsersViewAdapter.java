@@ -84,6 +84,8 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final User user = mFilteredUsers.get(position);
 
         if (mDisplaysContacts) {
+            final ContainerActivity[] container = {(ContainerActivity) holder.itemView.getContext()};
+
             ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.nameTextView.setText(user.getUsername());
             contactViewHolder.emailTextView.setText(user.getEmail());
@@ -91,14 +93,13 @@ public class UsersViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 @Override
                 public void onClick(View view) {
-                    /* TODO show user details */
+                    container[0].onContactDetailsClicked(mUsers.get(position));
                 }
             });
             contactViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ContainerActivity container = (ContainerActivity) view.getContext();
-                    container.onContactSelected(mUsers.get(position));
+                    container[0].onContactSelected(mUsers.get(position));
                 }
             });
         } else {

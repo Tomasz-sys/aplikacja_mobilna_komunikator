@@ -203,12 +203,8 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
     }
 
     @Override
-    public void onCreateButtonClicked() {
-        /* TODO handle creating grouped conversation */
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
-        selectDrawerItem(conversationsMenuItem);
+    public void onContactDetailsClicked(User contact) {
+        DetailsActivity.show(this, contact.getId());
     }
 
     @Override
