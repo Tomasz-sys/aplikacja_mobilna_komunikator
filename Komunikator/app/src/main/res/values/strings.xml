@@ -75,6 +75,7 @@
 
     <string name="create_bar_button_text">Utwórz</string>
     <string name="cancel_bar_button_text">Anuluj</string>
+    <string name="new_message_error">Error while sending message</string>
 
     <string name="details">Szczegóły</string>
 
