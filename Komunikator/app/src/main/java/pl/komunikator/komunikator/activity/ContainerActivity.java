@@ -29,7 +29,6 @@ import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
-import pl.komunikator.komunikator.fragment.DetailsFragment;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
 import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
@@ -61,21 +60,14 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         userNameTextView.setText(User.getLoggedUser().getUsername());
 
         ImageView logo = (ImageView) headerView.findViewById(R.id.imageView);
+        final Activity activity = this;
 
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = null;
-                setTitle(R.string.details);
-                try {
-                    fragment = DetailsFragment.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
                 mDrawer.closeDrawers();
+                Intent intent = new Intent(activity, DetailsActivity.class);
+                activity.startActivity(intent);
             }
         });
 
@@ -195,7 +187,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         menuItem.setChecked(true);
         mDrawer.closeDrawers();
     }
-    
+
     public Menu getMenu() {
         return mMenu;
     }
