@@ -1,37 +1,56 @@
 package pl.komunikator.komunikator.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import io.realm.Realm;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.RealmUtilities;
+import pl.komunikator.komunikator.activity.ConversationActivity;
 import pl.komunikator.komunikator.entity.User;
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends AppCompatActivity {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
-        TextView details_bold_name = (TextView) view.findViewById(R.id.details_bold_name);
-        details_bold_name.setText(User.getLoggedUser().getUsername());
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_details);
 
-        TextView details_email = (TextView) view.findViewById(R.id.details_email);
-        details_email.setText(User.getLoggedUser().getEmail());
-        
-        return view;
+        TextView details_email = (TextView) findViewById(R.id.details_email);
+        TextView details_bold_name = (TextView) findViewById(R.id.details_bold_name);
+
+        String name;
+        String email;
+
+        RealmUtilities realm = new RealmUtilities();
+        long id = getIntent().getLongExtra("userId", 0);
+        if (id == 0) {
+            name = User.getLoggedUser().getUsername();
+            email = User.getLoggedUser().getEmail();
+        } else {
+            User user = realm.getUser(id);
+            name = user.getUsername();
+            email = user.getEmail();
+        }
+
+        details_bold_name.setText(name);
+        details_email.setText(email);
+
+        setTitle("Szczegóły");
     }
 
-    public static DetailsFragment newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        DetailsFragment fragment = new DetailsFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public static void show(Activity startActivity, long userId) {
+        Intent intent = new Intent(startActivity, DetailsFragment.class);
+        intent.putExtra("userId", userId);
+        startActivity.startActivity(intent);
     }
 
 }

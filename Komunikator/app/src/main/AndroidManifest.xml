@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".activity.ConversationActivity" />
         <activity android:name=".activity.CreateConversationActivity"></activity>
+        <activity android:name=".fragment.DetailsFragment" />
     </application>
 
 </manifest>
