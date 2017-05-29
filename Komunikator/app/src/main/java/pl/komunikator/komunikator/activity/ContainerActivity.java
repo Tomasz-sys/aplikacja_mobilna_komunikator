@@ -52,8 +52,8 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = mNavigationView.getHeaderView(0);
         TextView userEmailTextView = (TextView ) headerView.findViewById(R.id.userEmailTextView);
         userEmailTextView.setText(User.getLoggedUser().getEmail());
 
@@ -68,7 +68,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
                 Fragment fragment = null;
                 setTitle(R.string.details);
                 try {
-                    fragment = (Fragment) DetailsFragment.newInstance();
+                    fragment = DetailsFragment.newInstance();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -79,9 +79,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
             }
         });
 
-        setupDrawerContent(navigationView);
-
-
+        setupDrawerContent(mNavigationView);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
