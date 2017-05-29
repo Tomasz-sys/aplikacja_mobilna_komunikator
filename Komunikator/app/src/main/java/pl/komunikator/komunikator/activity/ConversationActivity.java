@@ -37,10 +37,10 @@ public class ConversationActivity extends AppCompatActivity {
     private ChatAdapter adapter;
     private Realm realm;
     private Conversation mConversation;
-    private Number lastMessageID = null;
-    private Handler mHandler;
+
     private Number loggedUserId = null;
     private Number conversationId = null;
+    private Number lastMessageID = null;
 
     public static void show(Activity startActivity, long conversationId) {
         Intent intent = new Intent(startActivity, ConversationActivity.class);
@@ -52,17 +52,6 @@ public class ConversationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-        mHandler = new Handler(getMainLooper()) {
-            @Override
-            public void handleMessage(android.os.Message msg) {
-                if (msg.what == ERROR_CODE) {
-                    Toast.makeText(ConversationActivity.this, R.string.new_message_error, Toast.LENGTH_SHORT).show();
-                } else if (msg.what == SUCCESS_CODE && lastMessageID != null) {
-                    Message message = realm.where(Message.class).equalTo("id", lastMessageID.intValue()).findFirst();
-                    displayMessage(message);
-                }
-            }
-        };
         realm = Realm.getDefaultInstance();
         loggedUserId = User.getLoggedUser().getId();
         initConversation();
@@ -81,7 +70,7 @@ public class ConversationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                realm.executeTransactionAsync(new Realm.Transaction() {
+                realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         String messageText = messageET.getText().toString().trim();
@@ -91,27 +80,18 @@ public class ConversationActivity extends AppCompatActivity {
                         User user = realm.where(User.class).equalTo("id", loggedUserId.intValue()).findFirst();
                         Conversation con = realm.where(Conversation.class).equalTo("id", conversationId.intValue()).findFirst();
                         lastMessageID = realm.where(Message.class).max("id");
-                        lastMessageID = (lastMessageID == null) ? 1 : lastMessageID.longValue() + 1;
+
+                        if (lastMessageID == null) {
+                            lastMessageID = new Long(0);
+                        }
+                        lastMessageID = lastMessageID.longValue() + 1;
                         Message message = realm.createObject(Message.class, lastMessageID.longValue());
                         message.setContent(messageText);
                         message.setFromUser(user);
                         message.setCreateDate(new Date());
                         con.getMessages().add(message);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-
-                    @Override
-                    public void onSuccess() {
-                        android.os.Message msg = mHandler.obtainMessage(SUCCESS_CODE);
-                        msg.sendToTarget();
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        android.os.Message msg = mHandler.obtainMessage(ERROR_CODE);
-                        msg.sendToTarget();
-                        Log.e("sending Message", error.getMessage(), error);
-
+                        lastMessageID = message.getId();
+                        displayMessage(message);
                     }
                 });
 

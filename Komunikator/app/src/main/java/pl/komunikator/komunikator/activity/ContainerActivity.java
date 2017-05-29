@@ -154,10 +154,10 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
                 setTitle(R.string.title_activity_conversations_list);
                 fragmentClass = ConversationsFragment.class;
                 break;
-           case R.id.nav_search:
-                setTitle(R.string.title_action_search);
-                fragmentClass = ContactsFragment.class;
-                break;
+//           case R.id.nav_search:
+//                setTitle(R.string.title_action_search);
+//                fragmentClass = ContactsFragment.class;
+//                break;
             case R.id.nav_help:
                 setTitle(R.string.navigation_help);
                 String url = "https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki";

@@ -57,7 +57,15 @@ public class ConversationsFragment extends Fragment {
         final MenuItem addFriendsMenuItem = containerActivity.getMenu().findItem(R.id.action_add_friends);
         addFriendsMenuItem.setVisible(false);
         searchView.setVisibility(View.GONE);
-
+        searchView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if(visibility != View.GONE)
+                {
+                    searchView.setVisibility(View.GONE);
+                }
+            }
+        });
         return view;
     }
 
