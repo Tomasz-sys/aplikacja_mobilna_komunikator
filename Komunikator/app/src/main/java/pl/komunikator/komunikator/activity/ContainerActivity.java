@@ -29,7 +29,7 @@ import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
-import pl.komunikator.komunikator.fragment.DetailsFragment;
+import pl.komunikator.komunikator.fragment.DetailsActivity;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
 import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
@@ -67,7 +67,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
             @Override
             public void onClick(View v) {
                 mDrawer.closeDrawers();
-                Intent intent = new Intent(activity, DetailsFragment.class);
+                Intent intent = new Intent(activity, DetailsActivity.class);
                 activity.startActivity(intent);
             }
         });

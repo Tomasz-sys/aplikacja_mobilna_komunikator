@@ -4,25 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.realm.Realm;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.RealmUtilities;
-import pl.komunikator.komunikator.activity.ConversationActivity;
 import pl.komunikator.komunikator.entity.User;
 
-public class DetailsFragment extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_details);
+        setContentView(R.layout.activity_details);
 
         TextView details_email = (TextView) findViewById(R.id.details_email);
         TextView details_bold_name = (TextView) findViewById(R.id.details_bold_name);
@@ -48,7 +42,7 @@ public class DetailsFragment extends AppCompatActivity {
     }
 
     public static void show(Activity startActivity, long userId) {
-        Intent intent = new Intent(startActivity, DetailsFragment.class);
+        Intent intent = new Intent(startActivity, DetailsActivity.class);
         intent.putExtra("userId", userId);
         startActivity.startActivity(intent);
     }
