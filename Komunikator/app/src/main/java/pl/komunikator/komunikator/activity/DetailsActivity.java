@@ -1,4 +1,4 @@
-package pl.komunikator.komunikator.fragment;
+package pl.komunikator.komunikator.activity;
 
 import android.app.Activity;
 import android.content.Intent;

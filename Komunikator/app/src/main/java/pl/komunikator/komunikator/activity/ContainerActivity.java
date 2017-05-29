@@ -29,7 +29,6 @@ import pl.komunikator.komunikator.entity.User;
 import pl.komunikator.komunikator.fragment.ConversationsFragment;
 import pl.komunikator.komunikator.fragment.ContactsFragment;
 import pl.komunikator.komunikator.R;
-import pl.komunikator.komunikator.fragment.DetailsActivity;
 import pl.komunikator.komunikator.fragment.SettingsFragment;
 import pl.komunikator.komunikator.interfaces.OnConversationCreatedListener;
 
