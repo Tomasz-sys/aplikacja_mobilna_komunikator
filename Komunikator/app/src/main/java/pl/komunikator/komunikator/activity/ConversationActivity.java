@@ -71,6 +71,7 @@ public class ConversationActivity extends AppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
+
                         String messageText = messageET.getText().toString().trim();
                         if (TextUtils.isEmpty(messageText)) {
                             return;
@@ -125,7 +126,7 @@ public class ConversationActivity extends AppCompatActivity {
         long id;
         if (conversationId != null && conversationId.longValue() < 0) {
             id = conversationId.longValue();
-        } else id = getIntent().getLongExtra("lastMessageID", 0);
+        } else id = getIntent().getLongExtra("lastMessageID", getIntent().getLongExtra("id", 0));
         RealmUtilities realm = new RealmUtilities();
         mConversation = realm.getConversation(id);
         conversationId = id;

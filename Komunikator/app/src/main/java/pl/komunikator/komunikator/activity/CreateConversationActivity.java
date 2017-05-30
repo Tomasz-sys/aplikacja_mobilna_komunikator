@@ -96,7 +96,10 @@ public class CreateConversationActivity extends AppCompatActivity {
                     intent = new Intent(activity, ConversationActivity.class);
                     ids.add(0, User.getLoggedUser().getId());
                     Conversation conversation = realm.createConversation(ids);
-                    intent.putExtra("id", conversation.getId());
+                    String conString = conversation.toString();
+                    conString = conString.replace("Conversation = [{id:","");
+                    conString = conString.substring(0,conString.indexOf("},{name:"));
+                    intent.putExtra("id", /*conversation.getId());*/Long.valueOf(conString));
                     activity.startActivity(intent);
                 }
 
