@@ -3,17 +3,14 @@ package pl.komunikator.komunikator.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +28,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     public static final int BACK_PRESS_CODE = 1;
     private static final int SUCCESS_CODE = 124;
+    private static final int CONVERSATION_ACTIVITY_ID = 234;
     private static int ERROR_CODE = 562;
     private EditText messageET;
     private ListView messagesContainer;
@@ -123,7 +121,11 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void initConversation() {
-        long id = getIntent().getLongExtra("lastMessageID", 0);
+
+        long id;
+        if (conversationId != null && conversationId.longValue() < 0) {
+            id = conversationId.longValue();
+        } else id = getIntent().getLongExtra("lastMessageID", 0);
         RealmUtilities realm = new RealmUtilities();
         mConversation = realm.getConversation(id);
         conversationId = id;
@@ -143,9 +145,16 @@ public class ConversationActivity extends AppCompatActivity {
             long conversationId = mConversation.getId();
             Intent intent = new Intent(this, CreateConversationActivity.class);
             intent.putExtra("editId", conversationId);
-            startActivity(intent);
+            startActivityForResult(intent, CONVERSATION_ACTIVITY_ID);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == CONVERSATION_ACTIVITY_ID) {
+            conversationId = data.getLongExtra("lastMessageID", 0);
+        }
     }
 
     @Override

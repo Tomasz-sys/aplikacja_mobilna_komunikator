@@ -75,17 +75,10 @@ public class ContactsFragment extends Fragment {
 
         final MenuItem createConversationMenuItem = containerActivity.getMenu().findItem(R.id.action_create_conversation);
         createConversationMenuItem.setVisible(false);
-//        createConversationMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem menuItem) {
-//                showConversationCreator();
-//                searchView.setIconified(true);
-//                return false;
-//            }
-//        });
 
         final MenuItem addFriendsMenuItem = containerActivity.getMenu().findItem(R.id.action_add_friends);
         addFriendsMenuItem.setVisible(true);
+        searchView.setVisibility(View.VISIBLE);
         addFriendsMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -157,10 +150,6 @@ public class ContactsFragment extends Fragment {
         }
     }
 
-//    private void showConversationCreator() {
-//        Intent intent = new Intent(mContext, CreateConversationActivity.class);
-//        mContext.startActivity(intent);
-//    }
 
     private List<User> getCopyOfUserFriends() {
         Realm realm = Realm.getDefaultInstance();
