@@ -27,7 +27,7 @@
         Suspendisse a pellentesque dui, non felis.
         Maecenas malesuada elit lectus felis, malesuada ultricies.</string>
     <string name="contact_email_placeholder">john.doe@example.com</string>
-    <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_details">Szczegóły</string>
 
     <string name="details_bold_name">John Doe</string>
     <string name="details_ignore">IGNORUJ</string>
@@ -75,8 +75,8 @@
 
     <string name="create_bar_button_text">Utwórz</string>
     <string name="cancel_bar_button_text">Anuluj</string>
-    <string name="new_message_error">Error while sending message</string>
+    <string name="new_message_error">Błąd podczas wysyłania wiadomości</string>
 
     <string name="details">Szczegóły</string>
-
+    <string name="pomoc">Pomoc</string>
 </resources>

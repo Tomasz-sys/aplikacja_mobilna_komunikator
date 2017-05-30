@@ -38,7 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
         details_bold_name.setText(name);
         details_email.setText(email);
 
-        setTitle("Szczegóły");
+        setTitle(R.string.title_activity_details);
     }
 
     public static void show(Activity startActivity, long userId) {
