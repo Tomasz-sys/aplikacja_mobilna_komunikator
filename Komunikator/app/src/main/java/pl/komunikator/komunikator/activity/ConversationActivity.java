@@ -17,6 +17,9 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmList;
+import io.realm.RealmModel;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.RealmUtilities;
 import pl.komunikator.komunikator.adapter.ChatAdapter;
@@ -54,6 +57,7 @@ public class ConversationActivity extends AppCompatActivity {
         loggedUserId = User.getLoggedUser().getId();
         initConversation();
         initControls();
+
 
     }
 
@@ -130,7 +134,12 @@ public class ConversationActivity extends AppCompatActivity {
         RealmUtilities realm = new RealmUtilities();
         mConversation = realm.getConversation(id);
         conversationId = id;
-
+        mConversation.addChangeListener(new RealmChangeListener<RealmModel>() {
+            @Override
+            public void onChange(RealmModel element) {
+                initControls();
+            }
+        });
         setTitle(mConversation.getName());
     }
 
