@@ -85,18 +85,25 @@ public class CreateConversationActivity extends AppCompatActivity {
                     return;
                 }
 
-                Intent intent = new Intent(activity, ConversationActivity.class);
+                Intent intent;
 
                 if (mConversationToEdit != null) {
+                    intent = getIntent();
                     realm.bindObjects(mConversationToEdit, ids);
                     intent.putExtra("id", mConversationToEdit.getId());
+                    setResult(RESULT_OK, intent);
                 } else {
+                    intent = new Intent(activity, ConversationActivity.class);
                     ids.add(0, User.getLoggedUser().getId());
                     Conversation conversation = realm.createConversation(ids);
-                    intent.putExtra("id", conversation.getId());
+                    String conString = conversation.toString();
+                    conString = conString.replace("Conversation = [{id:","");
+                    conString = conString.substring(0,conString.indexOf("},{name:"));
+                    intent.putExtra("id", /*conversation.getId());*/Long.valueOf(conString));
+                    activity.startActivity(intent);
                 }
 
-                activity.startActivity(intent);
+
                 activity.finish();
             }
         });

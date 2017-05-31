@@ -8,6 +8,6 @@ import pl.komunikator.komunikator.entity.User;
 public interface OnConversationCreatedListener {
 
     void onContactSelected(User contact);
-    void onCreateButtonClicked();
+    void onContactDetailsClicked(User contact);
 
 }

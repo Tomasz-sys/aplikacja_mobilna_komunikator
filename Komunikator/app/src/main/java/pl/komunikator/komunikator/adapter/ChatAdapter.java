@@ -12,8 +12,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import pl.komunikator.komunikator.entity.ChatMessage;
 import pl.komunikator.komunikator.R;
+import pl.komunikator.komunikator.entity.Message;
+import pl.komunikator.komunikator.entity.User;
 
 /**
  * Created by adrian on 30.03.2017.
@@ -21,10 +22,10 @@ import pl.komunikator.komunikator.R;
 
 public class ChatAdapter extends BaseAdapter {
 
-    private final List<ChatMessage> mChatMessages;
+    private final List<Message> mChatMessages;
     private Context mContext;
 
-    public ChatAdapter(Context context, List<ChatMessage> chatMessages) {
+    public ChatAdapter(Context context, List<Message> chatMessages) {
         mContext = context;
         mChatMessages = chatMessages;
     }
@@ -39,7 +40,7 @@ public class ChatAdapter extends BaseAdapter {
     }
 
     @Override
-    public ChatMessage getItem(int position) {
+    public Message getItem(int position) {
         if (mChatMessages != null) {
             return mChatMessages.get(position);
         } else {
@@ -55,7 +56,7 @@ public class ChatAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        ChatMessage chatMessage = getItem(position);
+        Message chatMessage = getItem(position);
         LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
@@ -66,20 +67,20 @@ public class ChatAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        boolean myMsg = chatMessage.isMe ;//Just a dummy check
+        boolean myMsg = chatMessage.getFromUser().getId() == (User.getLoggedUser().getId());//Just a dummy check
         //to simulate whether it me or other sender
         setAlignment(holder, myMsg);
-        holder.txtMessage.setText(chatMessage.message);
-        holder.txtInfo.setText(chatMessage.dateTime);
+        holder.txtMessage.setText(chatMessage.getContent());
+        holder.txtInfo.setText(chatMessage.getCreateDate().toString());
 
         return convertView;
     }
 
-    public void add(ChatMessage message) {
+    public void add(Message message) {
         mChatMessages.add(message);
     }
 
-    public void add(List<ChatMessage> messages) {
+    public void add(List<Message> messages) {
         mChatMessages.addAll(messages);
     }
 

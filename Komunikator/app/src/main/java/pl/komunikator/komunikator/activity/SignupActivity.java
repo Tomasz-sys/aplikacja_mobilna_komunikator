@@ -98,7 +98,7 @@ public class SignupActivity extends AppCompatActivity {
         mRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("mEmailEditText", emailText).findFirst();
+                RealmObject object = realm.where(User.class).equalTo("username", loginText).or().equalTo("email", emailText).findFirst();
                 if (object == null) {
                     Number id = realm.where(User.class).max("id");
                     User user = realm.createObject(User.class, (id == null) ? 1 : id.longValue() + 1);

@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,13 +52,24 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         toggle.syncState();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        View v = mNavigationView.getHeaderView(0);
-        
-        TextView userEmailTextView = (TextView ) v.findViewById(R.id.userEmailTextView);
+        View headerView = mNavigationView.getHeaderView(0);
+        TextView userEmailTextView = (TextView ) headerView.findViewById(R.id.userEmailTextView);
         userEmailTextView.setText(User.getLoggedUser().getEmail());
 
-        TextView userNameTextView = (TextView ) v.findViewById(R.id.userNameTextView);
+        TextView userNameTextView = (TextView ) headerView.findViewById(R.id.userNameTextView);
         userNameTextView.setText(User.getLoggedUser().getUsername());
+
+        ImageView logo = (ImageView) headerView.findViewById(R.id.imageView);
+        final Activity activity = this;
+
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawer.closeDrawers();
+                Intent intent = new Intent(activity, DetailsActivity.class);
+                activity.startActivity(intent);
+            }
+        });
 
         setupDrawerContent(mNavigationView);
     }
@@ -134,12 +146,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
                 setTitle(R.string.title_activity_conversations_list);
                 fragmentClass = ConversationsFragment.class;
                 break;
-           case R.id.nav_search:
-                setTitle(R.string.title_action_search);
-                fragmentClass = ContactsFragment.class;
-                break;
             case R.id.nav_help:
-                setTitle(R.string.navigation_help);
                 String url = "https://github.com/teneusz/aplikacja_mobilna_komunikator/wiki";
 
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
@@ -175,7 +182,7 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
         menuItem.setChecked(true);
         mDrawer.closeDrawers();
     }
-    
+
     public Menu getMenu() {
         return mMenu;
     }
@@ -191,12 +198,8 @@ public class ContainerActivity extends AppCompatActivity implements OnConversati
     }
 
     @Override
-    public void onCreateButtonClicked() {
-        /* TODO handle creating grouped conversation */
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuItem conversationsMenuItem = navigationView.getMenu().findItem(R.id.nav_conversations);
-        selectDrawerItem(conversationsMenuItem);
+    public void onContactDetailsClicked(User contact) {
+        DetailsActivity.show(this, contact.getId());
     }
 
     @Override
