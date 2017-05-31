@@ -1,0 +1,4 @@
+var namespacepl_1_1komunikator_1_1komunikator_1_1interfaces =
+[
+    [ "OnConversationCreatedListener", "interfacepl_1_1komunikator_1_1komunikator_1_1interfaces_1_1_on_conversation_created_listener.html", "interfacepl_1_1komunikator_1_1komunikator_1_1interfaces_1_1_on_conversation_created_listener" ]
+];
