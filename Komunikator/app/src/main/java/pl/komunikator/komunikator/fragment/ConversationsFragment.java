@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmList;
 import pl.komunikator.komunikator.R;
 import pl.komunikator.komunikator.activity.ContainerActivity;
@@ -75,7 +76,17 @@ public class ConversationsFragment extends Fragment {
 
         User loggedUser = User.getLoggedUser();
         RealmList<Conversation> conversations = loggedUser.getConversations();
+        createListOfConversation(conversations);
+        loggedUser.getConversations().addChangeListener(new RealmChangeListener<RealmList<Conversation>>() {
+            @Override
+            public void onChange(RealmList<Conversation> element) {
+                createListOfConversation(element);
+            }
+        });
 
+    }
+    private void createListOfConversation(RealmList<Conversation> conversations)
+    {
         ConversationsViewAdapter adapter = new ConversationsViewAdapter(conversations);
         mRecyclerView.setAdapter(adapter);
     }

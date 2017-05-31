@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['chatadapter',['ChatAdapter',['../classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_chat_adapter.html',1,'pl::komunikator::komunikator::adapter']]],
+  ['chatmessage',['ChatMessage',['../classpl_1_1komunikator_1_1komunikator_1_1entity_1_1_chat_message.html',1,'pl::komunikator::komunikator::entity']]],
+  ['checkboxedcontactviewholder',['CheckBoxedContactViewHolder',['../classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder.html',1,'pl::komunikator::komunikator::adapter::ConversationCreatorAdapter']]],
+  ['color',['color',['../classandroid_1_1support_1_1design_1_1_r_1_1color.html',1,'android.support.design.R.color'],['../classpl_1_1komunikator_1_1komunikator_1_1_r_1_1color.html',1,'pl.komunikator.komunikator.R.color'],['../classandroid_1_1support_1_1v7_1_1appcompat_1_1_r_1_1color.html',1,'android.support.v7.appcompat.R.color']]],
+  ['contactsfragment',['ContactsFragment',['../classpl_1_1komunikator_1_1komunikator_1_1fragment_1_1_contacts_fragment.html',1,'pl::komunikator::komunikator::fragment']]],
+  ['contactviewholder',['ContactViewHolder',['../classpl_1_1komunikator_1_1komunikator_1_1view_holder_1_1_contact_view_holder.html',1,'pl::komunikator::komunikator::viewHolder']]],
+  ['containeractivity',['ContainerActivity',['../classpl_1_1komunikator_1_1komunikator_1_1activity_1_1_container_activity.html',1,'pl::komunikator::komunikator::activity']]],
+  ['conversation',['Conversation',['../classpl_1_1komunikator_1_1komunikator_1_1entity_1_1_conversation.html',1,'pl::komunikator::komunikator::entity']]],
+  ['conversationactivity',['ConversationActivity',['../classpl_1_1komunikator_1_1komunikator_1_1activity_1_1_conversation_activity.html',1,'pl::komunikator::komunikator::activity']]],
+  ['conversationcolumninfo',['ConversationColumnInfo',['../classio_1_1realm_1_1_conversation_realm_proxy_1_1_conversation_column_info.html',1,'io::realm::ConversationRealmProxy']]],
+  ['conversationcreatoradapter',['ConversationCreatorAdapter',['../classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter.html',1,'pl::komunikator::komunikator::adapter']]],
+  ['conversationrealmproxy',['ConversationRealmProxy',['../classio_1_1realm_1_1_conversation_realm_proxy.html',1,'io::realm']]],
+  ['conversationrealmproxyinterface',['ConversationRealmProxyInterface',['../interfaceio_1_1realm_1_1_conversation_realm_proxy_interface.html',1,'io::realm']]],
+  ['conversationsfragment',['ConversationsFragment',['../classpl_1_1komunikator_1_1komunikator_1_1fragment_1_1_conversations_fragment.html',1,'pl::komunikator::komunikator::fragment']]],
+  ['conversationsviewadapter',['ConversationsViewAdapter',['../classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversations_view_adapter.html',1,'pl::komunikator::komunikator::adapter']]],
+  ['conversationviewholder',['ConversationViewHolder',['../classpl_1_1komunikator_1_1komunikator_1_1view_holder_1_1_conversation_view_holder.html',1,'pl::komunikator::komunikator::viewHolder']]],
+  ['createconversationactivity',['CreateConversationActivity',['../classpl_1_1komunikator_1_1komunikator_1_1activity_1_1_create_conversation_activity.html',1,'pl::komunikator::komunikator::activity']]]
+];
