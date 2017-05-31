@@ -30,136 +30,67 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/details_bold_name"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        style="?attr/buttonBarStyle">
+        style="?attr/buttonBarStyle"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/details_ignore_button"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:background="@android:color/holo_blue_light"
             android:text="@string/details_ignore"
-            android:textColor="@android:color/white"
             android:textAlignment="center"
-            style="?attr/buttonBarButtonStyle"/>
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/details_add_button"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
             android:background="@android:color/holo_blue_light"
             android:text="@string/details_add"
-            android:textColor="@android:color/white"
             android:textAlignment="center"
-            style="?attr/buttonBarButtonStyle"/>
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/details_name_label"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout"
-        android:layout_alignStart="@+id/linearLayout"
         android:layout_below="@+id/linearLayout"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="17dp"
-        android:text="@string/details_name_label"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/details_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/details_name_label"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginTop="12dp"
-        android:layout_toLeftOf="@+id/details_avatar"
-        android:layout_toStartOf="@+id/details_avatar"
-        android:text="@string/details_name"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/details_email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/details_email_label"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/details_surname_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_name_label"
-        android:layout_alignStart="@+id/details_name_label"
-        android:layout_below="@+id/details_name"
-        android:layout_marginTop="12dp"
-        android:text="@string/details_surname_label"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/details_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@string/details_email"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/details_surname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_name"
-        android:layout_alignStart="@+id/details_name"
-        android:layout_below="@+id/details_surname_label"
-        android:layout_marginTop="12dp"
-        android:text="@string/details_surname"
-        android:textSize="16sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/details_email_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_surname_label"
-        android:layout_alignStart="@+id/details_surname_label"
-        android:layout_below="@+id/details_surname"
-        android:layout_marginTop="12dp"
-        android:text="@string/details_email_label"
-        android:textSize="16sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/details_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_surname"
-        android:layout_alignStart="@+id/details_surname"
-        android:layout_below="@+id/details_email_label"
-        android:layout_marginTop="12dp"
-        android:text="@string/details_email"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/details_birth_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_email_label"
-        android:layout_alignStart="@+id/details_email_label"
-        android:layout_below="@+id/details_email"
-        android:layout_marginTop="12dp"
-        android:text="@string/details_birth_label"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/details_birth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_email"
-        android:layout_alignStart="@+id/details_email"
-        android:layout_below="@+id/details_birth_label"
-        android:layout_marginTop="12dp"
-        android:text="@string/details_birth" />
 
 </RelativeLayout>
