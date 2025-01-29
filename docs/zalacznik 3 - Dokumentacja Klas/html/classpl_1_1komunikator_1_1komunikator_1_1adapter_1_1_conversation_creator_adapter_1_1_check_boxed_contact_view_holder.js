@@ -1,8 +1,0 @@
-var classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder =
-[
-    [ "CheckBoxedContactViewHolder", "classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder.html#a1010e97306d5e272422438511f6fb4e4", null ],
-    [ "avatarImageView", "classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder.html#ac1babea34ef5635b37d2565ab90be394", null ],
-    [ "checkBox", "classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder.html#a8fc446d7dbaff34d77bab60c0de35c2c", null ],
-    [ "emailTextView", "classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder.html#a17c385f74a86033181ab55df7a570d3e", null ],
-    [ "nameTextView", "classpl_1_1komunikator_1_1komunikator_1_1adapter_1_1_conversation_creator_adapter_1_1_check_boxed_contact_view_holder.html#aac599e54994d89e31bde5ba2f48659ab", null ]
-];
